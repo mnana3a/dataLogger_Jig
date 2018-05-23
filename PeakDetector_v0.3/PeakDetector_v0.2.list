@@ -1,0 +1,4297 @@
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PeakDetector_v0.2.c
+				;1	// NOTE: when calibrating the ac value better be 215 vAC for higher precision
+				;2	
+				;3	#include "config.h"
+				;4	#include "util.h"
+				;5	#include "uart.h"
+				;6	#include "adc.h"
+				;7	#include "seos.h"
+				;8	#include "main_ht66f0185.h"
+				;9	#include "port.h"
+				;10	#include "HT66F0185.h"
+				;11	#include "eeprom.h"
+				;12	
+				;13	void main()
+				;14	{
+				L0000:
+				@code .SECTION 'CODE'
+				include HT66F0185.inc
+0000	2830	jmp     begin_startup_value
+0001	0F8E	mov     a, 8EH
+0002	40AD	mov     rb[4], a
+				L0003:
+0003	50B0	sz      rb[7]
+0004	2806	jmp     L0006
+0005	2982	jmp     L0182
+				L0006:
+0006	340A	clr     C
+				L0007:
+0007	5BB0	rrc     rb[7]
+0008	5BAC	rrc     rb[3]
+0009	5BAB	rrc     rb[2]
+000A	5BAA	rrc     rb[1]
+000B	54AD	inc     rb[4]
+000C	2803	jmp     L0003
+000D	0D0A	or      a, AH
+000E	0000	nop
+				startupend3:
+				@start .SECTION 'CODE'
+006A	2C42	jmp     _main
+006B	2284	call    L0284
+006C	5F47	clr     rb[30]
+006D	5F48	clr     rb[31]
+006E	5F49	clr     rb[32]
+006F	50C6	sz      rb[29]
+0070	2873	jmp     L0073
+0071	713F	set     rb[22].2
+0072	2896	jmp     L0096
+				L0073:
+0073	503D	sza     rb[20]
+0074	2876	jmp     L0076
+0075	2896	jmp     L0096
+				L0076:
+0076	4246	sub     a, rb[29]
+0077	0B77	add     a, 77H
+0078	40BD	mov     rb[20], a
+0079	5B3E	rrca    rb[21]
+007A	44BE	xorm    a, rb[21]
+007B	0F18	mov     a, 18H
+007C	40C6	mov     rb[29], a
+				L007D:
+007D	473A	mov     a, rb[17]
+007E	4243	sub     a, rb[26]
+007F	473B	mov     a, rb[18]
+0080	5244	sbc     a, rb[27]
+0081	473C	mov     a, rb[19]
+0082	5245	sbc     a, rb[28]
+0083	380A	snz     C
+0084	288D	jmp     L008D
+0085	40BC	mov     rb[19], a
+0086	473A	mov     a, rb[17]
+0087	4243	sub     a, rb[26]
+0088	40BA	mov     rb[17], a
+0089	473B	mov     a, rb[18]
+008A	5244	sbc     a, rb[27]
+008B	40BB	mov     rb[18], a
+008C	300A	set     C
+				L008D:
+008D	5AC7	rlc     rb[30]
+008E	5AC8	rlc     rb[31]
+008F	5AC9	rlc     rb[32]
+0090	340A	clr     C
+0091	5ABA	rlc     rb[17]
+0092	5ABB	rlc     rb[18]
+0093	5ABC	rlc     rb[19]
+0094	57C6	sdz     rb[29]
+0095	287D	jmp     L007D
+				L0096:
+0096	4747	mov     a, rb[30]
+0097	40BA	mov     rb[17], a
+0098	4748	mov     a, rb[31]
+0099	40BB	mov     rb[18], a
+009A	4749	mov     a, rb[32]
+009B	40BC	mov     rb[19], a
+009C	2A1F	jmp     L021F
+009D	22DA	call    L02DA
+009E	5F47	clr     rb[30]
+009F	5F48	clr     rb[31]
+00A0	5F49	clr     rb[32]
+00A1	5F42	clr     rb[25]
+00A2	0F7A	mov     a, 7AH
+00A3	4346	add     a, rb[29]
+00A4	43BD	addm    a, rb[20]
+00A5	5B3E	rrca    rb[21]
+00A6	44BE	xorm    a, rb[21]
+00A7	0F07	mov     a, 7H
+00A8	40C1	mov     rb[24], a
+				L00A9:
+00A9	5BC5	rrc     rb[28]
+00AA	5BC4	rrc     rb[27]
+00AB	5BC3	rrc     rb[26]
+00AC	380A	snz     C
+00AD	28B6	jmp     L00B6
+00AE	473A	mov     a, rb[17]
+00AF	43C7	addm    a, rb[30]
+00B0	473B	mov     a, rb[18]
+00B1	53C8	adcm    a, rb[31]
+00B2	473C	mov     a, rb[19]
+00B3	53C9	adcm    a, rb[32]
+00B4	4740	mov     a, rb[23]
+00B5	53C2	adcm    a, rb[25]
+				L00B6:
+00B6	340A	clr     C
+00B7	5ABA	rlc     rb[17]
+00B8	5ABB	rlc     rb[18]
+00B9	5ABC	rlc     rb[19]
+00BA	5AC0	rlc     rb[23]
+00BB	57C1	sdz     rb[24]
+00BC	28A9	jmp     L00A9
+00BD	0F11	mov     a, 11H
+00BE	40C1	mov     rb[24], a
+00BF	28C5	jmp     L00C5
+				L00C0:
+00C0	340A	clr     C
+00C1	5BC2	rrc     rb[25]
+00C2	5BC9	rrc     rb[32]
+00C3	5BC8	rrc     rb[31]
+00C4	5BC7	rrc     rb[30]
+				L00C5:
+00C5	5BC5	rrc     rb[28]
+00C6	5BC4	rrc     rb[27]
+00C7	5BC3	rrc     rb[26]
+00C8	380A	snz     C
+00C9	28D2	jmp     L00D2
+00CA	473A	mov     a, rb[17]
+00CB	43C7	addm    a, rb[30]
+00CC	473B	mov     a, rb[18]
+00CD	53C8	adcm    a, rb[31]
+00CE	473C	mov     a, rb[19]
+00CF	53C9	adcm    a, rb[32]
+00D0	4740	mov     a, rb[23]
+00D1	53C2	adcm    a, rb[25]
+				L00D2:
+00D2	57C1	sdz     rb[24]
+00D3	28C0	jmp     L00C0
+00D4	4747	mov     a, rb[30]
+00D5	40BA	mov     rb[17], a
+00D6	4748	mov     a, rb[31]
+00D7	40BB	mov     rb[18], a
+00D8	4749	mov     a, rb[32]
+00D9	40BC	mov     rb[19], a
+00DA	4742	mov     a, rb[25]
+00DB	40C0	mov     rb[23], a
+00DC	2AF2	jmp     L02F2
+00DD	22E5	call    L02E5
+00DE	473D	mov     a, rb[20]
+00DF	0A7F	sub     a, 7FH
+00E0	380A	snz     C
+00E1	2AED	jmp     L02ED
+00E2	0A17	sub     a, 17H
+00E3	40BD	mov     rb[20], a
+00E4	380A	snz     C
+00E5	28F4	jmp     L00F4
+00E6	0F18	mov     a, 18H
+00E7	423D	sub     a, rb[20]
+00E8	380A	snz     C
+00E9	2AED	jmp     L02ED
+00EA	28F1	jmp     L00F1
+				L00EB:
+00EB	55BD	dec     rb[20]
+00EC	340A	clr     C
+00ED	5ABA	rlc     rb[17]
+00EE	5ABB	rlc     rb[18]
+00EF	5ABC	rlc     rb[19]
+00F0	5AC0	rlc     rb[23]
+				L00F1:
+00F1	50BD	sz      rb[20]
+00F2	28EB	jmp     L00EB
+00F3	28FA	jmp     L00FA
+				L00F4:
+00F4	340A	clr     C
+00F5	5BBC	rrc     rb[19]
+00F6	5BBB	rrc     rb[18]
+00F7	5BBA	rrc     rb[17]
+00F8	1685	siz     ACC
+00F9	28F4	jmp     L00F4
+				L00FA:
+00FA	783E	snz     rb[21].0
+00FB	2907	jmp     L0107
+00FC	41BA	cpl     rb[17]
+00FD	41BB	cpl     rb[18]
+00FE	41BC	cpl     rb[19]
+00FF	41C0	cpl     rb[23]
+0100	54BA	inc     rb[17]
+0101	3D0A	sz      Z
+0102	54BB	inc     rb[18]
+0103	3D0A	sz      Z
+0104	54BC	inc     rb[19]
+0105	3D0A	sz      Z
+0106	54C0	inc     rb[23]
+				L0107:
+0107	0003	ret
+0108	22DA	call    L02DA
+0109	5F47	clr     rb[30]
+010A	5F48	clr     rb[31]
+010B	5F49	clr     rb[32]
+010C	5F42	clr     rb[25]
+010D	50C6	sz      rb[29]
+010E	2911	jmp     L0111
+010F	713F	set     rb[22].2
+0110	293B	jmp     L013B
+				L0111:
+0111	503D	sza     rb[20]
+0112	2914	jmp     L0114
+0113	293B	jmp     L013B
+				L0114:
+0114	4246	sub     a, rb[29]
+0115	0B77	add     a, 77H
+0116	40BD	mov     rb[20], a
+0117	5B3E	rrca    rb[21]
+0118	44BE	xorm    a, rb[21]
+0119	0F20	mov     a, 20H
+011A	40C6	mov     rb[29], a
+				L011B:
+011B	473A	mov     a, rb[17]
+011C	4243	sub     a, rb[26]
+011D	473B	mov     a, rb[18]
+011E	5244	sbc     a, rb[27]
+011F	473C	mov     a, rb[19]
+0120	5245	sbc     a, rb[28]
+0121	4740	mov     a, rb[23]
+0122	5241	sbc     a, rb[24]
+0123	380A	snz     C
+0124	2930	jmp     L0130
+0125	40C0	mov     rb[23], a
+0126	473A	mov     a, rb[17]
+0127	4243	sub     a, rb[26]
+0128	40BA	mov     rb[17], a
+0129	473B	mov     a, rb[18]
+012A	5244	sbc     a, rb[27]
+012B	40BB	mov     rb[18], a
+012C	473C	mov     a, rb[19]
+012D	5245	sbc     a, rb[28]
+012E	40BC	mov     rb[19], a
+012F	300A	set     C
+				L0130:
+0130	5AC7	rlc     rb[30]
+0131	5AC8	rlc     rb[31]
+0132	5AC9	rlc     rb[32]
+0133	5AC2	rlc     rb[25]
+0134	340A	clr     C
+0135	5ABA	rlc     rb[17]
+0136	5ABB	rlc     rb[18]
+0137	5ABC	rlc     rb[19]
+0138	5AC0	rlc     rb[23]
+0139	57C6	sdz     rb[29]
+013A	291B	jmp     L011B
+				L013B:
+013B	4747	mov     a, rb[30]
+013C	40BA	mov     rb[17], a
+013D	4748	mov     a, rb[31]
+013E	40BB	mov     rb[18], a
+013F	4749	mov     a, rb[32]
+0140	40BC	mov     rb[19], a
+0141	4742	mov     a, rb[25]
+0142	40C0	mov     rb[23], a
+0143	2AF2	jmp     L02F2
+0144	0F80	mov     a, 80H
+0145	44B1	xorm    a, rb[8]
+0146	21C7	call    L01C7
+				L0147:
+0147	4736	mov     a, rb[13]
+0148	422D	sub     a, rb[4]
+0149	3D0A	sz      Z
+014A	295B	jmp     L015B
+014B	380A	snz     C
+014C	2954	jmp     L0154
+014D	340A	clr     C
+014E	5BB0	rrc     rb[7]
+014F	5BAC	rrc     rb[3]
+0150	5BAB	rrc     rb[2]
+0151	5BAA	rrc     rb[1]
+0152	54AD	inc     rb[4]
+0153	2947	jmp     L0147
+				L0154:
+0154	340A	clr     C
+0155	5BB1	rrc     rb[8]
+0156	5BB5	rrc     rb[12]
+0157	5BB4	rrc     rb[11]
+0158	5BB3	rrc     rb[10]
+0159	54B6	inc     rb[13]
+015A	2947	jmp     L0147
+				L015B:
+015B	592E	rra     rb[5]
+015C	442E	xor     a, rb[5]
+015D	3805	snz     ACC.0
+015E	296A	jmp     L016A
+015F	41B3	cpl     rb[10]
+0160	41B4	cpl     rb[11]
+0161	41B5	cpl     rb[12]
+0162	41B1	cpl     rb[8]
+0163	54B3	inc     rb[10]
+0164	3D0A	sz      Z
+0165	54B4	inc     rb[11]
+0166	3D0A	sz      Z
+0167	54B5	inc     rb[12]
+0168	3D0A	sz      Z
+0169	54B1	inc     rb[8]
+				L016A:
+016A	4733	mov     a, rb[10]
+016B	43AA	addm    a, rb[1]
+016C	4734	mov     a, rb[11]
+016D	53AB	adcm    a, rb[2]
+016E	4735	mov     a, rb[12]
+016F	53AC	adcm    a, rb[3]
+0170	4731	mov     a, rb[8]
+0171	53B0	adcm    a, rb[7]
+0172	7BB0	snz     rb[7].7
+0173	29DF	jmp     L01DF
+0174	41AA	cpl     rb[1]
+0175	41AB	cpl     rb[2]
+0176	41AC	cpl     rb[3]
+0177	41B0	cpl     rb[7]
+0178	54AA	inc     rb[1]
+0179	3D0A	sz      Z
+017A	54AB	inc     rb[2]
+017B	3D0A	sz      Z
+017C	54AC	inc     rb[3]
+017D	3D0A	sz      Z
+017E	54B0	inc     rb[7]
+017F	0F01	mov     a, 1H
+0180	44AE	xorm    a, rb[5]
+0181	29DF	jmp     L01DF
+				L0182:
+0182	50AD	sz      rb[4]
+0183	2985	jmp     L0185
+0184	29C3	jmp     L01C3
+				L0185:
+0185	50AC	sz      rb[3]
+0186	2999	jmp     L0199
+0187	472A	mov     a, rb[1]
+0188	452B	or      a, rb[2]
+0189	3D0A	sz      Z
+018A	29C5	jmp     L01C5
+				L018B:
+018B	7FAB	sz      rb[2].7
+018C	29A8	jmp     L01A8
+018D	57AD	sdz     rb[4]
+018E	2991	jmp     L0191
+018F	702F	set     rb[6].0
+0190	29C3	jmp     L01C3
+				L0191:
+0191	340A	clr     C
+0192	5AAA	rlc     rb[1]
+0193	5AAB	rlc     rb[2]
+0194	298B	jmp     L018B
+				L0195:
+0195	340A	clr     C
+0196	5BAC	rrc     rb[3]
+0197	5BAB	rrc     rb[2]
+0198	5BAA	rrc     rb[1]
+				L0199:
+0199	54AD	inc     rb[4]
+019A	562D	siza    rb[4]
+019B	299E	jmp     L019E
+019C	70AF	set     rb[6].1
+019D	2818	jmp     L0018
+				L019E:
+019E	572C	sdza    rb[3]
+019F	2995	jmp     L0195
+01A0	300A	set     C
+01A1	53AA	adcm    a, rb[1]
+01A2	53AB	adcm    a, rb[2]
+01A3	3C0A	sz      C
+01A4	54AD	inc     rb[4]
+01A5	5BAC	rrc     rb[3]
+01A6	5BAB	rrc     rb[2]
+01A7	5BAA	rrc     rb[1]
+				L01A8:
+01A8	50AD	sz      rb[4]
+01A9	29AB	jmp     L01AB
+01AA	29C3	jmp     L01C3
+				L01AB:
+01AB	5BAE	rrc     rb[5]
+01AC	5B2D	rrca    rb[4]
+01AD	40AC	mov     rb[3], a
+01AE	380A	snz     C
+01AF	77AB	clr     rb[2].7
+01B0	0003	ret
+01B1	5A34	rlca    rb[11]
+01B2	5A35	rlca    rb[12]
+01B3	5AAE	rlc     rb[5]
+01B4	40B6	mov     rb[13], a
+01B5	5F35	clr     rb[12]
+01B6	73B4	set     rb[11].7
+01B7	50B6	sz      rb[13]
+01B8	29BB	jmp     L01BB
+01B9	5F33	clr     rb[10]
+01BA	5F34	clr     rb[11]
+				L01BB:
+01BB	5A2B	rlca    rb[2]
+01BC	5A2C	rlca    rb[3]
+01BD	5AAE	rlc     rb[5]
+01BE	40AD	mov     rb[4], a
+01BF	5F2C	clr     rb[3]
+01C0	73AB	set     rb[2].7
+01C1	50AD	sz      rb[4]
+01C2	0003	ret
+				L01C3:
+01C3	5F2A	clr     rb[1]
+01C4	5F2B	clr     rb[2]
+				L01C5:
+01C5	5F2C	clr     rb[3]
+01C6	0003	ret
+				L01C7:
+01C7	5A35	rlca    rb[12]
+01C8	5A31	rlca    rb[8]
+01C9	5AAE	rlc     rb[5]
+01CA	40B6	mov     rb[13], a
+01CB	5F31	clr     rb[8]
+01CC	73B5	set     rb[12].7
+01CD	50B6	sz      rb[13]
+01CE	29D2	jmp     L01D2
+01CF	5F33	clr     rb[10]
+01D0	5F34	clr     rb[11]
+01D1	5F35	clr     rb[12]
+				L01D2:
+01D2	5A2C	rlca    rb[3]
+01D3	5A30	rlca    rb[7]
+01D4	5AAE	rlc     rb[5]
+01D5	40AD	mov     rb[4], a
+01D6	5F30	clr     rb[7]
+01D7	73AC	set     rb[3].7
+01D8	50AD	sz      rb[4]
+01D9	0003	ret
+				L01DA:
+01DA	5F2A	clr     rb[1]
+01DB	5F2B	clr     rb[2]
+01DC	5F2C	clr     rb[3]
+				L01DD:
+01DD	5F30	clr     rb[7]
+01DE	0003	ret
+				L01DF:
+01DF	50AD	sz      rb[4]
+01E0	29E2	jmp     L01E2
+01E1	29DA	jmp     L01DA
+				L01E2:
+01E2	50B0	sz      rb[7]
+01E3	29F9	jmp     L01F9
+01E4	472A	mov     a, rb[1]
+01E5	452B	or      a, rb[2]
+01E6	452C	or      a, rb[3]
+01E7	3D0A	sz      Z
+01E8	29DD	jmp     L01DD
+				L01E9:
+01E9	7FAC	sz      rb[3].7
+01EA	2A0A	jmp     L020A
+01EB	57AD	sdz     rb[4]
+01EC	29EF	jmp     L01EF
+01ED	702F	set     rb[6].0
+01EE	29DA	jmp     L01DA
+				L01EF:
+01EF	340A	clr     C
+01F0	5AAA	rlc     rb[1]
+01F1	5AAB	rlc     rb[2]
+01F2	5AAC	rlc     rb[3]
+01F3	29E9	jmp     L01E9
+				L01F4:
+01F4	340A	clr     C
+01F5	5BB0	rrc     rb[7]
+01F6	5BAC	rrc     rb[3]
+01F7	5BAB	rrc     rb[2]
+01F8	5BAA	rrc     rb[1]
+				L01F9:
+01F9	54AD	inc     rb[4]
+01FA	562D	siza    rb[4]
+01FB	29FE	jmp     L01FE
+01FC	70AF	set     rb[6].1
+01FD	281E	jmp     L001E
+				L01FE:
+01FE	5730	sdza    rb[7]
+01FF	29F4	jmp     L01F4
+0200	300A	set     C
+0201	53AA	adcm    a, rb[1]
+0202	53AB	adcm    a, rb[2]
+0203	53AC	adcm    a, rb[3]
+0204	3C0A	sz      C
+0205	54AD	inc     rb[4]
+0206	5BB0	rrc     rb[7]
+0207	5BAC	rrc     rb[3]
+0208	5BAB	rrc     rb[2]
+0209	5BAA	rrc     rb[1]
+				L020A:
+020A	50AD	sz      rb[4]
+020B	2A0D	jmp     L020D
+020C	29DA	jmp     L01DA
+				L020D:
+020D	5BAE	rrc     rb[5]
+020E	5B2D	rrca    rb[4]
+020F	40B0	mov     rb[7], a
+0210	380A	snz     C
+0211	77AC	clr     rb[3].7
+0212	0003	ret
+				L0213:
+0213	0F8E	mov     a, 8EH
+0214	40BD	mov     rb[20], a
+				L0215:
+0215	50C0	sz      rb[23]
+0216	2A18	jmp     L0218
+0217	2A1F	jmp     L021F
+				L0218:
+0218	340A	clr     C
+0219	5BC0	rrc     rb[23]
+021A	5BBC	rrc     rb[19]
+021B	5BBB	rrc     rb[18]
+021C	5BBA	rrc     rb[17]
+021D	54BD	inc     rb[20]
+021E	2A15	jmp     L0215
+				L021F:
+021F	50BD	sz      rb[20]
+0220	2A22	jmp     L0222
+0221	2A96	jmp     L0296
+				L0222:
+0222	50BC	sz      rb[19]
+0223	2A36	jmp     L0236
+0224	473A	mov     a, rb[17]
+0225	453B	or      a, rb[18]
+0226	3D0A	sz      Z
+0227	2A98	jmp     L0298
+				L0228:
+0228	7FBB	sz      rb[18].7
+0229	2A45	jmp     L0245
+022A	57BD	sdz     rb[20]
+022B	2A2E	jmp     L022E
+022C	703F	set     rb[22].0
+022D	2A96	jmp     L0296
+				L022E:
+022E	340A	clr     C
+022F	5ABA	rlc     rb[17]
+0230	5ABB	rlc     rb[18]
+0231	2A28	jmp     L0228
+				L0232:
+0232	340A	clr     C
+0233	5BBC	rrc     rb[19]
+0234	5BBB	rrc     rb[18]
+0235	5BBA	rrc     rb[17]
+				L0236:
+0236	54BD	inc     rb[20]
+0237	563D	siza    rb[20]
+0238	2A3B	jmp     L023B
+0239	70BF	set     rb[22].1
+023A	2825	jmp     L0025
+				L023B:
+023B	573C	sdza    rb[19]
+023C	2A32	jmp     L0232
+023D	300A	set     C
+023E	53BA	adcm    a, rb[17]
+023F	53BB	adcm    a, rb[18]
+0240	3C0A	sz      C
+0241	54BD	inc     rb[20]
+0242	5BBC	rrc     rb[19]
+0243	5BBB	rrc     rb[18]
+0244	5BBA	rrc     rb[17]
+				L0245:
+0245	50BD	sz      rb[20]
+0246	2A48	jmp     L0248
+0247	2A96	jmp     L0296
+				L0248:
+0248	5BBE	rrc     rb[21]
+0249	5B3D	rrca    rb[20]
+024A	40BC	mov     rb[19], a
+024B	380A	snz     C
+024C	77BB	clr     rb[18].7
+024D	0003	ret
+				L024E:
+024E	5F3C	clr     rb[19]
+024F	0F8E	mov     a, 8EH
+0250	40BD	mov     rb[20], a
+0251	2A1F	jmp     L021F
+				L0252:
+0252	2284	call    L0284
+0253	5F47	clr     rb[30]
+0254	5F48	clr     rb[31]
+0255	5F49	clr     rb[32]
+0256	50C6	sz      rb[29]
+0257	2A5A	jmp     L025A
+0258	713F	set     rb[22].2
+0259	2A7D	jmp     L027D
+				L025A:
+025A	503D	sza     rb[20]
+025B	2A5D	jmp     L025D
+025C	2A7D	jmp     L027D
+				L025D:
+025D	4246	sub     a, rb[29]
+025E	0B77	add     a, 77H
+025F	40BD	mov     rb[20], a
+0260	5B3E	rrca    rb[21]
+0261	44BE	xorm    a, rb[21]
+0262	0F18	mov     a, 18H
+0263	40C6	mov     rb[29], a
+				L0264:
+0264	473A	mov     a, rb[17]
+0265	4243	sub     a, rb[26]
+0266	473B	mov     a, rb[18]
+0267	5244	sbc     a, rb[27]
+0268	473C	mov     a, rb[19]
+0269	5245	sbc     a, rb[28]
+026A	380A	snz     C
+026B	2A74	jmp     L0274
+026C	40BC	mov     rb[19], a
+026D	473A	mov     a, rb[17]
+026E	4243	sub     a, rb[26]
+026F	40BA	mov     rb[17], a
+0270	473B	mov     a, rb[18]
+0271	5244	sbc     a, rb[27]
+0272	40BB	mov     rb[18], a
+0273	300A	set     C
+				L0274:
+0274	5AC7	rlc     rb[30]
+0275	5AC8	rlc     rb[31]
+0276	5AC9	rlc     rb[32]
+0277	340A	clr     C
+0278	5ABA	rlc     rb[17]
+0279	5ABB	rlc     rb[18]
+027A	5ABC	rlc     rb[19]
+027B	57C6	sdz     rb[29]
+027C	2A64	jmp     L0264
+				L027D:
+027D	4747	mov     a, rb[30]
+027E	40BA	mov     rb[17], a
+027F	4748	mov     a, rb[31]
+0280	40BB	mov     rb[18], a
+0281	4749	mov     a, rb[32]
+0282	40BC	mov     rb[19], a
+0283	2A1F	jmp     L021F
+				L0284:
+0284	5A44	rlca    rb[27]
+0285	5A45	rlca    rb[28]
+0286	5ABE	rlc     rb[21]
+0287	40C6	mov     rb[29], a
+0288	5F45	clr     rb[28]
+0289	73C4	set     rb[27].7
+028A	50C6	sz      rb[29]
+028B	2A8E	jmp     L028E
+028C	5F43	clr     rb[26]
+028D	5F44	clr     rb[27]
+				L028E:
+028E	5A3B	rlca    rb[18]
+028F	5A3C	rlca    rb[19]
+0290	5ABE	rlc     rb[21]
+0291	40BD	mov     rb[20], a
+0292	5F3C	clr     rb[19]
+0293	73BB	set     rb[18].7
+0294	50BD	sz      rb[20]
+0295	0003	ret
+				L0296:
+0296	5F3A	clr     rb[17]
+0297	5F3B	clr     rb[18]
+				L0298:
+0298	5F3C	clr     rb[19]
+0299	0003	ret
+				L029A:
+029A	22DA	call    L02DA
+029B	5F47	clr     rb[30]
+029C	5F48	clr     rb[31]
+029D	5F49	clr     rb[32]
+029E	5F42	clr     rb[25]
+029F	0F7A	mov     a, 7AH
+02A0	4346	add     a, rb[29]
+02A1	43BD	addm    a, rb[20]
+02A2	5B3E	rrca    rb[21]
+02A3	44BE	xorm    a, rb[21]
+02A4	0F07	mov     a, 7H
+02A5	40C1	mov     rb[24], a
+				L02A6:
+02A6	5BC5	rrc     rb[28]
+02A7	5BC4	rrc     rb[27]
+02A8	5BC3	rrc     rb[26]
+02A9	380A	snz     C
+02AA	2AB3	jmp     L02B3
+02AB	473A	mov     a, rb[17]
+02AC	43C7	addm    a, rb[30]
+02AD	473B	mov     a, rb[18]
+02AE	53C8	adcm    a, rb[31]
+02AF	473C	mov     a, rb[19]
+02B0	53C9	adcm    a, rb[32]
+02B1	4740	mov     a, rb[23]
+02B2	53C2	adcm    a, rb[25]
+				L02B3:
+02B3	340A	clr     C
+02B4	5ABA	rlc     rb[17]
+02B5	5ABB	rlc     rb[18]
+02B6	5ABC	rlc     rb[19]
+02B7	5AC0	rlc     rb[23]
+02B8	57C1	sdz     rb[24]
+02B9	2AA6	jmp     L02A6
+02BA	0F11	mov     a, 11H
+02BB	40C1	mov     rb[24], a
+02BC	2AC2	jmp     L02C2
+				L02BD:
+02BD	340A	clr     C
+02BE	5BC2	rrc     rb[25]
+02BF	5BC9	rrc     rb[32]
+02C0	5BC8	rrc     rb[31]
+02C1	5BC7	rrc     rb[30]
+				L02C2:
+02C2	5BC5	rrc     rb[28]
+02C3	5BC4	rrc     rb[27]
+02C4	5BC3	rrc     rb[26]
+02C5	380A	snz     C
+02C6	2ACF	jmp     L02CF
+02C7	473A	mov     a, rb[17]
+02C8	43C7	addm    a, rb[30]
+02C9	473B	mov     a, rb[18]
+02CA	53C8	adcm    a, rb[31]
+02CB	473C	mov     a, rb[19]
+02CC	53C9	adcm    a, rb[32]
+02CD	4740	mov     a, rb[23]
+02CE	53C2	adcm    a, rb[25]
+				L02CF:
+02CF	57C1	sdz     rb[24]
+02D0	2ABD	jmp     L02BD
+02D1	4747	mov     a, rb[30]
+02D2	40BA	mov     rb[17], a
+02D3	4748	mov     a, rb[31]
+02D4	40BB	mov     rb[18], a
+02D5	4749	mov     a, rb[32]
+02D6	40BC	mov     rb[19], a
+02D7	4742	mov     a, rb[25]
+02D8	40C0	mov     rb[23], a
+02D9	2AF2	jmp     L02F2
+				L02DA:
+02DA	5A45	rlca    rb[28]
+02DB	5A41	rlca    rb[24]
+02DC	5ABE	rlc     rb[21]
+02DD	40C6	mov     rb[29], a
+02DE	5F41	clr     rb[24]
+02DF	73C5	set     rb[28].7
+02E0	50C6	sz      rb[29]
+02E1	2AE5	jmp     L02E5
+02E2	5F43	clr     rb[26]
+02E3	5F44	clr     rb[27]
+02E4	5F45	clr     rb[28]
+				L02E5:
+02E5	5A3C	rlca    rb[19]
+02E6	5A40	rlca    rb[23]
+02E7	5ABE	rlc     rb[21]
+02E8	40BD	mov     rb[20], a
+02E9	5F40	clr     rb[23]
+02EA	73BC	set     rb[19].7
+02EB	50BD	sz      rb[20]
+02EC	0003	ret
+				L02ED:
+02ED	5F3A	clr     rb[17]
+02EE	5F3B	clr     rb[18]
+02EF	5F3C	clr     rb[19]
+				L02F0:
+02F0	5F40	clr     rb[23]
+02F1	0003	ret
+				L02F2:
+02F2	50BD	sz      rb[20]
+02F3	2AF5	jmp     L02F5
+02F4	2AED	jmp     L02ED
+				L02F5:
+02F5	50C0	sz      rb[23]
+02F6	2B0C	jmp     L030C
+02F7	473A	mov     a, rb[17]
+02F8	453B	or      a, rb[18]
+02F9	453C	or      a, rb[19]
+02FA	3D0A	sz      Z
+02FB	2AF0	jmp     L02F0
+				L02FC:
+02FC	7FBC	sz      rb[19].7
+02FD	2B1D	jmp     L031D
+02FE	57BD	sdz     rb[20]
+02FF	2B02	jmp     L0302
+0300	703F	set     rb[22].0
+0301	2AED	jmp     L02ED
+				L0302:
+0302	340A	clr     C
+0303	5ABA	rlc     rb[17]
+0304	5ABB	rlc     rb[18]
+0305	5ABC	rlc     rb[19]
+0306	2AFC	jmp     L02FC
+				L0307:
+0307	340A	clr     C
+0308	5BC0	rrc     rb[23]
+0309	5BBC	rrc     rb[19]
+030A	5BBB	rrc     rb[18]
+030B	5BBA	rrc     rb[17]
+				L030C:
+030C	54BD	inc     rb[20]
+030D	563D	siza    rb[20]
+030E	2B11	jmp     L0311
+030F	70BF	set     rb[22].1
+0310	2B26	jmp     L0326
+				L0311:
+0311	5740	sdza    rb[23]
+0312	2B07	jmp     L0307
+0313	300A	set     C
+0314	53BA	adcm    a, rb[17]
+0315	53BB	adcm    a, rb[18]
+0316	53BC	adcm    a, rb[19]
+0317	3C0A	sz      C
+0318	54BD	inc     rb[20]
+0319	5BC0	rrc     rb[23]
+031A	5BBC	rrc     rb[19]
+031B	5BBB	rrc     rb[18]
+031C	5BBA	rrc     rb[17]
+				L031D:
+031D	50BD	sz      rb[20]
+031E	2B20	jmp     L0320
+031F	2AED	jmp     L02ED
+				L0320:
+0320	5BBE	rrc     rb[21]
+0321	5B3D	rrca    rb[20]
+0322	40C0	mov     rb[23], a
+0323	380A	snz     C
+0324	77BC	clr     rb[19].7
+0325	0003	ret
+				L0326:
+0326	5FBA	set     rb[17]
+0327	5FBB	set     rb[18]
+0328	5FBC	set     rb[19]
+0329	5FC0	set     rb[23]
+032A	783E	snz     rb[21].0
+032B	77C0	clr     rb[23].7
+032C	0003	ret
+				L032D:
+032D	22E5	call    L02E5
+032E	473D	mov     a, rb[20]
+032F	0A7F	sub     a, 7FH
+0330	380A	snz     C
+0331	2AED	jmp     L02ED
+0332	0A17	sub     a, 17H
+0333	40BD	mov     rb[20], a
+0334	380A	snz     C
+0335	2B44	jmp     L0344
+0336	0F18	mov     a, 18H
+0337	423D	sub     a, rb[20]
+0338	380A	snz     C
+0339	2AED	jmp     L02ED
+033A	2B41	jmp     L0341
+				L033B:
+033B	55BD	dec     rb[20]
+033C	340A	clr     C
+033D	5ABA	rlc     rb[17]
+033E	5ABB	rlc     rb[18]
+033F	5ABC	rlc     rb[19]
+0340	5AC0	rlc     rb[23]
+				L0341:
+0341	50BD	sz      rb[20]
+0342	2B3B	jmp     L033B
+0343	2B4A	jmp     L034A
+				L0344:
+0344	340A	clr     C
+0345	5BBC	rrc     rb[19]
+0346	5BBB	rrc     rb[18]
+0347	5BBA	rrc     rb[17]
+0348	1685	siz     ACC
+0349	2B44	jmp     L0344
+				L034A:
+034A	783E	snz     rb[21].0
+034B	2B57	jmp     L0357
+034C	41BA	cpl     rb[17]
+034D	41BB	cpl     rb[18]
+034E	41BC	cpl     rb[19]
+034F	41C0	cpl     rb[23]
+0350	54BA	inc     rb[17]
+0351	3D0A	sz      Z
+0352	54BB	inc     rb[18]
+0353	3D0A	sz      Z
+0354	54BC	inc     rb[19]
+0355	3D0A	sz      Z
+0356	54C0	inc     rb[23]
+				L0357:
+0357	0003	ret
+				L0358:
+0358	0F80	mov     a, 80H
+0359	44C1	xorm    a, rb[24]
+				L035A:
+035A	22DA	call    L02DA
+				L035B:
+035B	4746	mov     a, rb[29]
+035C	423D	sub     a, rb[20]
+035D	3D0A	sz      Z
+035E	2B6F	jmp     L036F
+035F	380A	snz     C
+0360	2B68	jmp     L0368
+0361	340A	clr     C
+0362	5BC0	rrc     rb[23]
+0363	5BBC	rrc     rb[19]
+0364	5BBB	rrc     rb[18]
+0365	5BBA	rrc     rb[17]
+0366	54BD	inc     rb[20]
+0367	2B5B	jmp     L035B
+				L0368:
+0368	340A	clr     C
+0369	5BC1	rrc     rb[24]
+036A	5BC5	rrc     rb[28]
+036B	5BC4	rrc     rb[27]
+036C	5BC3	rrc     rb[26]
+036D	54C6	inc     rb[29]
+036E	2B5B	jmp     L035B
+				L036F:
+036F	593E	rra     rb[21]
+0370	443E	xor     a, rb[21]
+0371	3805	snz     ACC.0
+0372	2B7E	jmp     L037E
+0373	41C3	cpl     rb[26]
+0374	41C4	cpl     rb[27]
+0375	41C5	cpl     rb[28]
+0376	41C1	cpl     rb[24]
+0377	54C3	inc     rb[26]
+0378	3D0A	sz      Z
+0379	54C4	inc     rb[27]
+037A	3D0A	sz      Z
+037B	54C5	inc     rb[28]
+037C	3D0A	sz      Z
+037D	54C1	inc     rb[24]
+				L037E:
+037E	4743	mov     a, rb[26]
+037F	43BA	addm    a, rb[17]
+0380	4744	mov     a, rb[27]
+0381	53BB	adcm    a, rb[18]
+0382	4745	mov     a, rb[28]
+0383	53BC	adcm    a, rb[19]
+0384	4741	mov     a, rb[24]
+0385	53C0	adcm    a, rb[23]
+0386	7BC0	snz     rb[23].7
+0387	2AF2	jmp     L02F2
+0388	41BA	cpl     rb[17]
+0389	41BB	cpl     rb[18]
+038A	41BC	cpl     rb[19]
+038B	41C0	cpl     rb[23]
+038C	54BA	inc     rb[17]
+038D	3D0A	sz      Z
+038E	54BB	inc     rb[18]
+038F	3D0A	sz      Z
+0390	54BC	inc     rb[19]
+0391	3D0A	sz      Z
+0392	54C0	inc     rb[23]
+0393	0F01	mov     a, 1H
+0394	44BE	xorm    a, rb[21]
+0395	2AF2	jmp     L02F2
+				L0396:
+0396	22DA	call    L02DA
+0397	5F47	clr     rb[30]
+0398	5F48	clr     rb[31]
+0399	5F49	clr     rb[32]
+039A	5F42	clr     rb[25]
+039B	50C6	sz      rb[29]
+039C	2B9F	jmp     L039F
+039D	713F	set     rb[22].2
+039E	2BC9	jmp     L03C9
+				L039F:
+039F	503D	sza     rb[20]
+03A0	2BA2	jmp     L03A2
+03A1	2BC9	jmp     L03C9
+				L03A2:
+03A2	4246	sub     a, rb[29]
+03A3	0B77	add     a, 77H
+03A4	40BD	mov     rb[20], a
+03A5	5B3E	rrca    rb[21]
+03A6	44BE	xorm    a, rb[21]
+03A7	0F20	mov     a, 20H
+03A8	40C6	mov     rb[29], a
+				L03A9:
+03A9	473A	mov     a, rb[17]
+03AA	4243	sub     a, rb[26]
+03AB	473B	mov     a, rb[18]
+03AC	5244	sbc     a, rb[27]
+03AD	473C	mov     a, rb[19]
+03AE	5245	sbc     a, rb[28]
+03AF	4740	mov     a, rb[23]
+03B0	5241	sbc     a, rb[24]
+03B1	380A	snz     C
+03B2	2BBE	jmp     L03BE
+03B3	40C0	mov     rb[23], a
+03B4	473A	mov     a, rb[17]
+03B5	4243	sub     a, rb[26]
+03B6	40BA	mov     rb[17], a
+03B7	473B	mov     a, rb[18]
+03B8	5244	sbc     a, rb[27]
+03B9	40BB	mov     rb[18], a
+03BA	473C	mov     a, rb[19]
+03BB	5245	sbc     a, rb[28]
+03BC	40BC	mov     rb[19], a
+03BD	300A	set     C
+				L03BE:
+03BE	5AC7	rlc     rb[30]
+03BF	5AC8	rlc     rb[31]
+03C0	5AC9	rlc     rb[32]
+03C1	5AC2	rlc     rb[25]
+03C2	340A	clr     C
+03C3	5ABA	rlc     rb[17]
+03C4	5ABB	rlc     rb[18]
+03C5	5ABC	rlc     rb[19]
+03C6	5AC0	rlc     rb[23]
+03C7	57C6	sdz     rb[29]
+03C8	2BA9	jmp     L03A9
+				L03C9:
+03C9	4747	mov     a, rb[30]
+03CA	40BA	mov     rb[17], a
+03CB	4748	mov     a, rb[31]
+03CC	40BB	mov     rb[18], a
+03CD	4749	mov     a, rb[32]
+03CE	40BC	mov     rb[19], a
+03CF	4742	mov     a, rb[25]
+03D0	40C0	mov     rb[23], a
+03D1	2AF2	jmp     L02F2
+03D2	6441	call    L0C41
+03D3	7264	set     str[1].4
+03D4	7365	set     str[2].6
+03D5	2073	call    L0073
+03D6	6F56	jmp     F56H
+03D7	746C	clr     s[2].0
+03D8	6761	call    F61H
+03D9	0065	call    L0065
+03DA	0D0A	or      a, AH
+03DB	2D00	jmp     L0500
+03DC	2D2D	jmp     L052D
+03DD	2D2D	jmp     L052D
+03DE	2D2D	jmp     L052D
+03DF	2D2D	jmp     L052D
+03E0	532D	adc     a, rb[4]
+03E1	4154	cpla    r310
+03E2	5452	inca    r110
+03E3	315F	set     __pdpu[11].2
+03E4	5453	inca    r210
+03E5	535F	adc     a, data
+03E6	4345	add     a, rb[28]
+03E7	4F54	dc	04F54H
+03E8	2D52	jmp     L0552
+03E9	2D2D	jmp     L052D
+03EA	2D2D	jmp     L052D
+03EB	2D2D	jmp     L052D
+03EC	2D2D	jmp     L052D
+03ED	002D	jmp     L002D
+03EE	2D2D	jmp     L052D
+03EF	2D2D	jmp     L052D
+03F0	2D2D	jmp     L052D
+03F1	2D2D	jmp     L052D
+03F2	2D2D	jmp     L052D
+03F3	5453	inca    r210
+03F4	5241	sbc     a, rb[24]
+03F5	5F54	clr     r310
+03F6	4E32	dc	04E32H
+03F7	5F44	clr     rb[27]
+03F8	4553	or      a, r210
+03F9	5443	inca    rb[26]
+03FA	524F	sbc     a, rf10
+03FB	2D2D	jmp     L052D
+03FC	2D2D	jmp     L052D
+03FD	2D2D	jmp     L052D
+03FE	2D2D	jmp     L052D
+03FF	2D2D	jmp     L052D
+0400	2D00	jmp     L0500
+0401	2D2D	jmp     L052D
+0402	2D2D	jmp     L052D
+0403	2D2D	jmp     L052D
+0404	2D2D	jmp     L052D
+0405	412D	cpla    rb[4]
+0406	4444	xor     a, rb[27]
+0407	2E52	jmp     L0652
+0408	505F	sza     data
+0409	494F	dc	0494FH
+040A	544E	inca    rg10
+040B	5245	sbc     a, rb[28]
+040C	2D2D	jmp     L052D
+040D	2D2D	jmp     L052D
+040E	2D2D	jmp     L052D
+040F	2D2D	jmp     L052D
+0410	2D2D	jmp     L052D
+0411	2000	call    L0000
+0412	2D00	jmp     L0500
+0413	2D2D	jmp     L052D
+0414	2D2D	jmp     L052D
+0415	2D2D	jmp     L052D
+0416	2D2D	jmp     L052D
+0417	2D2D	jmp     L052D
+0418	452D	or      a, rb[4]
+0419	444E	xor     a, rg10
+041A	2D2D	jmp     L052D
+041B	2D2D	jmp     L052D
+041C	2D2D	jmp     L052D
+041D	2D2D	jmp     L052D
+041E	2D2D	jmp     L052D
+041F	2D2D	jmp     L052D
+0420	0000	nop
+0421	2D2D	jmp     L052D
+0422	2D2D	jmp     L052D
+0423	2D2D	jmp     L052D
+0424	2D2D	jmp     L052D
+0425	2D2D	jmp     L052D
+0426	4545	or      a, rb[28]
+0427	5250	sbc     a, re10
+0428	4D4F	dc	04D4FH
+0429	445F	xor     a, data
+042A	5441	inca    rb[24]
+042B	2D41	jmp     _L17
+042C	2D2D	jmp     L052D
+042D	2D2D	jmp     L052D
+042E	2D2D	jmp     L052D
+042F	2D2D	jmp     L052D
+0430	002D	jmp     L002D
+0431	0D0A	or      a, AH
+0432	2D00	jmp     L0500
+0433	2D2D	jmp     L052D
+0434	2D2D	jmp     L052D
+0435	2D2D	jmp     L052D
+0436	2D2D	jmp     L052D
+0437	4D2D	dc	04D2DH
+0438	4E4F	dc	04E4FH
+0439	5449	inca    rb[32]
+043A	524F	sbc     a, rf10
+043B	4E49	dc	04E49H
+043C	2D47	jmp     L0547
+043D	2D2D	jmp     L052D
+043E	2D2D	jmp     L052D
+043F	2D2D	jmp     L052D
+0440	2D2D	jmp     L052D
+0441	002D	jmp     L002D
+				;15		SAFEGUARD_INIT_1;
+				_main:
+				_main:
+0442	0FA8	mov     a, A8H
+0443	009A	mov     WDTC, a
+0444	0F08	mov     a, 8H
+0445	00BF	mov     CPC, a
+0446	1F14	clr     PA
+0447	1F25	clr     PB
+0448	1F41	clr     PC
+0449	1F52	clr     PD
+044A	1F95	set     PAC
+044B	1FA6	set     PBC
+044C	1FC2	set     PCC
+044D	1FD3	set     PDC
+044E	1F17	clr     PAWU
+044F	1F16	clr     PAPU
+0450	1F27	clr     PBPU
+0451	1F43	clr     PCPU
+0452	1F54	clr     PDPU
+				;16	    IDLE1_ENABLE;
+0453	308B	set     IDLEN
+0454	339C	set     FSYSON
+				;17	    UART_init();
+0455	6244	call    _UART_init
+				;18	    ADC_init();
+0456	2465	call    _ADC_init
+				;19	    EEPROM_init();
+0457	273E	call    _EEPROM_init
+				;20	    
+				;21	    CONTROL_BIT(SYS_INDICATION_DDR, SYS_INDICATION_PIN, OUTPUT);
+0458	3542	clr     PCC2
+				;22	    CONTROL_BIT(SYS_INDICATION_PORT, SYS_INDICATION_PIN, HIGH);
+0459	3141	set     PC2
+				;23	    
+				;24	    SEOS_init();
+045A	6213	call    _SEOS_init
+				;25	    while (1)
+				;26	    {
+				;27	        SEOS_sleep();
+				_L2:
+045B	6224	call    _SEOS_sleep
+045C	2C5B	jmp     _L2
+045D	2C5D	jmp     $
+				startup_value:
+				@ROMDATA_BASE .SECTION 'CODE'
+				@dummy .SECTION 'CODE'
+045E	0007	jmp     L0007
+045F	009F	mov     EED, a
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+0460	0000	nop
+0461	0000	nop
+0462	0000	nop
+0463	0000	nop
+0464	0000	nop
+				;28	    }
+				;29	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\util.c
+				;1	#include "util.h"
+				;2	
+				;3	#if 0
+				;4	void ftoa(float x, char *a)
+				;5	{
+				;6	    int i = 0;
+				;7	    unsigned int integer = (unsigned int)x;
+				;8	    unsigned int fraction = (((x - integer) < 0.11) ? (0) : (x-integer)*100);
+				;9	    if (integer == 0) a[i++] = '0';
+				;10	    else{
+				;11	        while (integer > 0)
+				;12	        {
+				;13	            a[i] = (integer % 10) | 0x30;
+				;14	            integer /= 10;
+				;15	            i++;    
+				;16	        }  
+				;17	    } 
+				;18	    a[i++] = '.';
+				;19	    reverse(a);
+				;20	    if (fraction == 0) {a[i++] = '0';  a[i] = '\0';}
+				;21	    else{
+				;22	        while (fraction > 0)
+				;23	        {
+				;24	            a[i] = (fraction % 10) | 0x30;
+				;25	            fraction /= 10;
+				;26	            i++;    
+				;27	        }   
+				;28	        a[i] = '\0';
+				;29	        reverse(&a[i-2]);
+				;30	    }
+				;31	}
+				;32	#endif
+				;33	
+				;34	void itoa(int n, char s[])
+				;35	{
+				_itoa:
+				_itoa:
+0BA3	4768	mov     a, n[0]
+0BA4	40CF	mov     rf10, a
+0BA5	4769	mov     a, n[1]
+0BA6	40CE	mov     rg10, a
+0BA7	7BCE	snz     rg10.7
+0BA8	6BAD	jmp     _L12
+0BA9	0F00	mov     a, 0H
+0BAA	42CF	subm    a, rf10
+0BAB	0F00	mov     a, 0H
+0BAC	52CE	sbcm    a, rg10
+				_L12:
+0BAD	5F51	clr     rd10
+0BAE	5F50	clr     re10
+				_L14:
+0BAF	0F01	mov     a, 1H
+0BB0	4351	add     a, rd10
+0BB1	40CC	mov     rb10, a
+0BB2	0F00	mov     a, 0H
+0BB3	5350	adc     a, re10
+0BB4	40CB	mov     rc10, a
+				;36	  int i, sign;
+				;37	  if ((sign = n) < 0)
+				;38	    n = -n;
+				;39	  i = 0;
+				;40	  do { 
+				;41	    s[i++] = n % 10 + ' 0'; 
+0BB5	474F	mov     a, rf10
+0BB6	40E0	mov     s, a
+0BB7	474E	mov     a, rg10
+0BB8	40E1	mov     tmp, a
+0BB9	0F0A	mov     a, AH
+0BBA	40E2	mov     tmp[1], a
+0BBB	0F00	mov     a, 0H
+0BBC	40E3	mov     str, a
+0BBD	641F	call    L0C1F
+0BBE	4764	mov     a, str[1]
+0BBF	40EC	mov     s[2], a
+0BC0	4765	mov     a, str[2]
+0BC1	40ED	mov     s[3], a
+0BC2	476C	mov     a, s[2]
+0BC3	0B30	add     a, 30H
+0BC4	40CA	mov     ra10, a
+0BC5	4751	mov     a, rd10
+0BC6	436A	add     a, s[0]
+0BC7	0083	mov     MP1, a
+0BC8	4750	mov     a, re10
+0BC9	536B	adc     a, s[1]
+0BCA	0081	mov     MP0, a
+0BCB	0701	mov     a, MP0
+0BCC	0084	mov     BP, a
+0BCD	474A	mov     a, ra10
+0BCE	0082	mov     __iar1[0], a
+0BE2	474C	mov     a, rb10
+0BE3	40D1	mov     rd10, a
+0BE4	474B	mov     a, rc10
+0BE5	40D0	mov     re10, a
+0BE6	6BAF	jmp     _L14
+				_L13:
+0BE7	474C	mov     a, rb10
+0BE8	40CF	mov     rf10, a
+0BE9	474B	mov     a, rc10
+0BEA	40CE	mov     rg10, a
+				;42	  } while ((n /= 10) > 0); 
+0BCF	474F	mov     a, rf10
+0BD0	40E0	mov     s, a
+0BD1	474E	mov     a, rg10
+0BD2	40E1	mov     tmp, a
+0BD3	0F0A	mov     a, AH
+0BD4	40E2	mov     tmp[1], a
+0BD5	0F00	mov     a, 0H
+0BD6	40E3	mov     str, a
+0BD7	641F	call    L0C1F
+0BD8	4760	mov     a, s
+0BD9	40CF	mov     rf10, a
+0BDA	4761	mov     a, tmp
+0BDB	40CE	mov     rg10, a
+0BDC	7FCE	sz      rg10.7
+0BDD	6BE7	jmp     _L13
+0BDE	474F	mov     a, rf10
+0BDF	454E	or      a, rg10
+0BE0	3D0A	sz      Z
+0BE1	6BE7	jmp     _L13
+				;43	  if (sign < 0)
+0BEB	7BE9	snz     n[1].7
+0BEC	6BFD	jmp     _L15
+				;44	    s[i++] = '-';
+0BED	0F02	mov     a, 2H
+0BEE	4351	add     a, rd10
+0BEF	40CC	mov     rb10, a
+0BF0	0F00	mov     a, 0H
+0BF1	5350	adc     a, re10
+0BF2	40CB	mov     rc10, a
+0BF3	474F	mov     a, rf10
+0BF4	436A	add     a, s[0]
+0BF5	0083	mov     MP1, a
+0BF6	474E	mov     a, rg10
+0BF7	536B	adc     a, s[1]
+0BF8	0081	mov     MP0, a
+0BF9	0701	mov     a, MP0
+0BFA	0084	mov     BP, a
+0BFB	0F2D	mov     a, 2DH
+0BFC	0082	mov     __iar1[0], a
+				;45	  s[i] = '\0'; 
+				_L15:
+0BFD	474C	mov     a, rb10
+0BFE	436A	add     a, s[0]
+0BFF	0083	mov     MP1, a
+0C00	474B	mov     a, rc10
+0C01	536B	adc     a, s[1]
+0C02	0081	mov     MP0, a
+0C03	0701	mov     a, MP0
+0C04	0084	mov     BP, a
+0C05	0F00	mov     a, 0H
+0C06	0082	mov     __iar1[0], a
+				;46	  reverse(s);
+0C07	476A	mov     a, s[0]
+0C08	40E3	mov     str, a
+0C09	476B	mov     a, s[1]
+0C0A	40E4	mov     str[1], a
+0C0B	635C	call    _reverse
+0C0C	0003	ret
+0C0D	1483	inc     MP1
+0C0E	3D0A	sz      Z
+0C0F	1481	inc     MP0
+				L0C10:
+0C10	3F81	sz      MP0.7
+0C11	6C16	jmp     L0C16
+0C12	0701	mov     a, MP0
+0C13	0084	mov     BP, a
+0C14	0702	mov     a, __iar1[0]
+0C15	0003	ret
+				L0C16:
+0C16	1B01	rrca    MP0
+0C17	0E3F	and     a, 3FH
+0C18	0089	mov     TBHP, a
+0C19	1B03	rrca    MP1
+0C1A	0087	mov     TBLP, a
+0C1B	1D05	tabrd   ACC
+0C1C	3C0A	sz      C
+0C1D	0708	mov     a, TBLH
+0C1E	0003	ret
+				L0C1F:
+0C1F	5F66	clr     str[3]
+0C20	7BE1	snz     tmp.7
+0C21	6C28	jmp     L0C28
+0C22	41E0	cpl     s
+0C23	41E1	cpl     tmp
+0C24	54E0	inc     s
+0C25	3D0A	sz      Z
+0C26	54E1	inc     tmp
+0C27	55E6	dec     str[3]
+				L0C28:
+0C28	7BE3	snz     str.7
+0C29	6C31	jmp     L0C31
+0C2A	41E2	cpl     tmp[1]
+0C2B	41E3	cpl     str
+0C2C	54E2	inc     tmp[1]
+0C2D	3D0A	sz      Z
+0C2E	54E3	inc     str
+0C2F	54E6	inc     str[3]
+0C30	54E6	inc     str[3]
+				L0C31:
+0C31	5F64	clr     str[1]
+0C32	5F65	clr     str[2]
+0C33	0F10	mov     a, 10H
+0C34	40E7	mov     str[4], a
+				L0C35:
+0C35	340A	clr     C
+0C36	5AE0	rlc     s
+0C37	5AE1	rlc     tmp
+0C38	5AE4	rlc     str[1]
+0C39	5AE5	rlc     str[2]
+0C3A	4764	mov     a, str[1]
+0C3B	4262	sub     a, tmp[1]
+0C3C	4765	mov     a, str[2]
+0C3D	5263	sbc     a, str
+0C3E	380A	snz     C
+0C3F	6C45	jmp     L0C45
+0C40	40E5	mov     str[2], a
+				L0C41:
+0C41	4764	mov     a, str[1]
+0C42	4262	sub     a, tmp[1]
+0C43	40E4	mov     str[1], a
+0C44	54E0	inc     s
+				L0C45:
+0C45	57E7	sdz     str[4]
+0C46	6C35	jmp     L0C35
+0C47	7866	snz     str[3].0
+0C48	6C4E	jmp     L0C4E
+0C49	41E4	cpl     str[1]
+0C4A	41E5	cpl     str[2]
+0C4B	54E4	inc     str[1]
+0C4C	3D0A	sz      Z
+0C4D	54E5	inc     str[2]
+				L0C4E:
+0C4E	78E6	snz     str[3].1
+0C4F	6C55	jmp     L0C55
+0C50	41E0	cpl     s
+0C51	41E1	cpl     tmp
+0C52	54E0	inc     s
+0C53	3D0A	sz      Z
+0C54	54E1	inc     tmp
+				L0C55:
+0C55	0003	ret
+				L0D2D:
+				org	0d2dh
+0D2D	0000	nop
+				L0E4F:
+				org	0e4fh
+0E4F	0000	nop
+				L0F56:
+				org	0f56h
+0F56	0000	nop
+				L0F61:
+				org	0f61h
+0F61	0000	nop
+				;47	}
+				;48	
+				;49	void reverse(char *str)
+				;50	{
+				;51	    int i , j;
+				;52	    char temp;
+				;53	    for(i = 0, j = strlen(str) - 1 ; i < j ; i++, j--)
+				_reverse:
+				_reverse:
+0B5C	4763	mov     a, str[0]
+0B5D	40E0	mov     s, a
+0B5E	4764	mov     a, str[1]
+0B5F	40E1	mov     tmp, a
+0B60	6342	call    _strlen
+0B61	474C	mov     a, rb10
+0B62	40CB	mov     rc10, a
+0B63	474A	mov     a, ra10
+0B64	0BFF	add     a, FFH
+0B65	40CC	mov     rb10, a
+0B66	0FFF	mov     a, FFH
+0B67	53CB	adcm    a, rc10
+0B68	5F51	clr     rd10
+0B69	5F50	clr     re10
+0B6A	6B9A	jmp     _L9
+				_L10:
+0B6B	4751	mov     a, rd10
+0B6C	4363	add     a, str[0]
+0B6D	40CF	mov     rf10, a
+0B6E	4750	mov     a, re10
+0B6F	5364	adc     a, str[1]
+0B70	40CE	mov     rg10, a
+0B93	54D1	inc     rd10
+0B94	3D0A	sz      Z
+0B95	54D0	inc     re10
+0B96	0FFF	mov     a, FFH
+0B97	43CC	addm    a, rb10
+0B98	0FFF	mov     a, FFH
+0B99	53CB	adcm    a, rc10
+				_L9:
+0B9A	4751	mov     a, rd10
+0B9B	424C	sub     a, rb10
+0B9C	4750	mov     a, re10
+0B9D	524B	sbc     a, rc10
+0B9E	1185	swap    ACC
+0B9F	040A	xor     a, STATUS
+0BA0	3D85	sz      ACC.3
+0BA1	6B6B	jmp     _L10
+0BA2	0003	ret
+				;54	    {
+				;55	        temp = str[i];
+0B71	474F	mov     a, rf10
+0B72	0083	mov     MP1, a
+0B73	474E	mov     a, rg10
+0B74	0081	mov     MP0, a
+0B75	6410	call    L0C10
+0B76	40CD	mov     rh10, a
+0B77	474C	mov     a, rb10
+0B78	4363	add     a, str[0]
+0B79	40E5	mov     str[2], a
+0B7A	474B	mov     a, rc10
+0B7B	5364	adc     a, str[1]
+0B7C	40E6	mov     str[3], a
+				;56	        str[i] = str[j];
+0B7D	4765	mov     a, str[2]
+0B7E	0083	mov     MP1, a
+0B7F	4766	mov     a, str[3]
+0B80	0081	mov     MP0, a
+0B81	6410	call    L0C10
+0B82	40CA	mov     ra10, a
+0B83	474F	mov     a, rf10
+0B84	0083	mov     MP1, a
+0B85	474E	mov     a, rg10
+0B86	0081	mov     MP0, a
+0B87	0701	mov     a, MP0
+0B88	0084	mov     BP, a
+0B89	474A	mov     a, ra10
+0B8A	0082	mov     __iar1[0], a
+				;57	        str[j] = temp;
+0B8B	4765	mov     a, str[2]
+0B8C	0083	mov     MP1, a
+0B8D	4766	mov     a, str[3]
+0B8E	0081	mov     MP0, a
+0B8F	0701	mov     a, MP0
+0B90	0084	mov     BP, a
+0B91	474D	mov     a, rh10
+0B92	0082	mov     __iar1[0], a
+				;58	    }
+				;59	}
+				;60	
+				;61	int strlen(char *s)
+				;62	{
+				;63	    int i = 0;
+				_strlen:
+				_strlen:
+0B42	5F4C	clr     rb10
+0B43	5F4B	clr     rc10
+				;64	    while(s[i] != 0 && s[i] != '.') i++;
+				_L2:
+0B44	474C	mov     a, rb10
+0B45	4360	add     a, s[0]
+0B46	0083	mov     MP1, a
+0B47	474B	mov     a, rc10
+0B48	5361	adc     a, s[1]
+0B49	0081	mov     MP0, a
+0B4A	6410	call    L0C10
+0B4B	40E2	mov     tmp[1], a
+0B4C	4762	mov     a, tmp[1]
+0B4D	0A00	sub     a, 0H
+0B4E	3D0A	sz      Z
+0B4F	6B57	jmp     _L6
+0B50	0A2E	sub     a, 2EH
+0B51	3D0A	sz      Z
+0B52	6B57	jmp     _L6
+0B53	54CC	inc     rb10
+0B54	3D0A	sz      Z
+0B55	54CB	inc     rc10
+0B56	6B44	jmp     _L2
+				;65	    return i;
+				;66	}
+				_L6:
+0B57	474C	mov     a, rb10
+0B58	40CA	mov     ra10, a
+0B59	474B	mov     a, rc10
+0B5A	40CC	mov     rb10, a
+0B5B	0003	ret
+				;67	
+				;68	void delay(unsigned long x)
+				;69	{
+				_delay:
+				_delay:
+000F	0003	ret
+				;70	    while (x-- > 0);
+				;71	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\seos.c
+				;1	#include "config.h"
+				;2	#include "seos.h"
+				;3	#include "main_ht66f0185.h"
+				;4	#include "HT66F0185.h"
+				;5	#include "uart.h"
+				;6	#include "port.h"
+				;7	
+				;8	void SEOS_init(void)
+				;9	{
+				;10	    sEOS_TIMER_ENABLE(SYS_TICK);
+				_SEOS_init:
+				_SEOS_init:
+0A13	0F30	mov     a, 30H
+0A14	00A8	mov     TM2C0, a
+0A15	0F01	mov     a, 1H
+0A16	00A9	mov     TM2C1, a
+0A17	1F2C	clr     TM2AL
+0A18	1F2D	clr     TM2AH
+0A19	0F6A	mov     a, 6AH
+0A1A	00AC	mov     TM2AL, a
+0A1B	0F18	mov     a, 18H
+0A1C	00AD	mov     TM2AH, a
+0A1D	3792	clr     T2AF
+0A1E	360F	clr     MF1F
+0A1F	31A8	set     T2ON
+0A20	3192	set     T2AE
+0A21	300F	set     MF1E
+0A22	300E	set     EMI
+0A23	0003	ret
+				;11	}
+				;12	
+				;13	void SEOS_sleep(void)
+				;14	{
+				;15	    SLEEP;
+				_SEOS_sleep:
+				_SEOS_sleep:
+0A24	0002	halt
+0A25	0003	ret
+				;16	}
+				;17	
+				;18	void __attribute((interrupt(0x10))) ISR_tmr2 (void)
+				;19	{
+				@ISR_tmr2_code .SECTION 'CODE'
+0010	40D2	mov     r110, a
+0011	0704	mov     a, BP
+0012	40D3	mov     r210, a
+0013	6A26	jmp     _ISR_tmr2
+				@dummy16 .SECTION 'CODE'
+0014	5F2C	clr     rb[3]
+0015	0F8E	mov     a, 8EH
+0016	40AD	mov     rb[4], a
+0017	2982	jmp     L0182
+				L0018:
+0018	5FAA	set     rb[1]
+0019	5FAB	set     rb[2]
+001A	5FAC	set     rb[3]
+001B	782E	snz     rb[5].0
+001C	77AC	clr     rb[3].7
+001D	0003	ret
+				L001E:
+001E	5FAA	set     rb[1]
+001F	5FAB	set     rb[2]
+0020	5FAC	set     rb[3]
+0021	5FB0	set     rb[7]
+0022	782E	snz     rb[5].0
+0023	77B0	clr     rb[7].7
+0024	0003	ret
+				L0025:
+0025	5FBA	set     rb[17]
+0026	5FBB	set     rb[18]
+0027	5FBC	set     rb[19]
+0028	783E	snz     rb[21].0
+0029	77BC	clr     rb[19].7
+002A	0003	ret
+002B	0000	nop
+				_ISR_tmr2:
+				_ISR_tmr2:
+0A26	070A	mov     a, STATUS
+0A27	40D4	mov     r310, a
+0A28	0703	mov     a, MP1
+0A29	40D5	mov     r410, a
+0A2A	0701	mov     a, MP0
+0A2B	40D6	mov     r510, a
+0A2C	0707	mov     a, TBLP
+0A2D	40D7	mov     r610, a
+0A2E	0709	mov     a, TBHP
+0A2F	40D8	mov     r710, a
+				;20		ADC_update();
+0A30	248F	call    _ADC_update
+				;21	    EEPROM_update();
+0A31	275F	call    _EEPROM_update
+				;22	    UART_update();
+0A32	6254	call    _UART_update
+				;23	    sEOS_TIMER_FLAG_CLEAR;
+0A33	3792	clr     T2AF
+0A34	360F	clr     MF1F
+0A35	4753	mov     a, r210
+0A36	0084	mov     BP, a
+0A37	4754	mov     a, r310
+0A38	008A	mov     STATUS, a
+0A39	4755	mov     a, r410
+0A3A	0083	mov     MP1, a
+0A3B	4756	mov     a, r510
+0A3C	0081	mov     MP0, a
+0A3D	4757	mov     a, r610
+0A3E	0087	mov     TBLP, a
+0A3F	4758	mov     a, r710
+0A40	0089	mov     TBHP, a
+0A41	1D05	tabrd   ACC
+0A42	4752	mov     a, r110
+0A43	0004	reti
+				;24	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\uart.c
+				;1	#include "config.h"
+				;2	#include "util.h"
+				;3	#include "port.h"
+				;4	#include "main_ht66f0185.h"
+				;5	#include "adc.h"
+				;6	#include "eeprom.h"
+				;7	#include "uart.h"
+				;8	
+				;9	volatile uint8_t gu8Buf_idx = 0;
+				;10	volatile uint8_t gu8Main_buf[MAX_UART_BUF_SIZE] = {0};
+				;11	volatile uint8_t gu8Buffer_ready = 0;
+				;12	volatile static uint8_t uart_signal = 0;
+				;13	
+				;14	void UART_init(void)
+				;15	{
+				;16		uint8_t i = 0;
+				;17		UART_INIT;	
+				_UART_init:
+				_UART_init:
+0A44	3190	set     URE
+0A45	33D6	set     UARTEN
+0A46	0F0C	mov     a, CH
+0A47	00D8	mov     BRG, a
+0A48	0FC4	mov     a, C4H
+0A49	05D7	orm     a, UCR2
+0A4A	300E	set     EMI
+				;18		for (i = 0; i < MAX_UART_BUF_SIZE; i++)
+				;19			gu8Main_buf[i] = 0;
+0A4B	5F20	clr     gu8Main_buf[0]
+0A4C	5F21	clr     gu8Main_buf[1]
+0A4D	5F22	clr     gu8Main_buf[2]
+0A4E	5F23	clr     gu8Main_buf[3]
+0A4F	5F24	clr     gu8Main_buf[4]
+				;20		gu8Buf_idx = 0;
+0A50	5F25	clr     gu8Buf_idx[0]
+				;21		gu8Buffer_ready = 0;
+0A51	5F1F	clr     gu8Buffer_ready[0]
+				;22		uart_signal = 0;
+0A52	5F27	clr     uart_signal[0]
+0A53	0003	ret
+				;23	}
+				;24	
+				;25	void UART_update(void)
+				;26	{
+				;27		uint8_t tmp;
+				;28		uint8_t cac[5];
+				;29	
+				;30		//if (ADC_getSignal() == 0) return ;
+				;31		
+				;32		ADC_setSignal(0);
+				_UART_update:
+				_UART_update:
+0A54	0F00	mov     a, 0H
+0A55	2735	call    _ADC_setSignal
+				;33		UART_GET_CHAR(tmp);
+0A56	509F	sz      gu8Buffer_ready[0]
+0A57	6A59	jmp     _LI1
+0A58	6AFB	jmp     _L2
+				_LI1:
+0A59	4726	mov     a, __bufCounter_1926[0]
+0A5A	40CA	mov     ra10, a
+0A5B	544A	inca    ra10
+0A5C	40A6	mov     __bufCounter_1926[0], a
+0A5D	0FA0	mov     a, A0H
+0A5E	434A	add     a, ra10
+0A5F	0083	mov     MP1, a
+0A60	0F00	mov     a, 0H
+0A61	1F01	clr     MP0
+0A62	1381	adcm    a, MP0
+0A63	6410	call    L0C10
+0A64	40E1	mov     tmp[0], a
+0A65	50E1	sz      tmp[0]
+0A66	6A68	jmp     _LI2
+0A67	6A6C	jmp     _L5
+				_LI2:
+0A68	0F04	mov     a, 4H
+0A69	4226	sub     a, __bufCounter_1926[0]
+0A6A	3C0A	sz      C
+0A6B	6A6E	jmp     _L6
+				_L5:
+0A6C	5F26	clr     __bufCounter_1926[0]
+0A6D	5F1F	clr     gu8Buffer_ready[0]
+				;34		if (tmp == UART_DISPLAY)
+				_L6:
+0A6E	4761	mov     a, tmp[0]
+0A6F	0A64	sub     a, 64H
+0A70	390A	snz     Z
+0A71	6AB5	jmp     _L7
+0A72	5F4A	clr     ra10
+				;35		{
+				;36			UART_PUT_STRING("----------EEPROM_DATA----------");
+				_L8:
+0A73	0F42	mov     a, 42H
+0A74	434A	add     a, ra10
+0A75	0083	mov     MP1, a
+0A76	0F88	mov     a, 88H
+0A77	1F01	clr     MP0
+0A78	1381	adcm    a, MP0
+0A79	6410	call    L0C10
+0A7A	40CC	mov     rb10, a
+0A7B	50CC	sz      rb10
+0A7C	6A7E	jmp     _L10
+0A7D	6A84	jmp     _L13
+				_L10:
+				_LI3:
+0A7E	3855	snz     TXIF
+0A7F	6A7E	jmp     _L10
+0A80	474C	mov     a, rb10
+0A81	00D9	mov     TXR_RXR, a
+0A82	54CA	inc     ra10
+0A83	6A73	jmp     _L8
+				_L13:
+0A84	3855	snz     TXIF
+0A85	6A84	jmp     _L13
+0A86	1F59	clr     TXR_RXR
+				;37			UART_PUT_STRING("\n\r");
+0A87	5F4A	clr     ra10
+				_L14:
+0A88	0F62	mov     a, 62H
+0A89	434A	add     a, ra10
+0A8A	0083	mov     MP1, a
+0A8B	0F88	mov     a, 88H
+0A8C	1F01	clr     MP0
+0A8D	1381	adcm    a, MP0
+0A8E	6410	call    L0C10
+0A8F	40CC	mov     rb10, a
+0A90	50CC	sz      rb10
+0A91	6A93	jmp     _L16
+0A92	6A99	jmp     _L19
+				_L16:
+				_LI4:
+0A93	3855	snz     TXIF
+0A94	6A93	jmp     _L16
+0A95	474C	mov     a, rb10
+0A96	00D9	mov     TXR_RXR, a
+0A97	54CA	inc     ra10
+0A98	6A88	jmp     _L14
+				_L19:
+0A99	3855	snz     TXIF
+0A9A	6A99	jmp     _L19
+0A9B	1F59	clr     TXR_RXR
+				;38			UART_PUT_STRING("\n\r");
+0A9C	5F4A	clr     ra10
+				_L20:
+0A9D	0F62	mov     a, 62H
+0A9E	434A	add     a, ra10
+0A9F	0083	mov     MP1, a
+0AA0	0F88	mov     a, 88H
+0AA1	1F01	clr     MP0
+0AA2	1381	adcm    a, MP0
+0AA3	6410	call    L0C10
+0AA4	40CC	mov     rb10, a
+0AA5	50CC	sz      rb10
+0AA6	6AA8	jmp     _L22
+0AA7	6AAE	jmp     _L25
+				_L22:
+				_LI5:
+0AA8	3855	snz     TXIF
+0AA9	6AA8	jmp     _L22
+0AAA	474C	mov     a, rb10
+0AAB	00D9	mov     TXR_RXR, a
+0AAC	54CA	inc     ra10
+0AAD	6A9D	jmp     _L20
+				_L25:
+0AAE	3855	snz     TXIF
+0AAF	6AAE	jmp     _L25
+0AB0	1F59	clr     TXR_RXR
+				;39			uart_signal = 1;
+0AB1	0F01	mov     a, 1H
+0AB2	40A7	mov     uart_signal[0], a
+				;40			ADC_setSignal(1);
+0AB3	0F01	mov     a, 1H
+0AB4	6AFA	jmp     _L48
+				;41		}	
+				;42		else if (tmp == UART_MONITOR)
+				_L7:
+0AB5	4761	mov     a, tmp[0]
+0AB6	0A6D	sub     a, 6DH
+0AB7	390A	snz     Z
+0AB8	6AFB	jmp     _L2
+0AB9	5F4A	clr     ra10
+				;43		{
+				;44			UART_PUT_STRING("\n\r");
+				_L27:
+0ABA	0F62	mov     a, 62H
+0ABB	434A	add     a, ra10
+0ABC	0083	mov     MP1, a
+0ABD	0F88	mov     a, 88H
+0ABE	1F01	clr     MP0
+0ABF	1381	adcm    a, MP0
+0AC0	6410	call    L0C10
+0AC1	40CC	mov     rb10, a
+0AC2	50CC	sz      rb10
+0AC3	6AC5	jmp     _L29
+0AC4	6ACB	jmp     _L32
+				_L29:
+				_LI6:
+0AC5	3855	snz     TXIF
+0AC6	6AC5	jmp     _L29
+0AC7	474C	mov     a, rb10
+0AC8	00D9	mov     TXR_RXR, a
+0AC9	54CA	inc     ra10
+0ACA	6ABA	jmp     _L27
+				_L32:
+0ACB	3855	snz     TXIF
+0ACC	6ACB	jmp     _L32
+0ACD	1F59	clr     TXR_RXR
+				;45			UART_PUT_STRING("----------MONITORING----------");
+0ACE	5F4A	clr     ra10
+				_L33:
+0ACF	0F65	mov     a, 65H
+0AD0	434A	add     a, ra10
+0AD1	0083	mov     MP1, a
+0AD2	0F88	mov     a, 88H
+0AD3	1F01	clr     MP0
+0AD4	1381	adcm    a, MP0
+0AD5	6410	call    L0C10
+0AD6	40CC	mov     rb10, a
+0AD7	50CC	sz      rb10
+0AD8	6ADA	jmp     _L35
+0AD9	6AE0	jmp     _L38
+				_L35:
+				_LI7:
+0ADA	3855	snz     TXIF
+0ADB	6ADA	jmp     _L35
+0ADC	474C	mov     a, rb10
+0ADD	00D9	mov     TXR_RXR, a
+0ADE	54CA	inc     ra10
+0ADF	6ACF	jmp     _L33
+				_L38:
+0AE0	3855	snz     TXIF
+0AE1	6AE0	jmp     _L38
+0AE2	1F59	clr     TXR_RXR
+				;46			UART_PUT_STRING("\n\r");
+0AE3	5F4A	clr     ra10
+				_L39:
+0AE4	0F62	mov     a, 62H
+0AE5	434A	add     a, ra10
+0AE6	0083	mov     MP1, a
+0AE7	0F88	mov     a, 88H
+0AE8	1F01	clr     MP0
+0AE9	1381	adcm    a, MP0
+0AEA	6410	call    L0C10
+0AEB	40CC	mov     rb10, a
+0AEC	50CC	sz      rb10
+0AED	6AEF	jmp     _L41
+0AEE	6AF5	jmp     _L44
+				_L41:
+				_LI8:
+0AEF	3855	snz     TXIF
+0AF0	6AEF	jmp     _L41
+0AF1	474C	mov     a, rb10
+0AF2	00D9	mov     TXR_RXR, a
+0AF3	54CA	inc     ra10
+0AF4	6AE4	jmp     _L39
+				_L44:
+0AF5	3855	snz     TXIF
+0AF6	6AF5	jmp     _L44
+0AF7	1F59	clr     TXR_RXR
+				;47			uart_signal = 0;
+0AF8	5F27	clr     uart_signal[0]
+				;48			ADC_setSignal(0);
+0AF9	0F00	mov     a, 0H
+				_L48:
+0AFA	2735	call    _ADC_setSignal
+				_L2:
+0AFB	0003	ret
+				;49		}
+				;50	}
+				;51	
+				;52	uint8_t UART_getSignal(void)
+				;53	{
+				;54		return uart_signal;
+				_UART_getSignal:
+				_UART_getSignal:
+0AFC	4727	mov     a, uart_signal[0]
+0AFD	40CA	mov     ra10, a
+				;55	}
+0AFE	474A	mov     a, ra10
+0AFF	0003	ret
+				;56	
+				;57	void UART_setSignal(uint8_t signal)
+				;58	{
+				_UART_setSignal:
+				_UART_setSignal:
+0B00	40A8	mov     ra, a
+				;59		uart_signal = signal;
+0B01	4728	mov     a, ra
+0B02	40A7	mov     uart_signal[0], a
+0B03	0003	ret
+				;60	}	
+				;61	// NOTE:
+				;62	// this driver depends on the application to read the buffer first before accepting new data
+				;63	// thus some values will be lost if the sys_tick is high enough that the user input is faster.
+				;64	
+				;65	void __attribute((interrupt(0x2c))) ISR_uart (void)
+				;66	{
+				@ISR_uart_code .SECTION 'CODE'
+002C	40D9	mov     r12c, a
+				L002D:
+002D	0704	mov     a, BP
+002E	40DA	mov     r22c, a
+002F	6B04	jmp     _ISR_uart
+				_ISR_uart:
+				_ISR_uart:
+0B04	070A	mov     a, STATUS
+0B05	40DB	mov     r32c, a
+0B06	0703	mov     a, MP1
+0B07	40DC	mov     r42c, a
+0B08	0701	mov     a, MP0
+0B09	40DD	mov     r52c, a
+				;67		volatile char data;
+				;68		
+				;69		data = TXR_RXR;
+0B0A	0759	mov     a, TXR_RXR
+0B0B	40DF	mov     data[0], a
+				;70		if(gu8Buffer_ready == 0)
+0B0C	509F	sz      gu8Buffer_ready[0]
+0B0D	6B38	jmp     L0B38
+				;71		{
+				;72			gu8Main_buf[gu8Buf_idx++] = data;
+0B0E	4725	mov     a, gu8Buf_idx[0]
+0B0F	40DE	mov     ra2c, a
+0B10	545E	inca    ra2c
+0B11	40A5	mov     gu8Buf_idx[0], a
+0B12	0FA0	mov     a, A0H
+0B13	435E	add     a, ra2c
+0B14	0083	mov     MP1, a
+0B15	0F00	mov     a, 0H
+0B16	1F01	clr     MP0
+0B17	1381	adcm    a, MP0
+0B18	0701	mov     a, MP0
+0B19	0084	mov     BP, a
+0B1A	475F	mov     a, data[0]
+0B1B	0082	mov     __iar1[0], a
+				;73			if(data == TERMINATOR1 || data == TERMINATOR2 || data == TERMINATOR3 || data == TERMINATOR4 || gu8Buf_idx >= MAX_UART_BUF_SIZE-1)
+0B1C	475F	mov     a, data[0]
+0B1D	0A0A	sub     a, AH
+0B1E	3D0A	sz      Z
+0B1F	6B2B	jmp     L0B2B
+0B20	0A03	sub     a, 3H
+0B21	3D0A	sz      Z
+0B22	6B2B	jmp     L0B2B
+0B23	475F	mov     a, data[0]
+0B24	40DE	mov     ra2c, a
+0B25	475F	mov     a, data[0]
+0B26	40DE	mov     ra2c, a
+0B27	0F03	mov     a, 3H
+0B28	4225	sub     a, gu8Buf_idx[0]
+0B29	3C0A	sz      C
+0B2A	6B38	jmp     L0B38
+				;74			{
+				;75				gu8Main_buf[gu8Buf_idx-1] = TERMINATOR0;
+				L0B2B:
+0B2B	0F9F	mov     a, 9FH
+0B2C	4325	add     a, gu8Buf_idx[0]
+0B2D	0083	mov     MP1, a
+0B2E	0F00	mov     a, 0H
+0B2F	1F01	clr     MP0
+0B30	1381	adcm    a, MP0
+0B31	0701	mov     a, MP0
+0B32	0084	mov     BP, a
+0B33	0F00	mov     a, 0H
+0B34	0082	mov     __iar1[0], a
+				;76				gu8Buf_idx = 0;
+0B35	5F25	clr     gu8Buf_idx[0]
+				;77				gu8Buffer_ready = 1;
+0B36	0F01	mov     a, 1H
+0B37	409F	mov     gu8Buffer_ready[0], a
+				L0B38:
+0B38	475A	mov     a, r22c
+0B39	0084	mov     BP, a
+0B3A	475B	mov     a, r32c
+0B3B	008A	mov     STATUS, a
+0B3C	475C	mov     a, r42c
+0B3D	0083	mov     MP1, a
+0B3E	475D	mov     a, r52c
+0B3F	0081	mov     MP0, a
+0B40	4759	mov     a, r12c
+0B41	0004	reti
+				;78			}
+				;79		}
+				;80	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\startup1_l.asm
+				;1	;;--------------------------------------------------------------;;
+				;2	;;    This file is part of the Holtek C Compiler V3 package     ;;
+				;3	;;    For the initialization of static linkage variables        ;;
+				;4	;;    Copyright (C) 2016 Holtek Semiconductor Inc.              ;;
+				;5	;;    Version: 1.06 (Above IDE3000 V7.93)                       ;;
+				;6	;;    Date:    2016/12/07                                        ;;
+				;7	;;--------------------------------------------------------------;;
+				;8	
+				;9	acc equ [05h]
+				;10	tblp equ [07h]
+				;11	tblh equ [08h]
+				;12	;;tbhp equ [09h] 
+				;13	r0 equ [00h]
+				;14	mp0 equ [01h]
+				;15	r1 equ [02h]
+				;16	mp1l equ [03h]
+				;17	mp1h equ [04h]
+				;18	z equ [0ah].2
+				;19	c equ [0ah].0
+				;20	
+				;21	ifndef tbhp
+				;22	tbhp equ [09h]
+				;23	endif
+				;24	 
+				;25	extern startup_value_1:near
+				;26	
+				;27	@start .section 'code'
+				;28	begin_startup_value:
+				;29	  mov a,low (offset startup_value_1) 
+				@dummy44 .SECTION 'CODE'
+				begin_startup_value:
+				@start .SECTION 'CODE'
+				_main_startup1:
+				@start .SECTION 'CODE'
+0030	0F5D	mov     a, 5DH
+				;30	  mov tblp,a
+0031	0087	mov     TBLP, a
+				;31	  mov a,high (offset startup_value_1) 
+0032	0F04	mov     a, 4H
+				;32	  mov tbhp,a
+0033	0089	mov     TBHP, a
+				;33	next_table:
+				;34	  ;CLR WDT
+				;35	  inc tblp
+				next_table:
+0034	1487	inc     TBLP
+				;36	  sz z
+0035	3D0A	sz      Z
+				;37	  inc tbhp
+0036	1489	inc     TBHP
+				;38	ifdef USE_TABRDC
+				;39	  tabrdc mp0
+				;40	else
+				;41	  tabrd mp0
+0037	1D01	tabrd   MP0
+				;42	endif
+				;43	  sz mp0
+0038	1081	sz      MP0
+				;44	  jmp read_data
+0039	283B	jmp     read_data
+				;45	  jmp startupend1
+003A	2850	jmp     startupend1
+				;46	read_data:
+				;47	  inc tblp
+				read_data:
+003B	1487	inc     TBLP
+				;48	  sz z
+003C	3D0A	sz      Z
+				;49	  inc tbhp
+003D	1489	inc     TBHP
+				;50	ifdef USE_TABRDC
+				;51	  tabrdc mp1l
+				;52	else
+				;53	  tabrd mp1l
+003E	1D03	tabrd   MP1
+				;54	endif
+				;55	  mov a,tblh
+003F	0708	mov     a, TBLH
+				;56	  mov mp1h,a
+0040	0084	mov     BP, a
+				;57	next_data:
+				;58	  inc tblp
+				next_data:
+0041	1487	inc     TBLP
+				;59	  sz z
+0042	3D0A	sz      Z
+				;60	  inc tbhp
+0043	1489	inc     TBHP
+				;61	ifdef USE_TABRDC
+				;62	  tabrdc acc
+				;63	else
+				;64	  tabrd acc
+0044	1D05	tabrd   ACC
+				;65	endif
+				;66	  mov r1,a
+0045	0082	mov     __iar1[0], a
+				;67	  sdz mp0
+0046	1781	sdz     MP0
+				;68	  jmp $+2
+0047	2849	jmp     L0049
+				;69	  jmp next_table
+0048	2834	jmp     next_table
+				;70	  inc mp1l
+				L0049:
+0049	1483	inc     MP1
+				;71	  mov a,tblh
+004A	0708	mov     a, TBLH
+				;72	  mov r1,a
+004B	0082	mov     __iar1[0], a
+				;73	  inc mp1l
+004C	1483	inc     MP1
+				;74	  sdz mp0
+004D	1781	sdz     MP0
+				;75	  jmp next_data
+004E	2841	jmp     next_data
+				;76	  jmp next_table
+004F	2834	jmp     next_table
+				;77	
+				;78	;end_startup_value:
+				;79	
+				;80	startupend1:
+				;81		MOV A,high  bitdatasec1_start
+				startupend1:
+0050	0F00	mov     a, 0H
+				;82		MOV mp1h,a
+0051	0084	mov     BP, a
+				;83		MOV A,offset bitdatasec1_end
+0052	0F80	mov     a, 80H
+				;84		mov mp1l,A
+0053	0083	mov     MP1, a
+				;85		dec mp1l
+0054	1583	dec     MP1
+				;86		clr z
+0055	350A	clr     Z
+				;87		sub a,offset bitdatasec1_start
+0056	0A80	sub     a, 80H
+				;88		sz z
+0057	3D0A	sz      Z
+				;89		jmp startupend2
+0058	285D	jmp     startupend2
+				;90	L0005:
+				;91		set r1
+				L0005:
+0059	1F82	set     __iar1[0]
+				;92		dec mp1l
+005A	1583	dec     MP1
+				;93		sdz  acc
+005B	1785	sdz     ACC
+				;94		jmp L0005
+005C	2859	jmp     L0005
+				;95	
+				;96	startupend2:
+				;97		MOV A,high  bitdatasec0_start
+				startupend2:
+005D	0F00	mov     a, 0H
+				;98		MOV mp1h,a
+005E	0084	mov     BP, a
+				;99		MOV A,offset bitdatasec0_end
+005F	0F80	mov     a, 80H
+				;100		mov mp1l,A
+0060	0083	mov     MP1, a
+				;101		dec mp1l
+0061	1583	dec     MP1
+				;102		clr z
+0062	350A	clr     Z
+				;103		sub a,offset bitdatasec0_start
+0063	0A80	sub     a, 80H
+				;104		sz  z
+0064	3D0A	sz      Z
+				;105		jmp startupend3
+				L0065:
+0065	286A	jmp     startupend3
+				;106	L0006:
+				;107		clr r1
+				L0006:
+0066	1F02	clr     __iar1[0]
+				;108		dec mp1l
+0067	1583	dec     MP1
+				;109		sdz  acc
+0068	1785	sdz     ACC
+				;110		jmp L0006
+0069	2866	jmp     L0006
+				;111	startupend3:
+				;112			
+				;113	   
+				;114	@ROMDATA_BASE .SECTION com_l 'CODE'  
+				;115	startup_value:
+				;116	;;linker range the initial value table here
+				;117	
+				;118	@BITDATASEC1 .SECTION com_l 'DATA'  
+				;119	bitdatasec1_start:
+				;120	
+				;121	@BITDATASEC1 .SECTION com_e 'DATA'  
+				;122	bitdatasec1_end:
+				;123	
+				;124	@BITDATASEC .SECTION com_l 'DATA'  
+				;125	bitdatasec0_start:
+				;126	
+				;127	@BITDATASEC .SECTION com_e 'DATA'  
+				;128	bitdatasec0_end:
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\adc.c
+				;1	/*
+				;2	 * NOTE: use 215 vAC for calibration as due to the rounding error in the adc, it gives
+				;3	 *		 the lowest error.
+				;4	 *		 		(((Vac * 5100 / 1005100) * sqrt(2)) - 0.5) / 0.0004
+				;5	 *			5.1k , 1M ohms resistors,    0.5: diode forward voltage drop
+				;6	 *			0.0004: adc step (vref/2^resolution)
+				;7	 *			-------------------------------------------------------------------
+				;8	 *			| 210 | 211 | 212 | 213 | 214 | 215 | 216 | 217 | 218 | 219 | 220 |
+				;9	 *			-------------------------------------------------------------------
+				;10	 *			|x.34 |x.28 |x.22 |x.16 | x.1 |x.04 |x.98 |x.92 |x.86 | x.8 |x.74 |
+				;11	 *			-------------------------------------------------------------------
+				;12	*/
+				;13	#include "config.h"
+				;14	#include "main_ht66f0185.h"
+				;15	#include "HT66F0185.h"
+				;16	#include "util.h"
+				;17	#include "port.h"
+				;18	#include "uart.h"
+				;19	#include "adc.h"
+				;20	#include "eeprom.h"
+				;21	
+				;22	volatile static double adc_val0 = 0;
+				;23	volatile static uint16_t ac = 0, maxAC = 0, minAC = 0;
+				;24	volatile static uint16_t counter = 0;
+				;25	static uint32_t tmp = 0;
+				;26	volatile static uint8_t adc_signal = 0;
+				;27	volatile static uint8_t initCounter = 0;
+				;28	static uint16_t maxTime = 0, minTime = 0;
+				;29	static uint8_t maxFlag = 0, minFlag = 0;
+				;30	static uint16_t runtime_counter = 0;
+				;31	
+				;32	void ADC_init(void)
+				;33	{
+				;34		ADC_INIT;
+				_ADC_init:
+				_ADC_init:
+0465	0F84	mov     a, 84H
+0466	05A3	orm     a, SADC1
+0467	3044	set     ACE0
+0468	350F	clr     ADE
+0469	370F	clr     ADF
+046A	0FDA	mov     a, DAH
+046B	00A4	mov     SADC2, a
+046C	0F30	mov     a, 30H
+046D	05A2	orm     a, SADC0
+				;35		adc_val0 = 0;
+046E	5F16	clr     adc_val0[0]
+046F	5F17	clr     adc_val0[1]
+0470	5F18	clr     adc_val0[2]
+0471	5F19	clr     adc_val0[3]
+				;36		ac = 0;
+0472	5F14	clr     ac[0]
+0473	5F15	clr     ac[1]
+				;37		maxAC = MIN_UINT16;
+0474	5F12	clr     maxAC[0]
+0475	5F13	clr     maxAC[1]
+				;38		minAC = MAX_UINT16;
+0476	5F90	set     minAC[0]
+0477	5F91	set     minAC[1]
+				;39		counter = 0;
+0478	5F0E	clr     counter[0]
+0479	5F0F	clr     counter[1]
+				;40		tmp = 0;
+047A	5F0A	clr     tmp[0]
+047B	5F0B	clr     tmp[1]
+047C	5F0C	clr     tmp[2]
+047D	5F0D	clr     tmp[3]
+				;41		adc_signal = 0;
+047E	5F09	clr     adc_signal[0]
+				;42		initCounter = 0;
+047F	5F08	clr     initCounter[0]
+				;43		maxTime = 0;
+0480	5F06	clr     maxTime[0]
+0481	5F07	clr     maxTime[1]
+				;44		minTime = 0;
+0482	5F04	clr     minTime[0]
+0483	5F05	clr     minTime[1]
+				;45		maxFlag = 0;
+0484	5F03	clr     maxFlag[0]
+				;46		minFlag = 0;
+0485	5F02	clr     minFlag[0]
+				;47		runtime_counter = 0;
+0486	5F00	clr     runtime_counter[0]
+0487	5F01	clr     runtime_counter[1]
+				;48		
+				;49		// capacitor charge build-up delay
+				;50		while (initCounter < INIT_VALUE)
+0488	2C8A	jmp     _L2
+				_L2:
+048A	0F63	mov     a, 63H
+048B	4208	sub     a, initCounter[0]
+048C	3C0A	sz      C
+048D	2C89	jmp     _L3
+048E	0003	ret
+				;51		{
+				;52			initCounter++;
+				_L3:
+0489	5488	inc     initCounter[0]
+				;53		}
+				;54	}
+				;55	
+				;56	void ADC_update(void)
+				;57	{
+				;58		uint8_t c[5];
+				;59		if (UART_getSignal() == 0)
+				_ADC_update:
+				_ADC_update:
+048F	62FC	call    _UART_getSignal
+0490	40CA	mov     ra10, a
+0491	50CA	sz      ra10
+0492	2F16	jmp     _L5
+				;60		{
+				;61			counter++;
+0493	548E	inc     counter[0]
+0494	3D0A	sz      Z
+0495	548F	inc     counter[1]
+				;62			ADC_READ(ADC_CHANNEL0);
+0496	3722	clr     ADBZ
+0497	0F01	mov     a, 1H
+0498	00C4	mov     ACERL, a
+0499	0F30	mov     a, 30H
+049A	00A2	mov     SADC0, a
+049B	37A2	clr     START
+049C	33A2	set     START
+049D	37A2	clr     START
+				_L9:
+049E	3B22	snz     ADBZ
+049F	2C9E	jmp     _L9
+04A0	3722	clr     ADBZ
+04A1	370F	clr     ADF
+				;63			tmp += ADC_DATA_REG;
+04A2	0721	mov     a, SADOH
+04A3	40CB	mov     rc10, a
+04A4	5F4C	clr     rb10
+04A5	0720	mov     a, SADOL
+04A6	45CC	orm     a, rb10
+04A7	474C	mov     a, rb10
+04A8	438A	addm    a, tmp[0]
+04A9	474B	mov     a, rc10
+04AA	538B	adcm    a, tmp[1]
+04AB	1F05	clr     ACC
+04AC	538C	adcm    a, tmp[2]
+04AD	538D	adcm    a, tmp[3]
+				;64		
+				;65			if (counter == REPETITION_VALUE)
+04AE	470E	mov     a, counter[0]
+04AF	0C28	xor     a, 28H
+04B0	450F	or      a, counter[1]
+04B1	390A	snz     Z
+04B2	2F16	jmp     _L5
+				;66			{
+				;67				runtime_counter++;		// occurs once each 2000 msec
+04B3	5480	inc     runtime_counter[0]
+04B4	3D0A	sz      Z
+04B5	5481	inc     runtime_counter[1]
+				;68				ADC_OFF;
+04B6	36A2	clr     ADCEN
+04B7	1F44	clr     ACERL
+				;69				GPIO_DDRB = 0X00;
+04B8	1F26	clr     PBC
+				;70				GPIO_PORTB = 0;
+04B9	1F25	clr     PB
+				;71	
+				;72				adc_val0 = (float)((float)tmp/counter) * CONVERSION_FACTOR;	
+04BA	470D	mov     a, tmp[3]
+04BB	40C0	mov     rb[23], a
+04BC	470C	mov     a, tmp[2]
+04BD	40BC	mov     rb[19], a
+04BE	470B	mov     a, tmp[1]
+04BF	40BB	mov     rb[18], a
+04C0	470A	mov     a, tmp[0]
+04C1	40BA	mov     rb[17], a
+04C2	743E	clr     rb[21].0
+04C3	2213	call    L0213
+04C4	473C	mov     a, rb[19]
+04C5	40CD	mov     rh10, a
+04C6	473B	mov     a, rb[18]
+04C7	40CE	mov     rg10, a
+04C8	473A	mov     a, rb[17]
+04C9	40CF	mov     rf10, a
+04CA	470F	mov     a, counter[1]
+04CB	40BB	mov     rb[18], a
+04CC	470E	mov     a, counter[0]
+04CD	40BA	mov     rb[17], a
+04CE	743E	clr     rb[21].0
+04CF	224E	call    L024E
+04D0	473C	mov     a, rb[19]
+04D1	40D0	mov     re10, a
+04D2	473B	mov     a, rb[18]
+04D3	40D1	mov     rd10, a
+04D4	473A	mov     a, rb[17]
+04D5	40CB	mov     rc10, a
+04D6	474D	mov     a, rh10
+04D7	40BC	mov     rb[19], a
+04D8	474E	mov     a, rg10
+04D9	40BB	mov     rb[18], a
+04DA	474F	mov     a, rf10
+04DB	40BA	mov     rb[17], a
+04DC	4750	mov     a, re10
+04DD	40C5	mov     rb[28], a
+04DE	4751	mov     a, rd10
+04DF	40C4	mov     rb[27], a
+04E0	474B	mov     a, rc10
+04E1	40C3	mov     rb[26], a
+04E2	2252	call    L0252
+04E3	473C	mov     a, rb[19]
+04E4	40D0	mov     re10, a
+04E5	473B	mov     a, rb[18]
+04E6	40D1	mov     rd10, a
+04E7	473A	mov     a, rb[17]
+04E8	40CB	mov     rc10, a
+04E9	4750	mov     a, re10
+04EA	40CE	mov     rg10, a
+04EB	4751	mov     a, rd10
+04EC	40CF	mov     rf10, a
+04ED	474B	mov     a, rc10
+04EE	40D0	mov     re10, a
+04EF	5F51	clr     rd10
+04F0	474E	mov     a, rg10
+04F1	40C0	mov     rb[23], a
+04F2	474F	mov     a, rf10
+04F3	40BC	mov     rb[19], a
+04F4	4750	mov     a, re10
+04F5	40BB	mov     rb[18], a
+04F6	4751	mov     a, rd10
+04F7	40BA	mov     rb[17], a
+04F8	0F3D	mov     a, 3DH
+04F9	40C1	mov     rb[24], a
+04FA	0FB3	mov     a, B3H
+04FB	40C5	mov     rb[28], a
+04FC	0FC0	mov     a, C0H
+04FD	40C4	mov     rb[27], a
+04FE	0FC2	mov     a, C2H
+04FF	40C3	mov     rb[26], a
+				L0500:
+0500	229A	call    L029A
+0501	4740	mov     a, rb[23]
+0502	4099	mov     adc_val0[3], a
+0503	473C	mov     a, rb[19]
+0504	4098	mov     adc_val0[2], a
+0505	473B	mov     a, rb[18]
+0506	4097	mov     adc_val0[1], a
+0507	473A	mov     a, rb[17]
+0508	4096	mov     adc_val0[0], a
+				;73				UART_NEW_LINE;
+0509	5F4A	clr     ra10
+				_L11:
+050A	0F1A	mov     a, 1AH
+050B	434A	add     a, ra10
+050C	0083	mov     MP1, a
+050D	0F80	mov     a, 80H
+050E	1F01	clr     MP0
+050F	1381	adcm    a, MP0
+0510	6410	call    L0C10
+0511	40CC	mov     rb10, a
+0512	50CC	sz      rb10
+0513	2D15	jmp     _L13
+0514	2D1B	jmp     _L16
+				_L13:
+				_LI1:
+0515	3855	snz     TXIF
+0516	2D15	jmp     _L13
+0517	474C	mov     a, rb10
+0518	00D9	mov     TXR_RXR, a
+0519	54CA	inc     ra10
+051A	2D0A	jmp     _L11
+				_L16:
+051B	3855	snz     TXIF
+051C	2D1B	jmp     _L16
+051D	1F59	clr     TXR_RXR
+				;74				itoa(adc_val0, c);
+051E	4716	mov     a, adc_val0[0]
+051F	40D1	mov     rd10, a
+0520	4717	mov     a, adc_val0[1]
+0521	40D0	mov     re10, a
+0522	4718	mov     a, adc_val0[2]
+0523	40CF	mov     rf10, a
+0524	4719	mov     a, adc_val0[3]
+0525	40CE	mov     rg10, a
+0526	0FEE	mov     a, EEH
+0527	40EA	mov     s, a
+0528	0F00	mov     a, 0H
+0529	40EB	mov     s[1], a
+052A	474E	mov     a, rg10
+052B	40C0	mov     rb[23], a
+052C	474F	mov     a, rf10
+				L052D:
+052D	40BC	mov     rb[19], a
+052E	4750	mov     a, re10
+052F	40BB	mov     rb[18], a
+0530	4751	mov     a, rd10
+0531	40BA	mov     rb[17], a
+0532	232D	call    L032D
+0533	4740	mov     a, rb[23]
+0534	40CE	mov     rg10, a
+0535	473C	mov     a, rb[19]
+0536	40CF	mov     rf10, a
+0537	473B	mov     a, rb[18]
+0538	40D0	mov     re10, a
+0539	473A	mov     a, rb[17]
+053A	40D1	mov     rd10, a
+053B	4751	mov     a, rd10
+053C	40E8	mov     n, a
+053D	4750	mov     a, re10
+053E	40E9	mov     n[1], a
+053F	63A3	call    _itoa
+				;75				UART_PUT_STRING(c);
+0540	5F4A	clr     ra10
+				_L17:
+0541	0FEE	mov     a, EEH
+0542	40CC	mov     rb10, a
+0543	0F00	mov     a, 0H
+0544	40CB	mov     rc10, a
+0545	474A	mov     a, ra10
+0546	434C	add     a, rb10
+				L0547:
+0547	0083	mov     MP1, a
+0548	1F05	clr     ACC
+0549	534B	adc     a, rc10
+054A	0081	mov     MP0, a
+054B	6410	call    L0C10
+054C	40CC	mov     rb10, a
+054D	50CC	sz      rb10
+054E	2D50	jmp     _L19
+054F	2D56	jmp     _L22
+				_L19:
+				_LI2:
+0550	3855	snz     TXIF
+0551	2D50	jmp     _L19
+				L0552:
+0552	474C	mov     a, rb10
+0553	00D9	mov     TXR_RXR, a
+0554	54CA	inc     ra10
+0555	2D41	jmp     _L17
+				_L22:
+0556	3855	snz     TXIF
+0557	2D56	jmp     _L22
+0558	1F59	clr     TXR_RXR
+				;76				UART_NEW_LINE;
+0559	5F4A	clr     ra10
+				_L23:
+055A	0F1A	mov     a, 1AH
+055B	434A	add     a, ra10
+055C	0083	mov     MP1, a
+055D	0F80	mov     a, 80H
+055E	1F01	clr     MP0
+055F	1381	adcm    a, MP0
+0560	6410	call    L0C10
+0561	40CC	mov     rb10, a
+0562	50CC	sz      rb10
+0563	2D65	jmp     _L25
+0564	2D6B	jmp     _L28
+				_L25:
+				_LI3:
+0565	3855	snz     TXIF
+0566	2D65	jmp     _L25
+0567	474C	mov     a, rb10
+0568	00D9	mov     TXR_RXR, a
+0569	54CA	inc     ra10
+056A	2D5A	jmp     _L23
+				_L28:
+056B	3855	snz     TXIF
+056C	2D6B	jmp     _L28
+056D	1F59	clr     TXR_RXR
+				;77		
+				;78				// due to non-linearity of the adc reading. (curve fitting)
+				;79				//if (adc_val0 < 60)	adc_val0 = 0;
+				;80				if (adc_val0 > AC_CALIBRATION_VALUE)	adc_val0 = adc_val0 - ((adc_val0 - AC_CALIBRATION_VALUE) / 6);
+056E	4719	mov     a, adc_val0[3]
+056F	40C0	mov     rb[23], a
+0570	4718	mov     a, adc_val0[2]
+0571	40BC	mov     rb[19], a
+0572	4717	mov     a, adc_val0[1]
+0573	40BB	mov     rb[18], a
+0574	4716	mov     a, adc_val0[0]
+0575	40BA	mov     rb[17], a
+0576	0F43	mov     a, 43H
+0577	40C1	mov     rb[24], a
+0578	0F57	mov     a, 57H
+0579	40C5	mov     rb[28], a
+057A	0F00	mov     a, 0H
+057B	40C4	mov     rb[27], a
+057C	0F00	mov     a, 0H
+057D	40C3	mov     rb[26], a
+057E	2358	call    L0358
+057F	7FC0	sz      rb[23].7
+0580	2D87	jmp     _LI4
+0581	4740	mov     a, rb[23]
+0582	453C	or      a, rb[19]
+0583	453B	or      a, rb[18]
+0584	453A	or      a, rb[17]
+0585	390A	snz     Z
+0586	2D88	jmp     _L51
+				_LI4:
+0587	2DD4	jmp     _L61
+				_L51:
+0588	4719	mov     a, adc_val0[3]
+0589	40C0	mov     rb[23], a
+058A	4718	mov     a, adc_val0[2]
+058B	40BC	mov     rb[19], a
+058C	4717	mov     a, adc_val0[1]
+058D	40BB	mov     rb[18], a
+058E	4716	mov     a, adc_val0[0]
+058F	40BA	mov     rb[17], a
+0590	0F43	mov     a, 43H
+0591	40C1	mov     rb[24], a
+0592	0F57	mov     a, 57H
+0593	40C5	mov     rb[28], a
+0594	0F00	mov     a, 0H
+0595	40C4	mov     rb[27], a
+0596	0F00	mov     a, 0H
+0597	40C3	mov     rb[26], a
+0598	2358	call    L0358
+0599	4740	mov     a, rb[23]
+059A	40CE	mov     rg10, a
+059B	473C	mov     a, rb[19]
+059C	40CF	mov     rf10, a
+059D	473B	mov     a, rb[18]
+059E	40D0	mov     re10, a
+059F	473A	mov     a, rb[17]
+05A0	40D1	mov     rd10, a
+05A1	474E	mov     a, rg10
+05A2	40C0	mov     rb[23], a
+05A3	474F	mov     a, rf10
+05A4	40BC	mov     rb[19], a
+05A5	4750	mov     a, re10
+05A6	40BB	mov     rb[18], a
+05A7	4751	mov     a, rd10
+05A8	40BA	mov     rb[17], a
+05A9	0F40	mov     a, 40H
+05AA	40C1	mov     rb[24], a
+05AB	0FC0	mov     a, C0H
+05AC	40C5	mov     rb[28], a
+05AD	0F00	mov     a, 0H
+05AE	40C4	mov     rb[27], a
+05AF	0F00	mov     a, 0H
+05B0	40C3	mov     rb[26], a
+05B1	2396	call    L0396
+05B2	4740	mov     a, rb[23]
+05B3	40CE	mov     rg10, a
+05B4	473C	mov     a, rb[19]
+05B5	40CF	mov     rf10, a
+05B6	473B	mov     a, rb[18]
+05B7	40D0	mov     re10, a
+05B8	473A	mov     a, rb[17]
+05B9	40D1	mov     rd10, a
+05BA	4719	mov     a, adc_val0[3]
+05BB	40C0	mov     rb[23], a
+05BC	4718	mov     a, adc_val0[2]
+05BD	40BC	mov     rb[19], a
+05BE	4717	mov     a, adc_val0[1]
+05BF	40BB	mov     rb[18], a
+05C0	4716	mov     a, adc_val0[0]
+05C1	40BA	mov     rb[17], a
+05C2	474E	mov     a, rg10
+05C3	40C1	mov     rb[24], a
+05C4	474F	mov     a, rf10
+05C5	40C5	mov     rb[28], a
+05C6	4750	mov     a, re10
+05C7	40C4	mov     rb[27], a
+05C8	4751	mov     a, rd10
+05C9	40C3	mov     rb[26], a
+05CA	2358	call    L0358
+05CB	4740	mov     a, rb[23]
+05CC	4099	mov     adc_val0[3], a
+05CD	473C	mov     a, rb[19]
+05CE	4098	mov     adc_val0[2], a
+05CF	473B	mov     a, rb[18]
+05D0	4097	mov     adc_val0[1], a
+05D1	473A	mov     a, rb[17]
+05D2	4096	mov     adc_val0[0], a
+05D3	2E39	jmp     _L31
+				;81				else if (adc_val0 < AC_CALIBRATION_VALUE)	adc_val0 = adc_val0 + ((AC_CALIBRATION_VALUE - adc_val0) / 7);
+				_L61:
+05D4	4719	mov     a, adc_val0[3]
+05D5	40C0	mov     rb[23], a
+05D6	4718	mov     a, adc_val0[2]
+05D7	40BC	mov     rb[19], a
+05D8	4717	mov     a, adc_val0[1]
+05D9	40BB	mov     rb[18], a
+05DA	4716	mov     a, adc_val0[0]
+05DB	40BA	mov     rb[17], a
+05DC	0F43	mov     a, 43H
+05DD	40C1	mov     rb[24], a
+05DE	0F57	mov     a, 57H
+05DF	40C5	mov     rb[28], a
+05E0	0F00	mov     a, 0H
+05E1	40C4	mov     rb[27], a
+05E2	0F00	mov     a, 0H
+05E3	40C3	mov     rb[26], a
+05E4	2358	call    L0358
+05E5	7FC0	sz      rb[23].7
+05E6	2DE8	jmp     _L52
+05E7	2E39	jmp     _L31
+				_L52:
+05E8	5F51	clr     rd10
+05E9	5F50	clr     re10
+05EA	0F57	mov     a, 57H
+05EB	40CF	mov     rf10, a
+05EC	0F43	mov     a, 43H
+05ED	40CE	mov     rg10, a
+05EE	474E	mov     a, rg10
+05EF	40C0	mov     rb[23], a
+05F0	474F	mov     a, rf10
+05F1	40BC	mov     rb[19], a
+05F2	4750	mov     a, re10
+05F3	40BB	mov     rb[18], a
+05F4	4751	mov     a, rd10
+05F5	40BA	mov     rb[17], a
+05F6	4719	mov     a, adc_val0[3]
+05F7	40C1	mov     rb[24], a
+05F8	4718	mov     a, adc_val0[2]
+05F9	40C5	mov     rb[28], a
+05FA	4717	mov     a, adc_val0[1]
+05FB	40C4	mov     rb[27], a
+05FC	4716	mov     a, adc_val0[0]
+05FD	40C3	mov     rb[26], a
+05FE	2358	call    L0358
+05FF	4740	mov     a, rb[23]
+0600	40CE	mov     rg10, a
+0601	473C	mov     a, rb[19]
+0602	40CF	mov     rf10, a
+0603	473B	mov     a, rb[18]
+0604	40D0	mov     re10, a
+0605	473A	mov     a, rb[17]
+0606	40D1	mov     rd10, a
+0607	474E	mov     a, rg10
+0608	40C0	mov     rb[23], a
+0609	474F	mov     a, rf10
+060A	40BC	mov     rb[19], a
+060B	4750	mov     a, re10
+060C	40BB	mov     rb[18], a
+060D	4751	mov     a, rd10
+060E	40BA	mov     rb[17], a
+060F	0F40	mov     a, 40H
+0610	40C1	mov     rb[24], a
+0611	0FE0	mov     a, E0H
+0612	40C5	mov     rb[28], a
+0613	0F00	mov     a, 0H
+0614	40C4	mov     rb[27], a
+0615	0F00	mov     a, 0H
+0616	40C3	mov     rb[26], a
+0617	2396	call    L0396
+0618	4740	mov     a, rb[23]
+0619	40CE	mov     rg10, a
+061A	473C	mov     a, rb[19]
+061B	40CF	mov     rf10, a
+061C	473B	mov     a, rb[18]
+061D	40D0	mov     re10, a
+061E	473A	mov     a, rb[17]
+061F	40D1	mov     rd10, a
+0620	4719	mov     a, adc_val0[3]
+0621	40C0	mov     rb[23], a
+0622	4718	mov     a, adc_val0[2]
+0623	40BC	mov     rb[19], a
+0624	4717	mov     a, adc_val0[1]
+0625	40BB	mov     rb[18], a
+0626	4716	mov     a, adc_val0[0]
+0627	40BA	mov     rb[17], a
+0628	474E	mov     a, rg10
+0629	40C1	mov     rb[24], a
+062A	474F	mov     a, rf10
+062B	40C5	mov     rb[28], a
+062C	4750	mov     a, re10
+062D	40C4	mov     rb[27], a
+062E	4751	mov     a, rd10
+062F	40C3	mov     rb[26], a
+0630	235A	call    L035A
+0631	4740	mov     a, rb[23]
+0632	4099	mov     adc_val0[3], a
+0633	473C	mov     a, rb[19]
+0634	4098	mov     adc_val0[2], a
+0635	473B	mov     a, rb[18]
+0636	4097	mov     adc_val0[1], a
+0637	473A	mov     a, rb[17]
+0638	4096	mov     adc_val0[0], a
+				;82				
+				;83				itoa(adc_val0, c);
+				_L31:
+0639	4716	mov     a, adc_val0[0]
+063A	40D1	mov     rd10, a
+063B	4717	mov     a, adc_val0[1]
+063C	40D0	mov     re10, a
+063D	4718	mov     a, adc_val0[2]
+063E	40CF	mov     rf10, a
+063F	4719	mov     a, adc_val0[3]
+0640	40CE	mov     rg10, a
+0641	0FEE	mov     a, EEH
+0642	40EA	mov     s, a
+0643	0F00	mov     a, 0H
+0644	40EB	mov     s[1], a
+0645	474E	mov     a, rg10
+0646	40C0	mov     rb[23], a
+0647	474F	mov     a, rf10
+0648	40BC	mov     rb[19], a
+0649	4750	mov     a, re10
+064A	40BB	mov     rb[18], a
+064B	4751	mov     a, rd10
+064C	40BA	mov     rb[17], a
+064D	232D	call    L032D
+064E	4740	mov     a, rb[23]
+064F	40CE	mov     rg10, a
+0650	473C	mov     a, rb[19]
+0651	40CF	mov     rf10, a
+				L0652:
+0652	473B	mov     a, rb[18]
+0653	40D0	mov     re10, a
+0654	473A	mov     a, rb[17]
+0655	40D1	mov     rd10, a
+0656	4751	mov     a, rd10
+0657	40E8	mov     n, a
+0658	4750	mov     a, re10
+0659	40E9	mov     n[1], a
+065A	63A3	call    _itoa
+				;84				UART_PUT_STRING(c);
+065B	5F4A	clr     ra10
+				_L33:
+065C	0FEE	mov     a, EEH
+065D	40CB	mov     rc10, a
+065E	0F00	mov     a, 0H
+065F	40D1	mov     rd10, a
+0660	474A	mov     a, ra10
+0661	434B	add     a, rc10
+0662	0083	mov     MP1, a
+0663	1F05	clr     ACC
+0664	5351	adc     a, rd10
+0665	0081	mov     MP0, a
+0666	6410	call    L0C10
+0667	40CC	mov     rb10, a
+0668	50CC	sz      rb10
+0669	2E6B	jmp     _L35
+066A	2E71	jmp     _L38
+				_L35:
+				_LI5:
+066B	3855	snz     TXIF
+066C	2E6B	jmp     _L35
+066D	474C	mov     a, rb10
+066E	00D9	mov     TXR_RXR, a
+066F	54CA	inc     ra10
+0670	2E5C	jmp     _L33
+				_L38:
+0671	3855	snz     TXIF
+0672	2E71	jmp     _L38
+0673	1F59	clr     TXR_RXR
+				;85				UART_NEW_LINE;
+0674	5F4A	clr     ra10
+				_L39:
+0675	0F1A	mov     a, 1AH
+0676	434A	add     a, ra10
+0677	0083	mov     MP1, a
+0678	0F80	mov     a, 80H
+0679	1F01	clr     MP0
+067A	1381	adcm    a, MP0
+067B	6410	call    L0C10
+067C	40CC	mov     rb10, a
+067D	50CC	sz      rb10
+067E	2E80	jmp     _L41
+067F	2E86	jmp     _L44
+				_L41:
+				_LI6:
+0680	3855	snz     TXIF
+0681	2E80	jmp     _L41
+0682	474C	mov     a, rb10
+0683	00D9	mov     TXR_RXR, a
+0684	54CA	inc     ra10
+0685	2E75	jmp     _L39
+				_L44:
+0686	3855	snz     TXIF
+0687	2E86	jmp     _L44
+0688	1F59	clr     TXR_RXR
+				;86				ac = (uint16_t) adc_val0;
+0689	4719	mov     a, adc_val0[3]
+068A	40C0	mov     rb[23], a
+068B	4718	mov     a, adc_val0[2]
+068C	40BC	mov     rb[19], a
+068D	4717	mov     a, adc_val0[1]
+068E	40BB	mov     rb[18], a
+068F	4716	mov     a, adc_val0[0]
+0690	40BA	mov     rb[17], a
+0691	232D	call    L032D
+0692	4740	mov     a, rb[23]
+0693	40CE	mov     rg10, a
+0694	473C	mov     a, rb[19]
+0695	40CF	mov     rf10, a
+0696	473B	mov     a, rb[18]
+0697	40D0	mov     re10, a
+0698	473A	mov     a, rb[17]
+0699	40D1	mov     rd10, a
+069A	4751	mov     a, rd10
+069B	4094	mov     ac[0], a
+069C	4750	mov     a, re10
+069D	4095	mov     ac[1], a
+				;87				
+				;88				if (ac > maxAC)	maxAC = ac;
+069E	4712	mov     a, maxAC[0]
+069F	4214	sub     a, ac[0]
+06A0	4713	mov     a, maxAC[1]
+06A1	5215	sbc     a, ac[1]
+06A2	3C0A	sz      C
+06A3	2EA9	jmp     _L45
+06A4	4714	mov     a, ac[0]
+06A5	4092	mov     maxAC[0], a
+06A6	4715	mov     a, ac[1]
+06A7	4093	mov     maxAC[1], a
+06A8	2EB3	jmp     _L46
+				;89				else if (ac < minAC)	minAC = ac;
+				_L45:
+06A9	4714	mov     a, ac[0]
+06AA	4210	sub     a, minAC[0]
+06AB	4715	mov     a, ac[1]
+06AC	5211	sbc     a, minAC[1]
+06AD	3C0A	sz      C
+06AE	2EB3	jmp     _L46
+06AF	4714	mov     a, ac[0]
+06B0	4090	mov     minAC[0], a
+06B1	4715	mov     a, ac[1]
+06B2	4091	mov     minAC[1], a
+				;90				
+				;91				
+				;92				if (!maxFlag && ac > CRIT_MAX_AC)
+				_L46:
+06B3	4703	mov     a, maxFlag[0]
+06B4	40F3	mov     i, a
+06B5	50F3	sz      i
+06B6	2EC4	jmp     _L47
+06B7	0FF0	mov     a, F0H
+06B8	4214	sub     a, ac[0]
+06B9	0F00	mov     a, 0H
+06BA	5215	sbc     a, ac[1]
+06BB	3C0A	sz      C
+06BC	2EC4	jmp     _L47
+				;93				{
+				;94					// take a snapshot of the time
+				;95					maxFlag = 1;
+06BD	0F01	mov     a, 1H
+06BE	4083	mov     maxFlag[0], a
+				;96					maxTime = runtime_counter;
+06BF	4700	mov     a, runtime_counter[0]
+06C0	4086	mov     maxTime[0], a
+06C1	4701	mov     a, runtime_counter[1]
+06C2	4087	mov     maxTime[1], a
+06C3	2F0A	jmp     _L48
+				;97				}
+				;98				else if (!minFlag && ac < CRIT_MIN_AC)
+				_L47:
+06C4	4702	mov     a, minFlag[0]
+06C5	40F4	mov     i[1], a
+06C6	50F4	sz      i[1]
+06C7	2ED5	jmp     _L49
+06C8	0FBD	mov     a, BDH
+06C9	4214	sub     a, ac[0]
+06CA	0F00	mov     a, 0H
+06CB	5215	sbc     a, ac[1]
+06CC	380A	snz     C
+06CD	2ED5	jmp     _L49
+				;99				{
+				;100					// take a snapshot of the time
+				;101					minFlag = 1;
+06CE	0F01	mov     a, 1H
+06CF	4082	mov     minFlag[0], a
+				;102					minTime = runtime_counter;
+06D0	4700	mov     a, runtime_counter[0]
+06D1	4084	mov     minTime[0], a
+06D2	4701	mov     a, runtime_counter[1]
+06D3	4085	mov     minTime[1], a
+06D4	2F0A	jmp     _L48
+				;103				}	
+				;104				else
+				;105				{
+				;106					if (maxFlag && ac < CRIT_MAX_AC) {maxTime = ((runtime_counter - maxTime)<<1); maxFlag = 0; runtime_counter = 0;}
+				_L49:
+06D5	50F3	sz      i
+06D6	2ED8	jmp     _LI7
+06D7	2EEF	jmp     _L50
+				_LI7:
+06D8	0FEF	mov     a, EFH
+06D9	4214	sub     a, ac[0]
+06DA	0F00	mov     a, 0H
+06DB	5215	sbc     a, ac[1]
+06DC	380A	snz     C
+06DD	2EEF	jmp     _L50
+06DE	4700	mov     a, runtime_counter[0]
+06DF	4206	sub     a, maxTime[0]
+06E0	40D1	mov     rd10, a
+06E1	4701	mov     a, runtime_counter[1]
+06E2	5207	sbc     a, maxTime[1]
+06E3	40D0	mov     re10, a
+06E4	4751	mov     a, rd10
+06E5	40CC	mov     rb10, a
+06E6	4750	mov     a, re10
+06E7	40CB	mov     rc10, a
+06E8	340A	clr     C
+06E9	5A4C	rlca    rb10
+06EA	4086	mov     maxTime[0], a
+06EB	5A4B	rlca    rc10
+06EC	4087	mov     maxTime[1], a
+06ED	5F03	clr     maxFlag[0]
+06EE	2F08	jmp     _L60
+				;107					else if (minFlag && ac > CRIT_MIN_AC) {minTime = ((runtime_counter - minTime)<<1) ; minFlag = 0; runtime_counter = 0;}
+				_L50:
+06EF	50F4	sz      i[1]
+06F0	2EF2	jmp     _LI8
+06F1	2F0A	jmp     _L48
+				_LI8:
+06F2	0FBE	mov     a, BEH
+06F3	4214	sub     a, ac[0]
+06F4	0F00	mov     a, 0H
+06F5	5215	sbc     a, ac[1]
+06F6	3C0A	sz      C
+06F7	2F0A	jmp     _L48
+06F8	4700	mov     a, runtime_counter[0]
+06F9	4204	sub     a, minTime[0]
+06FA	40D1	mov     rd10, a
+06FB	4701	mov     a, runtime_counter[1]
+06FC	5205	sbc     a, minTime[1]
+06FD	40D0	mov     re10, a
+06FE	4751	mov     a, rd10
+06FF	40CC	mov     rb10, a
+0700	4750	mov     a, re10
+0701	40CB	mov     rc10, a
+0702	340A	clr     C
+0703	5A4C	rlca    rb10
+0704	4084	mov     minTime[0], a
+0705	5A4B	rlca    rc10
+0706	4085	mov     minTime[1], a
+0707	5F02	clr     minFlag[0]
+				_L60:
+0708	5F00	clr     runtime_counter[0]
+0709	5F01	clr     runtime_counter[1]
+				;108				}
+				;109					
+				;110				adc_signal = 1;
+				_L48:
+070A	0F01	mov     a, 1H
+070B	4089	mov     adc_signal[0], a
+				;111				TOG_BIT(SYS_INDICATION_PORT, SYS_INDICATION_PIN);
+070C	0F04	mov     a, 4H
+070D	04C1	xorm    a, PC
+				;112				tmp = 0;
+070E	5F0A	clr     tmp[0]
+070F	5F0B	clr     tmp[1]
+0710	5F0C	clr     tmp[2]
+0711	5F0D	clr     tmp[3]
+				;113				counter = 0;
+0712	5F0E	clr     counter[0]
+0713	5F0F	clr     counter[1]
+				;114				ADC_ON(0);
+0714	3044	set     ACE0
+0715	32A2	set     ADCEN
+				_L5:
+0716	0003	ret
+				;115			}
+				;116		}
+				;117	}
+				;118	
+				;119	uint16_t ADC_getValue(uint8_t adc_channel)
+				;120	{
+				_ADC_getValue:
+				_ADC_getValue:
+0717	40E0	mov     adc_channel[0], a
+				;121		return ac;
+				;122	}
+0718	4714	mov     a, ac[0]
+0719	40CA	mov     ra10, a
+071A	4715	mov     a, ac[1]
+071B	40CC	mov     rb10, a
+071C	0003	ret
+				;123	
+				;124	uint16_t ADC_getMax(void)
+				;125	{
+				;126		return maxAC;
+				;127	}
+				_ADC_getMax:
+				_ADC_getMax:
+071D	4712	mov     a, maxAC[0]
+071E	40CA	mov     ra10, a
+071F	4713	mov     a, maxAC[1]
+0720	40CC	mov     rb10, a
+0721	0003	ret
+				;128	
+				;129	uint16_t ADC_getMin(void)
+				;130	{
+				;131		return minAC;
+				;132	}
+				_ADC_getMin:
+				_ADC_getMin:
+0722	4710	mov     a, minAC[0]
+0723	40CA	mov     ra10, a
+0724	4711	mov     a, minAC[1]
+0725	40CC	mov     rb10, a
+0726	0003	ret
+				;133	
+				;134	uint16_t ADC_getMaxTime(void)
+				;135	{
+				;136		return maxTime;
+				;137	}
+				_ADC_getMaxTime:
+				_ADC_getMaxTime:
+0727	4706	mov     a, maxTime[0]
+0728	40CA	mov     ra10, a
+0729	4707	mov     a, maxTime[1]
+072A	40CC	mov     rb10, a
+072B	0003	ret
+				;138	
+				;139	uint16_t ADC_getMinTime(void)
+				;140	{
+				;141		return minTime;
+				;142	}
+				_ADC_getMinTime:
+				_ADC_getMinTime:
+072C	4704	mov     a, minTime[0]
+072D	40CA	mov     ra10, a
+072E	4705	mov     a, minTime[1]
+072F	40CC	mov     rb10, a
+0730	0003	ret
+				;143	
+				;144	uint8_t ADC_getSignal(void)
+				;145	{
+				;146		return adc_signal;
+				_ADC_getSignal:
+				_ADC_getSignal:
+0731	4709	mov     a, adc_signal[0]
+0732	40CA	mov     ra10, a
+				;147	}
+0733	474A	mov     a, ra10
+0734	0003	ret
+				;148	
+				;149	void ADC_setSignal(uint8_t signal)
+				;150	{
+				_ADC_setSignal:
+				_ADC_setSignal:
+0735	40CA	mov     ra10, a
+				;151		adc_signal = signal;
+0736	474A	mov     a, ra10
+0737	4089	mov     adc_signal[0], a
+0738	0003	ret
+				;152	}
+				;153	
+				;154	uint16_t ADC_getCount(void)
+				;155	{
+				;156		return counter;
+				;157	}
+				_ADC_getCount:
+				_ADC_getCount:
+0739	470E	mov     a, counter[0]
+073A	40A8	mov     ra, a
+073B	470F	mov     a, counter[1]
+073C	40A9	mov     rb, a
+073D	0003	ret
+				;158	
+				;159	#if 0
+				;160	void ADC_setCount(uint16_t count)
+				;161	{
+				;162		counter = count;
+				;163	}
+				;164	#endif
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\eeprom.c
+				;1	// NOTE: EEPROM_WRITE here waits for the write operation to compelete that takes up to 
+				;2	//		 20 msec for 4 write operations. if the app. needs to poll&pass without waiting
+				;3	//		 you need to changet the EEPROM_WRITE macro from main.h
+				;4	
+				;5	#include "config.h"
+				;6	#include "main_ht66f0185.h"
+				;7	#include "HT66F0185.h"
+				;8	#include "util.h"
+				;9	#include "adc.h"
+				;10	#include "uart.h"
+				;11	#include "eeprom.h"
+				;12	#include "port.h"
+				;13	
+				;14	volatile static uint8_t stSCTR_addr = 0x00;		// address pointer in the 1st sector
+				;15	volatile static uint8_t ndSCTR_addr = 0x00;		// address pointer in the 2nd sector
+				;16	volatile static uint8_t stSCTR_data = 0x00;		// samples
+				;17	volatile static uint8_t ndSCTR_data = 0x00;		// max/min/average data
+				;18	static uint8_t flag = 0;
+				;19	
+				;20	
+				;21	void EEPROM_init(void)
+				;22	{
+				;23		stSCTR_addr = 0;
+				_EEPROM_init:
+				_EEPROM_init:
+073E	5F1E	clr     stSCTR_addr[0]
+				;24		stSCTR_data = 0;
+073F	5F1C	clr     stSCTR_data[0]
+				;25		ndSCTR_addr = 120;
+0740	0F78	mov     a, 78H
+0741	409D	mov     ndSCTR_addr[0], a
+				;26		ndSCTR_data = 0;
+0742	5F1B	clr     ndSCTR_data[0]
+				;27		flag = 0;
+0743	5F1A	clr     flag[0]
+0744	0003	ret
+				;28	}
+				;29	
+				;30			
+				;31	void EEPROM_update(void)
+				;32	{
+				;33		uint8_t i = 0;
+				;34		uint8_t cac[5];
+				;35		if (ADC_getSignal() == 0) return ;
+				_EEPROM_update:
+				_EEPROM_update:
+075F	2731	call    _ADC_getSignal
+0760	40CA	mov     ra10, a
+0761	50CA	sz      ra10
+0762	2F64	jmp     _LI1
+0763	6A0F	jmp     _L8
+				;36		
+				;37		if (!flag) {	UART_PUT_STRING("Address Voltage");UART_NEW_LINE; flag =1;}
+				_LI1:
+0764	509A	sz      flag[0]
+0765	2F92	jmp     _L10
+0766	5F4A	clr     ra10
+				_L11:
+0767	0FA4	mov     a, A4H
+0768	434A	add     a, ra10
+0769	0083	mov     MP1, a
+076A	0F87	mov     a, 87H
+076B	1F01	clr     MP0
+076C	1381	adcm    a, MP0
+076D	6410	call    L0C10
+076E	40CC	mov     rb10, a
+076F	50CC	sz      rb10
+0770	2F72	jmp     _L13
+0771	2F78	jmp     _L16
+				_L13:
+				_LI2:
+0772	3855	snz     TXIF
+0773	2F72	jmp     _L13
+0774	474C	mov     a, rb10
+0775	00D9	mov     TXR_RXR, a
+0776	54CA	inc     ra10
+0777	2F67	jmp     _L11
+				_L16:
+0778	3855	snz     TXIF
+0779	2F78	jmp     _L16
+077A	1F59	clr     TXR_RXR
+077B	5F4A	clr     ra10
+				_L17:
+077C	0FB4	mov     a, B4H
+077D	434A	add     a, ra10
+077E	0083	mov     MP1, a
+077F	0F87	mov     a, 87H
+0780	1F01	clr     MP0
+0781	1381	adcm    a, MP0
+0782	6410	call    L0C10
+0783	40CC	mov     rb10, a
+0784	50CC	sz      rb10
+0785	2F87	jmp     _L19
+0786	2F8D	jmp     _L22
+				_L19:
+				_LI3:
+0787	3855	snz     TXIF
+0788	2F87	jmp     _L19
+0789	474C	mov     a, rb10
+078A	00D9	mov     TXR_RXR, a
+078B	54CA	inc     ra10
+078C	2F7C	jmp     _L17
+				_L22:
+078D	3855	snz     TXIF
+078E	2F8D	jmp     _L22
+078F	1F59	clr     TXR_RXR
+0790	0F01	mov     a, 1H
+0791	409A	mov     flag[0], a
+				;38		if (UART_getSignal())
+				_L10:
+0792	62FC	call    _UART_getSignal
+0793	40CA	mov     ra10, a
+0794	50CA	sz      ra10
+0795	2F97	jmp     _LI4
+0796	68EF	jmp     _L23
+				_LI4:
+0797	0F81	mov     a, 81H
+0798	40F4	mov     i[1], a
+0799	5F75	clr     i[2]
+079A	5F73	clr     i[0]
+				_L24:
+079B	0FFF	mov     a, FFH
+079C	4374	add     a, i[1]
+079D	40F6	mov     i[3], a
+079E	0FFF	mov     a, FFH
+079F	5375	adc     a, i[2]
+07A0	40F7	mov     i[4], a
+				;39		{
+				;40			for (i =0; i <= EEPROM_2ND_SECTOR_END; i++)
+07A1	4776	mov     a, i[3]
+07A2	4577	or      a, i[4]
+07A3	3D0A	sz      Z
+07A4	68BF	jmp     _L154
+08B9	54F3	inc     i[0]
+08BA	4776	mov     a, i[3]
+08BB	40F4	mov     i[1], a
+08BC	4777	mov     a, i[4]
+08BD	40F5	mov     i[2], a
+08BE	2F9B	jmp     _L24
+				_L154:
+08BF	5F4A	clr     ra10
+				;41			{
+				;42				if (i == 0)
+07A5	5F4A	clr     ra10
+07A6	50F3	sz      i[0]
+07A7	2FD1	jmp     _L155
+				;43				{
+				;44					UART_PUT_STRING("----------START_1ST_SECTOR----------");
+				_L26:
+07A8	0FB7	mov     a, B7H
+07A9	434A	add     a, ra10
+07AA	0083	mov     MP1, a
+07AB	0F87	mov     a, 87H
+07AC	1F01	clr     MP0
+07AD	1381	adcm    a, MP0
+07AE	6410	call    L0C10
+07AF	40CC	mov     rb10, a
+07B0	50CC	sz      rb10
+07B1	2FB3	jmp     _L28
+07B2	2FB9	jmp     _L31
+				_L28:
+				_LI5:
+07B3	3855	snz     TXIF
+07B4	2FB3	jmp     _L28
+07B5	474C	mov     a, rb10
+07B6	00D9	mov     TXR_RXR, a
+07B7	54CA	inc     ra10
+07B8	2FA8	jmp     _L26
+				_L31:
+07B9	3855	snz     TXIF
+07BA	2FB9	jmp     _L31
+07BB	1F59	clr     TXR_RXR
+				;45					UART_PUT_STRING("\n\r");
+07BC	5F4A	clr     ra10
+				_L32:
+07BD	0FB4	mov     a, B4H
+07BE	434A	add     a, ra10
+07BF	0083	mov     MP1, a
+07C0	0F87	mov     a, 87H
+07C1	1F01	clr     MP0
+07C2	1381	adcm    a, MP0
+07C3	6410	call    L0C10
+07C4	40CC	mov     rb10, a
+07C5	50CC	sz      rb10
+07C6	2FC8	jmp     _L34
+07C7	2FCE	jmp     _L37
+				_L34:
+				_LI6:
+07C8	3855	snz     TXIF
+07C9	2FC8	jmp     _L34
+07CA	474C	mov     a, rb10
+07CB	00D9	mov     TXR_RXR, a
+07CC	54CA	inc     ra10
+07CD	2FBD	jmp     _L32
+				_L37:
+07CE	3855	snz     TXIF
+07CF	2FCE	jmp     _L37
+07D0	682C	jmp     _L152
+				;46				}
+				;47				else if (i == 120)
+				_L155:
+07D1	5F4A	clr     ra10
+07D2	4773	mov     a, i[0]
+07D3	0A78	sub     a, 78H
+07D4	390A	snz     Z
+07D5	2FFF	jmp     _L156
+				;48				{
+				;49					UART_PUT_STRING("----------START_2ND_SECTOR----------");
+				_L40:
+07D6	0FDC	mov     a, DCH
+07D7	434A	add     a, ra10
+07D8	0083	mov     MP1, a
+07D9	0F87	mov     a, 87H
+07DA	1F01	clr     MP0
+07DB	1381	adcm    a, MP0
+07DC	6410	call    L0C10
+07DD	40CC	mov     rb10, a
+07DE	50CC	sz      rb10
+07DF	2FE1	jmp     _L42
+07E0	2FE7	jmp     _L45
+				_L42:
+				_LI7:
+07E1	3855	snz     TXIF
+07E2	2FE1	jmp     _L42
+07E3	474C	mov     a, rb10
+07E4	00D9	mov     TXR_RXR, a
+07E5	54CA	inc     ra10
+07E6	2FD6	jmp     _L40
+				_L45:
+07E7	3855	snz     TXIF
+07E8	2FE7	jmp     _L45
+07E9	1F59	clr     TXR_RXR
+				;50					UART_PUT_STRING("\n\r");
+07EA	5F4A	clr     ra10
+				_L46:
+07EB	0FB4	mov     a, B4H
+07EC	434A	add     a, ra10
+07ED	0083	mov     MP1, a
+07EE	0F87	mov     a, 87H
+07EF	1F01	clr     MP0
+07F0	1381	adcm    a, MP0
+07F1	6410	call    L0C10
+07F2	40CC	mov     rb10, a
+07F3	50CC	sz      rb10
+07F4	2FF6	jmp     _L48
+07F5	2FFC	jmp     _L51
+				_L48:
+				_LI8:
+07F6	3855	snz     TXIF
+07F7	2FF6	jmp     _L48
+07F8	474C	mov     a, rb10
+07F9	00D9	mov     TXR_RXR, a
+07FA	54CA	inc     ra10
+07FB	2FEB	jmp     _L46
+				_L51:
+07FC	3855	snz     TXIF
+07FD	2FFC	jmp     _L51
+07FE	682C	jmp     _L152
+				;51				}
+				;52				else if (i == 127)
+				_L156:
+07FF	5F4A	clr     ra10
+0800	4773	mov     a, i[0]
+0801	0A7F	sub     a, 7FH
+0802	390A	snz     Z
+0803	682D	jmp     _L38
+				;53				{
+				;54					UART_PUT_STRING("----------ADDR._POINTER----------");
+				_L52:
+0804	0F01	mov     a, 1H
+0805	434A	add     a, ra10
+0806	0083	mov     MP1, a
+0807	0F88	mov     a, 88H
+0808	1F01	clr     MP0
+0809	1381	adcm    a, MP0
+080A	6410	call    L0C10
+080B	40CC	mov     rb10, a
+080C	50CC	sz      rb10
+080D	680F	jmp     _L54
+080E	6815	jmp     _L57
+				_L54:
+				_LI9:
+080F	3855	snz     TXIF
+0810	680F	jmp     _L54
+0811	474C	mov     a, rb10
+0812	00D9	mov     TXR_RXR, a
+0813	54CA	inc     ra10
+0814	6804	jmp     _L52
+				_L57:
+0815	3855	snz     TXIF
+0816	6815	jmp     _L57
+0817	1F59	clr     TXR_RXR
+				;55					UART_PUT_STRING("\n\r");
+0818	5F4A	clr     ra10
+				_L58:
+0819	0FB4	mov     a, B4H
+081A	434A	add     a, ra10
+081B	0083	mov     MP1, a
+081C	0F87	mov     a, 87H
+081D	1F01	clr     MP0
+081E	1381	adcm    a, MP0
+081F	6410	call    L0C10
+0820	40CC	mov     rb10, a
+0821	50CC	sz      rb10
+0822	6824	jmp     _L60
+0823	682A	jmp     _L63
+				_L60:
+				_LI10:
+0824	3855	snz     TXIF
+0825	6824	jmp     _L60
+0826	474C	mov     a, rb10
+0827	00D9	mov     TXR_RXR, a
+0828	54CA	inc     ra10
+0829	6819	jmp     _L58
+				_L63:
+082A	3855	snz     TXIF
+082B	682A	jmp     _L63
+				_L152:
+082C	1F59	clr     TXR_RXR
+				;56				}
+				;57				EEPROM_setAddr(i);
+				_L38:
+082D	4773	mov     a, i[0]
+082E	2757	call    _EEPROM_setAddr
+				;58				itoa(i, cac);
+082F	0FEE	mov     a, EEH
+0830	40EA	mov     s, a
+0831	0F00	mov     a, 0H
+0832	40EB	mov     s[1], a
+0833	0F81	mov     a, 81H
+0834	4274	sub     a, i[1]
+0835	40CA	mov     ra10, a
+0836	0F00	mov     a, 0H
+0837	5275	sbc     a, i[2]
+0838	40CC	mov     rb10, a
+0839	474A	mov     a, ra10
+083A	40E8	mov     n, a
+083B	474C	mov     a, rb10
+083C	40E9	mov     n[1], a
+083D	63A3	call    _itoa
+				;59				UART_PUT_STRING(cac);
+083E	5F4A	clr     ra10
+				_L64:
+083F	0FEE	mov     a, EEH
+0840	40CC	mov     rb10, a
+0841	0F00	mov     a, 0H
+0842	40CB	mov     rc10, a
+0843	474A	mov     a, ra10
+0844	434C	add     a, rb10
+0845	0083	mov     MP1, a
+0846	1F05	clr     ACC
+0847	534B	adc     a, rc10
+0848	0081	mov     MP0, a
+0849	6410	call    L0C10
+084A	40CC	mov     rb10, a
+084B	50CC	sz      rb10
+084C	684E	jmp     _L66
+084D	6854	jmp     _L69
+				_L66:
+				_LI11:
+084E	3855	snz     TXIF
+084F	684E	jmp     _L66
+0850	474C	mov     a, rb10
+0851	00D9	mov     TXR_RXR, a
+0852	54CA	inc     ra10
+0853	683F	jmp     _L64
+				_L69:
+0854	3855	snz     TXIF
+0855	6854	jmp     _L69
+0856	1F59	clr     TXR_RXR
+				;60				UART_PUT_STRING(" ");
+0857	5F4A	clr     ra10
+				_L70:
+0858	0F23	mov     a, 23H
+0859	434A	add     a, ra10
+085A	0083	mov     MP1, a
+085B	0F88	mov     a, 88H
+085C	1F01	clr     MP0
+085D	1381	adcm    a, MP0
+085E	6410	call    L0C10
+085F	40CC	mov     rb10, a
+0860	50CC	sz      rb10
+0861	6863	jmp     _L72
+0862	6869	jmp     _L75
+				_L72:
+				_LI12:
+0863	3855	snz     TXIF
+0864	6863	jmp     _L72
+0865	474C	mov     a, rb10
+0866	00D9	mov     TXR_RXR, a
+0867	54CA	inc     ra10
+0868	6858	jmp     _L70
+				_L75:
+0869	3855	snz     TXIF
+086A	6869	jmp     _L75
+086B	1F59	clr     TXR_RXR
+088B	5F4A	clr     ra10
+				;61				if (i > 121 && i != 126)
+086C	0F79	mov     a, 79H
+086D	4273	sub     a, i[0]
+086E	3C0A	sz      C
+086F	687E	jmp     _L76
+0870	4773	mov     a, i[0]
+0871	0A7E	sub     a, 7EH
+0872	3D0A	sz      Z
+0873	687E	jmp     _L76
+				;62					itoa(EEPROM_getData(), cac);
+0874	2745	call    _EEPROM_getData
+0875	40CA	mov     ra10, a
+0876	0FEE	mov     a, EEH
+0877	40EA	mov     s, a
+0878	0F00	mov     a, 0H
+0879	40EB	mov     s[1], a
+087A	474A	mov     a, ra10
+087B	40E8	mov     n, a
+087C	5F69	clr     n[1]
+087D	688A	jmp     _L153
+				;63				else
+				;64					itoa((EEPROM_getData()<<1), cac);
+				_L76:
+087E	2745	call    _EEPROM_getData
+087F	40CC	mov     rb10, a
+0880	0FEE	mov     a, EEH
+0881	40EA	mov     s, a
+0882	0F00	mov     a, 0H
+0883	40EB	mov     s[1], a
+0884	5F4B	clr     rc10
+0885	340A	clr     C
+0886	5A4C	rlca    rb10
+0887	40E8	mov     n, a
+0888	5A4B	rlca    rc10
+0889	40E9	mov     n[1], a
+				_L153:
+088A	63A3	call    _itoa
+				;65					
+				;66				UART_PUT_STRING(cac);
+				_L78:
+088C	0FEE	mov     a, EEH
+088D	40CC	mov     rb10, a
+088E	0F00	mov     a, 0H
+088F	40CB	mov     rc10, a
+0890	474A	mov     a, ra10
+0891	434C	add     a, rb10
+0892	0083	mov     MP1, a
+0893	1F05	clr     ACC
+0894	534B	adc     a, rc10
+0895	0081	mov     MP0, a
+0896	6410	call    L0C10
+0897	40CC	mov     rb10, a
+0898	50CC	sz      rb10
+0899	689B	jmp     _L80
+089A	68A1	jmp     _L83
+				_L80:
+				_LI13:
+089B	3855	snz     TXIF
+089C	689B	jmp     _L80
+089D	474C	mov     a, rb10
+089E	00D9	mov     TXR_RXR, a
+089F	54CA	inc     ra10
+08A0	688C	jmp     _L78
+				_L83:
+08A1	3855	snz     TXIF
+08A2	68A1	jmp     _L83
+08A3	1F59	clr     TXR_RXR
+				;67				UART_PUT_STRING("\n\r");
+08A4	5F4A	clr     ra10
+				_L84:
+08A5	0FB4	mov     a, B4H
+08A6	434A	add     a, ra10
+08A7	0083	mov     MP1, a
+08A8	0F87	mov     a, 87H
+08A9	1F01	clr     MP0
+08AA	1381	adcm    a, MP0
+08AB	6410	call    L0C10
+08AC	40CC	mov     rb10, a
+08AD	50CC	sz      rb10
+08AE	68B0	jmp     _L86
+08AF	68B6	jmp     _L89
+				_L86:
+				_LI14:
+08B0	3855	snz     TXIF
+08B1	68B0	jmp     _L86
+08B2	474C	mov     a, rb10
+08B3	00D9	mov     TXR_RXR, a
+08B4	54CA	inc     ra10
+08B5	68A5	jmp     _L84
+				_L89:
+08B6	3855	snz     TXIF
+08B7	68B6	jmp     _L89
+08B8	1F59	clr     TXR_RXR
+				;68			}
+				;69			UART_PUT_STRING("------------END------------");
+				_L91:
+08C0	0F25	mov     a, 25H
+08C1	434A	add     a, ra10
+08C2	0083	mov     MP1, a
+08C3	0F88	mov     a, 88H
+08C4	1F01	clr     MP0
+08C5	1381	adcm    a, MP0
+08C6	6410	call    L0C10
+08C7	40CC	mov     rb10, a
+08C8	50CC	sz      rb10
+08C9	68CB	jmp     _L93
+08CA	68D1	jmp     _L96
+				_L93:
+				_LI15:
+08CB	3855	snz     TXIF
+08CC	68CB	jmp     _L93
+08CD	474C	mov     a, rb10
+08CE	00D9	mov     TXR_RXR, a
+08CF	54CA	inc     ra10
+08D0	68C0	jmp     _L91
+				_L96:
+08D1	3855	snz     TXIF
+08D2	68D1	jmp     _L96
+08D3	1F59	clr     TXR_RXR
+				;70			UART_PUT_STRING("\n\r");
+08D4	5F4A	clr     ra10
+				_L97:
+08D5	0FB4	mov     a, B4H
+08D6	434A	add     a, ra10
+08D7	0083	mov     MP1, a
+08D8	0F87	mov     a, 87H
+08D9	1F01	clr     MP0
+08DA	1381	adcm    a, MP0
+08DB	6410	call    L0C10
+08DC	40CC	mov     rb10, a
+08DD	50CC	sz      rb10
+08DE	68E0	jmp     _L99
+08DF	68E6	jmp     _L102
+				_L99:
+				_LI16:
+08E0	3855	snz     TXIF
+08E1	68E0	jmp     _L99
+08E2	474C	mov     a, rb10
+08E3	00D9	mov     TXR_RXR, a
+08E4	54CA	inc     ra10
+08E5	68D5	jmp     _L97
+				_L102:
+08E6	3855	snz     TXIF
+08E7	68E6	jmp     _L102
+08E8	1F59	clr     TXR_RXR
+				;71			EEPROM_setAddr(EEPROM_1ST_SECTOR_START);
+08E9	0F00	mov     a, 0H
+08EA	2757	call    _EEPROM_setAddr
+				;72			//UART_setSignal(0);
+				;73			ADC_setSignal(0);
+08EB	0F00	mov     a, 0H
+08EC	2735	call    _ADC_setSignal
+				;74			CLR_BIT(SYS_INDICATION_PORT, SYS_INDICATION_PIN);
+08ED	3541	clr     PC2
+08EE	6A0F	jmp     _L8
+				;75		}
+				;76		else
+				;77		{
+				;78			stSCTR_data = (uint8_t)((uint16_t)ADC_getValue(ADC_CHANNEL0) >> 1);
+				_L23:
+08EF	0F00	mov     a, 0H
+08F0	2717	call    _ADC_getValue
+08F1	340A	clr     C
+08F2	5BCC	rrc     rb10
+08F3	5BCA	rrc     ra10
+08F4	474A	mov     a, ra10
+08F5	409C	mov     stSCTR_data[0], a
+				;79			EEPROM_WRITE(stSCTR_addr, stSCTR_data);
+08F6	471E	mov     a, stSCTR_addr[0]
+08F7	009E	mov     EEA, a
+08F8	471C	mov     a, stSCTR_data[0]
+08F9	009F	mov     EED, a
+08FA	0F40	mov     a, 40H
+08FB	0083	mov     MP1, a
+08FC	0F01	mov     a, 1H
+08FD	0084	mov     BP, a
+08FE	340E	clr     EMI
+08FF	3182	set     __iar1[0].3
+0900	3102	set     __iar1[0].2
+0901	300E	set     EMI
+				_L105:
+0902	3D02	sz      __iar1[0].2
+0903	6902	jmp     _L105
+0904	1F02	clr     __iar1[0]
+0905	1F04	clr     BP
+				;80			
+				;81			itoa(EEPROM_getAddr(), cac);
+0906	275B	call    _EEPROM_getAddr
+0907	40CA	mov     ra10, a
+0908	0FEE	mov     a, EEH
+0909	40EA	mov     s, a
+090A	0F00	mov     a, 0H
+090B	40EB	mov     s[1], a
+090C	474A	mov     a, ra10
+090D	40E8	mov     n, a
+090E	5F69	clr     n[1]
+090F	63A3	call    _itoa
+				;82			UART_PUT_STRING(cac);
+0910	5F4A	clr     ra10
+				_L106:
+0911	0FEE	mov     a, EEH
+0912	40CC	mov     rb10, a
+0913	0F00	mov     a, 0H
+0914	40CB	mov     rc10, a
+0915	474A	mov     a, ra10
+0916	434C	add     a, rb10
+0917	0083	mov     MP1, a
+0918	1F05	clr     ACC
+0919	534B	adc     a, rc10
+091A	0081	mov     MP0, a
+091B	6410	call    L0C10
+091C	40CC	mov     rb10, a
+091D	50CC	sz      rb10
+091E	6920	jmp     _L108
+091F	6926	jmp     _L111
+				_L108:
+				_LI17:
+0920	3855	snz     TXIF
+0921	6920	jmp     _L108
+0922	474C	mov     a, rb10
+0923	00D9	mov     TXR_RXR, a
+0924	54CA	inc     ra10
+0925	6911	jmp     _L106
+				_L111:
+0926	3855	snz     TXIF
+0927	6926	jmp     _L111
+0928	1F59	clr     TXR_RXR
+				;83			UART_PUT_STRING(" ");
+0929	5F4A	clr     ra10
+				_L112:
+092A	0F23	mov     a, 23H
+092B	434A	add     a, ra10
+092C	0083	mov     MP1, a
+092D	0F88	mov     a, 88H
+092E	1F01	clr     MP0
+092F	1381	adcm    a, MP0
+0930	6410	call    L0C10
+0931	40CC	mov     rb10, a
+0932	50CC	sz      rb10
+0933	6935	jmp     _L114
+0934	693B	jmp     _L117
+				_L114:
+				_LI18:
+0935	3855	snz     TXIF
+0936	6935	jmp     _L114
+0937	474C	mov     a, rb10
+0938	00D9	mov     TXR_RXR, a
+0939	54CA	inc     ra10
+093A	692A	jmp     _L112
+				_L117:
+093B	3855	snz     TXIF
+093C	693B	jmp     _L117
+093D	1F59	clr     TXR_RXR
+				;84			itoa((EEPROM_getData()<<1), cac);
+093E	2745	call    _EEPROM_getData
+093F	40CC	mov     rb10, a
+0940	0FEE	mov     a, EEH
+0941	40EA	mov     s, a
+0942	0F00	mov     a, 0H
+0943	40EB	mov     s[1], a
+0944	5F4B	clr     rc10
+0945	340A	clr     C
+0946	5A4C	rlca    rb10
+0947	40E8	mov     n, a
+0948	5A4B	rlca    rc10
+0949	40E9	mov     n[1], a
+094A	63A3	call    _itoa
+				;85			UART_PUT_STRING(cac);
+094B	5F4A	clr     ra10
+				_L118:
+094C	0FEE	mov     a, EEH
+094D	40CC	mov     rb10, a
+094E	0F00	mov     a, 0H
+094F	40CB	mov     rc10, a
+0950	474A	mov     a, ra10
+0951	434C	add     a, rb10
+0952	0083	mov     MP1, a
+0953	1F05	clr     ACC
+0954	534B	adc     a, rc10
+0955	0081	mov     MP0, a
+0956	6410	call    L0C10
+0957	40CC	mov     rb10, a
+0958	50CC	sz      rb10
+0959	695B	jmp     _L120
+095A	6961	jmp     _L123
+				_L120:
+				_LI19:
+095B	3855	snz     TXIF
+095C	695B	jmp     _L120
+095D	474C	mov     a, rb10
+095E	00D9	mov     TXR_RXR, a
+095F	54CA	inc     ra10
+0960	694C	jmp     _L118
+				_L123:
+0961	3855	snz     TXIF
+0962	6961	jmp     _L123
+0963	1F59	clr     TXR_RXR
+				;86			UART_NEW_LINE;
+0964	5F4A	clr     ra10
+				_L124:
+0965	0FB4	mov     a, B4H
+0966	434A	add     a, ra10
+0967	0083	mov     MP1, a
+0968	0F87	mov     a, 87H
+0969	1F01	clr     MP0
+096A	1381	adcm    a, MP0
+096B	6410	call    L0C10
+096C	40CC	mov     rb10, a
+096D	50CC	sz      rb10
+096E	6970	jmp     _L126
+096F	6976	jmp     _L129
+				_L126:
+				_LI20:
+0970	3855	snz     TXIF
+0971	6970	jmp     _L126
+0972	474C	mov     a, rb10
+0973	00D9	mov     TXR_RXR, a
+0974	54CA	inc     ra10
+0975	6965	jmp     _L124
+				_L129:
+0976	3855	snz     TXIF
+0977	6976	jmp     _L129
+0978	1F59	clr     TXR_RXR
+				;87			//UART_NEW_LINE;
+				;88			
+				;89			EEPROM_WRITE(127, stSCTR_addr);
+0979	0F7F	mov     a, 7FH
+097A	009E	mov     EEA, a
+097B	471E	mov     a, stSCTR_addr[0]
+097C	009F	mov     EED, a
+097D	0F40	mov     a, 40H
+097E	0083	mov     MP1, a
+097F	0F01	mov     a, 1H
+0980	0084	mov     BP, a
+0981	340E	clr     EMI
+0982	3182	set     __iar1[0].3
+0983	3102	set     __iar1[0].2
+0984	300E	set     EMI
+				_L131:
+0985	3D02	sz      __iar1[0].2
+0986	6985	jmp     _L131
+0987	1F02	clr     __iar1[0]
+0988	1F04	clr     BP
+				;90			
+				;91			
+				;92			ndSCTR_data = (uint8_t)((uint16_t)ADC_getMax() >> 1);
+0989	271D	call    _ADC_getMax
+098A	340A	clr     C
+098B	5BCC	rrc     rb10
+098C	5BCA	rrc     ra10
+098D	474A	mov     a, ra10
+098E	409B	mov     ndSCTR_data[0], a
+				;93			EEPROM_WRITE(ndSCTR_addr, ndSCTR_data);
+098F	471D	mov     a, ndSCTR_addr[0]
+0990	009E	mov     EEA, a
+0991	471B	mov     a, ndSCTR_data[0]
+0992	009F	mov     EED, a
+0993	0F40	mov     a, 40H
+0994	0083	mov     MP1, a
+0995	0F01	mov     a, 1H
+0996	0084	mov     BP, a
+0997	340E	clr     EMI
+0998	3182	set     __iar1[0].3
+0999	3102	set     __iar1[0].2
+099A	300E	set     EMI
+				_L133:
+099B	3D02	sz      __iar1[0].2
+099C	699B	jmp     _L133
+099D	1F02	clr     __iar1[0]
+099E	1F04	clr     BP
+				;94			ndSCTR_addr++;
+099F	549D	inc     ndSCTR_addr[0]
+				;95			
+				;96			ndSCTR_data = (uint8_t)((uint16_t)ADC_getMin() >> 1);
+09A0	2722	call    _ADC_getMin
+09A1	340A	clr     C
+09A2	5BCC	rrc     rb10
+09A3	5BCA	rrc     ra10
+09A4	474A	mov     a, ra10
+09A5	409B	mov     ndSCTR_data[0], a
+				;97			EEPROM_WRITE(ndSCTR_addr, ndSCTR_data);
+09A6	471D	mov     a, ndSCTR_addr[0]
+09A7	009E	mov     EEA, a
+09A8	471B	mov     a, ndSCTR_data[0]
+09A9	009F	mov     EED, a
+09AA	0F40	mov     a, 40H
+09AB	0083	mov     MP1, a
+09AC	0F01	mov     a, 1H
+09AD	0084	mov     BP, a
+09AE	340E	clr     EMI
+09AF	3182	set     __iar1[0].3
+09B0	3102	set     __iar1[0].2
+09B1	300E	set     EMI
+				_L135:
+09B2	3D02	sz      __iar1[0].2
+09B3	69B2	jmp     _L135
+09B4	1F02	clr     __iar1[0]
+09B5	1F04	clr     BP
+				;98			ndSCTR_addr++;
+09B6	549D	inc     ndSCTR_addr[0]
+				;99			
+				;100			ndSCTR_data = (uint8_t)ADC_getMaxTime();
+09B7	2727	call    _ADC_getMaxTime
+09B8	474A	mov     a, ra10
+09B9	409B	mov     ndSCTR_data[0], a
+				;101			EEPROM_WRITE(ndSCTR_addr, ndSCTR_data);
+09BA	471D	mov     a, ndSCTR_addr[0]
+09BB	009E	mov     EEA, a
+09BC	471B	mov     a, ndSCTR_data[0]
+09BD	009F	mov     EED, a
+09BE	0F40	mov     a, 40H
+09BF	0083	mov     MP1, a
+09C0	0F01	mov     a, 1H
+09C1	0084	mov     BP, a
+09C2	340E	clr     EMI
+09C3	3182	set     __iar1[0].3
+09C4	3102	set     __iar1[0].2
+09C5	300E	set     EMI
+				_L137:
+09C6	3D02	sz      __iar1[0].2
+09C7	69C6	jmp     _L137
+09C8	1F02	clr     __iar1[0]
+09C9	1F04	clr     BP
+				;102			ndSCTR_addr++;
+09CA	549D	inc     ndSCTR_addr[0]
+				;103			ndSCTR_data = (uint8_t)(ADC_getMaxTime() >> 8);
+09CB	2727	call    _ADC_getMaxTime
+09CC	474C	mov     a, rb10
+09CD	409B	mov     ndSCTR_data[0], a
+				;104			EEPROM_WRITE(ndSCTR_addr, ndSCTR_data);
+09CE	471D	mov     a, ndSCTR_addr[0]
+09CF	009E	mov     EEA, a
+09D0	471B	mov     a, ndSCTR_data[0]
+09D1	009F	mov     EED, a
+09D2	0F40	mov     a, 40H
+09D3	0083	mov     MP1, a
+09D4	0F01	mov     a, 1H
+09D5	0084	mov     BP, a
+09D6	340E	clr     EMI
+09D7	3182	set     __iar1[0].3
+09D8	3102	set     __iar1[0].2
+09D9	300E	set     EMI
+				_L139:
+09DA	3D02	sz      __iar1[0].2
+09DB	69DA	jmp     _L139
+09DC	1F02	clr     __iar1[0]
+09DD	1F04	clr     BP
+				;105			ndSCTR_addr++;
+09DE	549D	inc     ndSCTR_addr[0]
+				;106			
+				;107			ndSCTR_data = (uint8_t)ADC_getMinTime();
+09DF	272C	call    _ADC_getMinTime
+09E0	474A	mov     a, ra10
+09E1	409B	mov     ndSCTR_data[0], a
+				;108			EEPROM_WRITE(ndSCTR_addr, ndSCTR_data);
+09E2	471D	mov     a, ndSCTR_addr[0]
+09E3	009E	mov     EEA, a
+09E4	471B	mov     a, ndSCTR_data[0]
+09E5	009F	mov     EED, a
+09E6	0F40	mov     a, 40H
+09E7	0083	mov     MP1, a
+09E8	0F01	mov     a, 1H
+09E9	0084	mov     BP, a
+09EA	340E	clr     EMI
+09EB	3182	set     __iar1[0].3
+09EC	3102	set     __iar1[0].2
+09ED	300E	set     EMI
+				_L141:
+09EE	3D02	sz      __iar1[0].2
+09EF	69EE	jmp     _L141
+09F0	1F02	clr     __iar1[0]
+09F1	1F04	clr     BP
+				;109			ndSCTR_addr++;
+09F2	549D	inc     ndSCTR_addr[0]
+				;110			ndSCTR_data = (uint8_t)(ADC_getMinTime() >> 8);
+09F3	272C	call    _ADC_getMinTime
+09F4	474C	mov     a, rb10
+09F5	409B	mov     ndSCTR_data[0], a
+				;111			EEPROM_WRITE(ndSCTR_addr, ndSCTR_data);
+09F6	471D	mov     a, ndSCTR_addr[0]
+09F7	009E	mov     EEA, a
+09F8	471B	mov     a, ndSCTR_data[0]
+09F9	009F	mov     EED, a
+09FA	0F40	mov     a, 40H
+09FB	0083	mov     MP1, a
+09FC	0F01	mov     a, 1H
+09FD	0084	mov     BP, a
+09FE	340E	clr     EMI
+09FF	3182	set     __iar1[0].3
+0A00	3102	set     __iar1[0].2
+0A01	300E	set     EMI
+				_L143:
+0A02	3D02	sz      __iar1[0].2
+0A03	6A02	jmp     _L143
+0A04	1F02	clr     __iar1[0]
+0A05	1F04	clr     BP
+				;112			ndSCTR_addr = EEPROM_2ND_SECTOR_START;
+0A06	0F78	mov     a, 78H
+0A07	409D	mov     ndSCTR_addr[0], a
+				;113			
+				;114			
+				;115			if (stSCTR_addr < EEPROM_1ST_SECTOR_END) stSCTR_addr++;
+0A08	0F77	mov     a, 77H
+0A09	421E	sub     a, stSCTR_addr[0]
+0A0A	380A	snz     C
+0A0B	6A0E	jmp     _L144
+0A0C	549E	inc     stSCTR_addr[0]
+0A0D	6A0F	jmp     _L8
+				;116			else stSCTR_addr = EEPROM_1ST_SECTOR_START;
+				_L144:
+0A0E	5F1E	clr     stSCTR_addr[0]
+				_L8:
+0A0F	0003	ret
+				;117		}
+				;118	}
+				;119	
+				;120	uint8_t EEPROM_getData(void)
+				;121	{
+				;122		EEPROM_READ(stSCTR_addr, stSCTR_data);
+				_EEPROM_getData:
+				_EEPROM_getData:
+0745	471E	mov     a, stSCTR_addr[0]
+0746	009E	mov     EEA, a
+0747	0F40	mov     a, 40H
+0748	0083	mov     MP1, a
+0749	0F01	mov     a, 1H
+074A	0084	mov     BP, a
+074B	3082	set     __iar1[0].1
+074C	3002	set     __iar1[0].0
+				_L4:
+074D	3C02	sz      __iar1[0].0
+074E	2F4D	jmp     _L4
+074F	1F02	clr     __iar1[0]
+0750	1F04	clr     BP
+0751	071F	mov     a, EED
+0752	409C	mov     stSCTR_data[0], a
+				;123		return stSCTR_data;
+0753	471C	mov     a, stSCTR_data[0]
+0754	40CA	mov     ra10, a
+				;124	}
+0755	474A	mov     a, ra10
+0756	0003	ret
+				;125	
+				;126	void EEPROM_setAddr(uint8_t addr)
+				;127	{
+				_EEPROM_setAddr:
+				_EEPROM_setAddr:
+0757	40CA	mov     ra10, a
+				;128		stSCTR_addr = addr;
+0758	474A	mov     a, ra10
+0759	409E	mov     stSCTR_addr[0], a
+075A	0003	ret
+				;129	}
+				;130	
+				;131	uint8_t EEPROM_getAddr(void)
+				;132	{
+				;133		return stSCTR_addr;
+				_EEPROM_getAddr:
+				_EEPROM_getAddr:
+075B	471E	mov     a, stSCTR_addr[0]
+075C	40CA	mov     ra10, a
+				;134	}
+075D	474A	mov     a, ra10
+075E	0003	ret
+				;135	
+				;136	// this disables both READ & WRITE opeartions, i.e., you CAN'T use the eeprom
+				;137	void EEPROM_disable(void)
+				;138	{
+				;139		EEPROM_DISABLE;
+				_EEPROM_disable:
+				_EEPROM_disable:
+0A10	1F02	clr     __iar1[0]
+0A11	1F04	clr     BP
+0A12	0003	ret
+				;140	}
+				data .SECTION 'DATA'
+				__iar1 DB DUP (?) ; __iar1
+				__mp1 DB DUP (?) ; __mp1
+				__bp DB DUP (?) ; __bp
+				__intc0 DB DUP (?) ; __intc0
+				__intc1 DB DUP (?) ; __intc1
+				__intc2 DB DUP (?) ; __intc2
+				__mfi1 DB DUP (?) ; __mfi1
+				__pa DB DUP (?) ; __pa
+				__pac DB DUP (?) ; __pac
+				__papu DB DUP (?) ; __papu
+				__pawu DB DUP (?) ; __pawu
+				__wdtc DB DUP (?) ; __wdtc
+				__eea DB DUP (?) ; __eea
+				__eed DB DUP (?) ; __eed
+				__sadol DB DUP (?) ; __sadol
+				__sadoh DB DUP (?) ; __sadoh
+				__sadc0 DB DUP (?) ; __sadc0
+				__pb DB DUP (?) ; __pb
+				__pbc DB DUP (?) ; __pbc
+				__pbpu DB DUP (?) ; __pbpu
+				__tm2c0 DB DUP (?) ; __tm2c0
+				__tm2c1 DB DUP (?) ; __tm2c1
+				__tm2al DB DUP (?) ; __tm2al
+				__tm2ah DB DUP (?) ; __tm2ah
+				__cpc DB DUP (?) ; __cpc
+				__pc DB DUP (?) ; __pc
+				__pcc DB DUP (?) ; __pcc
+				__pcpu DB DUP (?) ; __pcpu
+				__pd DB DUP (?) ; __pd
+				__pdc DB DUP (?) ; __pdc
+				__pdpu DB DUP (?) ; __pdpu
+				runtime_counter DB 2 DUP (?) ; runtime_counter
+				minFlag DB DUP (?) ; minFlag
+				maxFlag DB DUP (?) ; maxFlag
+				minTime DB 2 DUP (?) ; minTime
+				maxTime DB 2 DUP (?) ; maxTime
+				initCounter DB DUP (?) ; initCounter
+				adc_signal DB DUP (?) ; adc_signal
+				tmp DB 4 DUP (?) ; tmp
+				counter DB 2 DUP (?) ; counter
+				minAC DB 2 DUP (?) ; minAC
+				maxAC DB 2 DUP (?) ; maxAC
+				ac DB 2 DUP (?) ; ac
+				adc_val0 DB 4 DUP (?) ; adc_val0
+				flag DB DUP (?) ; flag
+				ndSCTR_data DB DUP (?) ; ndSCTR_data
+				stSCTR_data DB DUP (?) ; stSCTR_data
+				ndSCTR_addr DB DUP (?) ; ndSCTR_addr
+				stSCTR_addr DB DUP (?) ; stSCTR_addr
+				bufCounter DB DUP (?) ; bufCounter
+				gu8Main_buf DB DUP (?) ; gu8Main_buf
+				gu8Buf_idx DB DUP (?) ; gu8Buf_idx
+				__bufCounter_1926 DB DUP (?) ; __bufCounter_1926
+				uart_signal DB DUP (?) ; uart_signal
+				ra DB DUP (?)
+				rb DB DUP (?)
+				ra10 DB DUP (?)
+				rc10 DB DUP (?)
+				rb10 DB DUP (?)
+				rh10 DB DUP (?)
+				rg10 DB DUP (?)
+				rf10 DB DUP (?)
+				re10 DB DUP (?)
+				rd10 DB DUP (?)
+				r110 DB DUP (?)
+				r210 DB DUP (?)
+				r310 DB DUP (?)
+				r410 DB DUP (?)
+				r510 DB DUP (?)
+				r610 DB DUP (?)
+				r710 DB DUP (?)
+				r12c DB DUP (?)
+				r22c DB DUP (?)
+				r32c DB DUP (?)
+				r42c DB DUP (?)
+				r52c DB DUP (?)
+				ra2c DB DUP (?)
+				data DB DUP (?) ; data
+				s DB DUP (?) ; s
+				tmp DB DUP (?) ; tmp
+				str DB DUP (?) ; str
+				n DB 2 DUP (?) ; n
+				s DB DUP (?) ; s
+				cac DB DUP (?) ; cac
+				i DB DUP (?) ; i
+				x DB 4 DUP (?) ; x

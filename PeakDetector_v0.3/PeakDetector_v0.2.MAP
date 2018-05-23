@@ -1,0 +1,496 @@
+
+Linker Version 8.7.2.161220
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\STARTUP1_L.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ
+
+Input Library File: C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB
+Input Library File: C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\v3_tabrd_mrsc.lib
+
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     0000h     0000h    0001h      CODE               @code (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ)
+     00h     0001h     000ch    000ch      CODE               ltofaz (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     000dh     000eh    0002h      CODE               @crom (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     000fh     000fh    0001h      CODE               _delay (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     0010h     0013h    0004h      CODE               @ISR_tmr2_code (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     0014h     0017h    0004h      CODE               itofaz (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0018h     001dh    0006h      CODE               _builtin_holtek_ftinf (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     001eh     0024h    0007h      CODE               _builtin_holtek_dtinf (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0025h     002ah    0006h      CODE               _builtin_holtek_ftinf_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     002ch     002fh    0004h      CODE               @ISR_uart_code (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0030h     006ah    003bh      CODE               @start (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ)
+     00h     006bh     009ch    0032h      CODE               _builtin_holtek_ftdiv (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     009dh     00dch    0040h      CODE               _builtin_holtek_dtmul (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00ddh     0107h    002bh      CODE               _builtin_holtek_dtol (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0108h     0143h    003ch      CODE               _builtin_holtek_dtdiv (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0144h     0181h    003eh      CODE               @builtin_holtek_dtsubadd (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0182h     01b0h    002fh      CODE               _builtin_holtek_ftnorm (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     01b1h     01c6h    0016h      CODE               @builtin_holtek_ftdecode (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     01c7h     01deh    0018h      CODE               @builtin_holtek_dtdecode (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     01dfh     0212h    0034h      CODE               _builtin_holtek_dtnorm (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0213h     021eh    000ch      CODE               ltofaz_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     021fh     024dh    002fh      CODE               _builtin_holtek_ftnorm_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     024eh     0251h    0004h      CODE               itofaz_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0252h     0283h    0032h      CODE               _builtin_holtek_ftdiv_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0284h     0299h    0016h      CODE               @builtin_holtek_ftdecode_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     029ah     02d9h    0040h      CODE               _builtin_holtek_dtmul_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     02dah     02f1h    0018h      CODE               @builtin_holtek_dtdecode_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     02f2h     0325h    0034h      CODE               _builtin_holtek_dtnorm_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0326h     032ch    0007h      CODE               _builtin_holtek_dtinf_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     032dh     0357h    002bh      CODE               _builtin_holtek_dtol_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0358h     0395h    003eh      CODE               @builtin_holtek_dtsubadd_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0396h     03d1h    003ch      CODE               _builtin_holtek_dtdiv_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     03d2h     0420h    004fh      CODE               @crom (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     0421h     0441h    0021h      CODE               @crom (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0442h     045dh    001ch      CODE               _main (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ)
+     00h     045eh     0464h    0007h      CODE               @ROMDATA_BASE (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\STARTUP1_L.OBJ)
+     00h     0465h     048eh    002ah      CODE               _ADC_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     048fh     0716h    0288h      CODE               _ADC_update (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     0717h     071ch    0006h      CODE               _ADC_getValue (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     071dh     0721h    0005h      CODE               _ADC_getMax (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     0722h     0726h    0005h      CODE               _ADC_getMin (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     0727h     072bh    0005h      CODE               _ADC_getMaxTime (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     072ch     0730h    0005h      CODE               _ADC_getMinTime (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     0731h     0734h    0004h      CODE               _ADC_getSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     0735h     0738h    0004h      CODE               _ADC_setSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     0739h     073dh    0005h      CODE               _ADC_getCount (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     073eh     0744h    0007h      CODE               _EEPROM_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     0745h     0756h    0012h      CODE               _EEPROM_getData (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     0757h     075ah    0004h      CODE               _EEPROM_setAddr (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     075bh     075eh    0004h      CODE               _EEPROM_getAddr (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     075fh     0a0fh    02b1h      CODE               _EEPROM_update (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     0a10h     0a12h    0003h      CODE               _EEPROM_disable (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     0a13h     0a23h    0011h      CODE               _SEOS_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     0a24h     0a25h    0002h      CODE               _SEOS_sleep (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     0a26h     0a43h    001eh      CODE               _ISR_tmr2 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     0a44h     0a53h    0010h      CODE               _UART_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0a54h     0afbh    00a8h      CODE               _UART_update (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0afch     0affh    0004h      CODE               _UART_getSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0b00h     0b03h    0004h      CODE               _UART_setSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0b04h     0b41h    003eh      CODE               _ISR_uart (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     0b42h     0b5bh    001ah      CODE               _strlen (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     0b5ch     0ba2h    0047h      CODE               _reverse (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     0ba3h     0c0ch    006ah      CODE               _itoa (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     0c0dh     0c1eh    0012h      CODE               _CROM2PROM (CROM2PROM)
+     00h     0c1fh     0c55h    0037h      CODE               _builtin_holtek_divmodhi4_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0080h     0099h    001ah      DATA     6.4231    @HCCINIT0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     009ah     009eh    0005h      DATA     8.6       @HCCINIT0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     009fh     00a5h    0007h      DATA     2.2857    @HCCINIT (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00a6h     00a7h    0002h      DATA     4.5       @HCCINIT0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00a8h     00a8h    0001h      DATA     3         @data_ra (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00a9h     00a9h    0001h      DATA     1         @data_rb (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00aah     00afh    0006h      DATA     17.833    ftdata1 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00b0h     00b2h    0003h      DATA     8         dtdata (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00b3h     00b9h    0007h      DATA     4.1429    ftdata2 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00bah     00bfh    0006h      DATA     56.5      ftdata1_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00c0h     00c2h    0003h      DATA     35.667    dtdata_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00c3h     00c9h    0007h      DATA     25.286    ftdata2_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00cah     00cah    0001h      DATA     133       @data_ra10 (isr:ra~rh)
+     00h     00cbh     00cbh    0001h      DATA     40        @data_rc10 (isr:ra~rh)
+     00h     00cch     00cch    0001h      DATA     135       @data_rb10 (isr:ra~rh)
+     00h     00cdh     00cdh    0001h      DATA     4         @data_rh10 (isr:ra~rh)
+     00h     00ceh     00ceh    0001h      DATA     34        @data_rg10 (isr:ra~rh)
+     00h     00cfh     00cfh    0001h      DATA     32        @data_rf10 (isr:ra~rh)
+     00h     00d0h     00d0h    0001h      DATA     39        @data_re10 (isr:ra~rh)
+     00h     00d1h     00d1h    0001h      DATA     41        @data_rd10 (isr:ra~rh)
+     00h     00d2h     00d2h    0001h      DATA     2         @data_r110 (isr:ra~rh)
+     00h     00d3h     00d3h    0001h      DATA     2         @data_r210 (isr:ra~rh)
+     00h     00d4h     00d4h    0001h      DATA     2         @data_r310 (isr:ra~rh)
+     00h     00d5h     00d5h    0001h      DATA     2         @data_r410 (isr:ra~rh)
+     00h     00d6h     00d6h    0001h      DATA     2         @data_r510 (isr:ra~rh)
+     00h     00d7h     00d7h    0001h      DATA     2         @data_r610 (isr:ra~rh)
+     00h     00d8h     00d8h    0001h      DATA     2         @data_r710 (isr:ra~rh)
+     00h     00d9h     00d9h    0001h      DATA     2         @data_r12c (isr:ra~rh)
+     00h     00dah     00dah    0001h      DATA     2         @data_r22c (isr:ra~rh)
+     00h     00dbh     00dbh    0001h      DATA     2         @data_r32c (isr:ra~rh)
+     00h     00dch     00dch    0001h      DATA     2         @data_r42c (isr:ra~rh)
+     00h     00ddh     00ddh    0001h      DATA     2         @data_r52c (isr:ra~rh)
+     00h     00deh     00deh    0001h      DATA     5         @data_ra2c (isr:ra~rh)
+
+     Local Sections
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     00f8h     00f8h    0000h      LOCAL    0         @dummy (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _main (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _UART_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _ADC_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _EEPROM_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _SEOS_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _SEOS_sleep (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         @dummy16 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     00f8h     00f8h    0000h      LOCAL    0         _ISR_tmr2 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\SEOS.OBJ)
+     00h     00eeh     00f4h    0007h      LOCAL    0.8571    _ADC_update (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _UART_getSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_ultof_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_uitof_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_ftdiv_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_dtmul_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _Crom2Prom (CROM2PROM)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_dtol_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e8h     00edh    0006h      LOCAL    7         _itoa (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     00e0h     00e7h    0008h      LOCAL    6.625     _builtin_holtek_divmodhi4_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e3h     00e6h    0004h      LOCAL    3.5       _reverse (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     00e0h     00e2h    0003h      LOCAL    2         _strlen (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_dtsubadd_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _builtin_holtek_dtdiv_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00eeh     00f7h    000ah      LOCAL    2.2       _EEPROM_update (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _ADC_getSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0001h      LOCAL    0         _EEPROM_setAddr (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _EEPROM_getData (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     00e0h     00e0h    0001h      LOCAL    0         _ADC_setSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0001h      LOCAL    1         _ADC_getValue (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _EEPROM_getAddr (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _ADC_getMax (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _ADC_getMin (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _ADC_getMaxTime (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         _ADC_getMinTime (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00e1h     00e1h    0001h      LOCAL    4         _UART_update (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00e0h     00e0h    0000h      LOCAL    0         @dummy44 (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00dfh     00dfh    0001h      LOCAL    5         _ISR_uart (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+
+     Indepentent Local Sections
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _ADC_getCount (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\ADC.OBJ)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _EEPROM_disable (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\EEPROM.OBJ)
+     00h     00f8h     00f8h    0001h      ILOCAL   0         _UART_setSignal (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UART.OBJ)
+     00h     00f8h     00fbh    0004h      ILOCAL   0         _delay (E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\UTIL.OBJ)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ultof (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_uitof (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftdiv (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtmul (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtol (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtdiv (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtsubadd (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftnorm (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtnorm (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtdecode (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftinf (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftdecode (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtinf (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftnorm_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftinf_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_ftdecode_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtdecode_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtnorm_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00f8h     00f8h    0000h      ILOCAL   0         _builtin_holtek_dtinf_isr10 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+
+     Public Symbols Information
+     Address            Public by Name
+     0739h              _ADC_getCount
+     071dh              _ADC_getMax
+     0727h              _ADC_getMaxTime
+     0722h              _ADC_getMin
+     072ch              _ADC_getMinTime
+     0731h              _ADC_getSignal
+     0717h              _ADC_getValue
+     0465h              _ADC_init
+     0735h              _ADC_setSignal
+     048fh              _ADC_update
+     0c0eh              _Crom2Prom
+     0c0dh              _Crom2PromNext
+     0a10h              _EEPROM_disable
+     075bh              _EEPROM_getAddr
+     0745h              _EEPROM_getData
+     073eh              _EEPROM_init
+     0757h              _EEPROM_setAddr
+     075fh              _EEPROM_update
+     0a26h              _ISR_tmr2
+     0b04h              _ISR_uart
+     0a13h              _SEOS_init
+     0a24h              _SEOS_sleep
+     0afch              _UART_getSignal
+     0a44h              _UART_init
+     0b00h              _UART_setSignal
+     0a54h              _UART_update
+     0c1fh              _builtin_holtek_divmodhi4_isr10
+     0145h              _builtin_holtek_dtadd
+     0359h              _builtin_holtek_dtadd_isr10
+     01cch              _builtin_holtek_dtdecode1
+     02dfh              _builtin_holtek_dtdecode1_isr10
+     01c7h              _builtin_holtek_dtdecode2
+     02dah              _builtin_holtek_dtdecode2_isr10
+     0108h              _builtin_holtek_dtdiv
+     0396h              _builtin_holtek_dtdiv_isr10
+     001eh              _builtin_holtek_dtinf
+     0326h              _builtin_holtek_dtinf_isr10
+     009dh              _builtin_holtek_dtmul
+     029ah              _builtin_holtek_dtmul_isr10
+     01dfh              _builtin_holtek_dtnorm
+     02f2h              _builtin_holtek_dtnorm_isr10
+     00ddh              _builtin_holtek_dtol
+     032dh              _builtin_holtek_dtol_isr10
+     0144h              _builtin_holtek_dtsub
+     0358h              _builtin_holtek_dtsub_isr10
+     01d0h              _builtin_holtek_dtzero
+     01d2h              _builtin_holtek_dtzero1
+     02e5h              _builtin_holtek_dtzero1_isr10
+     02e3h              _builtin_holtek_dtzero_isr10
+     00adh              _builtin_holtek_exp1
+     00bdh              _builtin_holtek_exp1_isr10
+     00b6h              _builtin_holtek_exp2
+     00c6h              _builtin_holtek_exp2_isr10
+     00afh              _builtin_holtek_floatflag
+     00bfh              _builtin_holtek_floatflag_isr10
+     01b6h              _builtin_holtek_ftdecode1
+     0289h              _builtin_holtek_ftdecode1_isr10
+     01b1h              _builtin_holtek_ftdecode2
+     0284h              _builtin_holtek_ftdecode2_isr10
+     006bh              _builtin_holtek_ftdiv
+     0252h              _builtin_holtek_ftdiv_isr10
+     0018h              _builtin_holtek_ftinf
+     0025h              _builtin_holtek_ftinf_isr10
+     0182h              _builtin_holtek_ftnorm
+     021fh              _builtin_holtek_ftnorm_isr10
+     01bah              _builtin_holtek_ftzero
+     01bbh              _builtin_holtek_ftzero1
+     028eh              _builtin_holtek_ftzero1_isr10
+     028dh              _builtin_holtek_ftzero_isr10
+     00aah              _builtin_holtek_mant1
+     00b0h              _builtin_holtek_mant12p
+     00c0h              _builtin_holtek_mant12p_isr10
+     00bah              _builtin_holtek_mant1_isr10
+     00b3h              _builtin_holtek_mant2
+     00c3h              _builtin_holtek_mant2_isr10
+     00b7h              _builtin_holtek_prod
+     00c7h              _builtin_holtek_prod_isr10
+     00aeh              _builtin_holtek_signs
+     00beh              _builtin_holtek_signs_isr10
+     0c28h              _builtin_holtek_udivmodhi4_isr10
+     00e0h              _builtin_holtek_udivmodhi4_isr10_2
+     0014h              _builtin_holtek_uitof
+     024eh              _builtin_holtek_uitof_isr10
+     0001h              _builtin_holtek_ultof
+     0213h              _builtin_holtek_ultof_isr10
+     000fh              _delay
+     00f9h              _delay_2
+     00a5h              _gu8Buf_idx
+     009fh              _gu8Buffer_ready
+     00a0h              _gu8Main_buf
+     0ba3h              _itoa
+     00e8h              _itoa_2
+     0442h              _main
+     0b5ch              _reverse
+     0b42h              _strlen
+     00d2h              r110
+     00d9h              r12c
+     00d3h              r210
+     00dah              r22c
+     00d4h              r310
+     00dbh              r32c
+     00d5h              r410
+     00dch              r42c
+     00d6h              r510
+     00ddh              r52c
+     00d7h              r610
+     00d8h              r710
+     00a8h              ra
+     00cah              ra10
+     00deh              ra2c
+     00a9h              rb
+     00cch              rb10
+     00cbh              rc10
+     00d1h              rd10
+     00d0h              re10
+     00cfh              rf10
+     00ceh              rg10
+     00cdh              rh10
+     045eh              startup_value_1
+
+     Address            Public by Value
+     0001h              _builtin_holtek_ultof
+     000fh              _delay
+     0014h              _builtin_holtek_uitof
+     0018h              _builtin_holtek_ftinf
+     001eh              _builtin_holtek_dtinf
+     0025h              _builtin_holtek_ftinf_isr10
+     006bh              _builtin_holtek_ftdiv
+     009dh              _builtin_holtek_dtmul
+     009fh              _gu8Buffer_ready
+     00a0h              _gu8Main_buf
+     00a5h              _gu8Buf_idx
+     00a8h              ra
+     00a9h              rb
+     00aah              _builtin_holtek_mant1
+     00adh              _builtin_holtek_exp1
+     00aeh              _builtin_holtek_signs
+     00afh              _builtin_holtek_floatflag
+     00b0h              _builtin_holtek_mant12p
+     00b3h              _builtin_holtek_mant2
+     00b6h              _builtin_holtek_exp2
+     00b7h              _builtin_holtek_prod
+     00bah              _builtin_holtek_mant1_isr10
+     00bdh              _builtin_holtek_exp1_isr10
+     00beh              _builtin_holtek_signs_isr10
+     00bfh              _builtin_holtek_floatflag_isr10
+     00c0h              _builtin_holtek_mant12p_isr10
+     00c3h              _builtin_holtek_mant2_isr10
+     00c6h              _builtin_holtek_exp2_isr10
+     00c7h              _builtin_holtek_prod_isr10
+     00cah              ra10
+     00cbh              rc10
+     00cch              rb10
+     00cdh              rh10
+     00ceh              rg10
+     00cfh              rf10
+     00d0h              re10
+     00d1h              rd10
+     00d2h              r110
+     00d3h              r210
+     00d4h              r310
+     00d5h              r410
+     00d6h              r510
+     00d7h              r610
+     00d8h              r710
+     00d9h              r12c
+     00dah              r22c
+     00dbh              r32c
+     00dch              r42c
+     00ddh              _builtin_holtek_dtol
+     00ddh              r52c
+     00deh              ra2c
+     00e0h              _builtin_holtek_udivmodhi4_isr10_2
+     00e8h              _itoa_2
+     00f9h              _delay_2
+     0108h              _builtin_holtek_dtdiv
+     0144h              _builtin_holtek_dtsub
+     0145h              _builtin_holtek_dtadd
+     0182h              _builtin_holtek_ftnorm
+     01b1h              _builtin_holtek_ftdecode2
+     01b6h              _builtin_holtek_ftdecode1
+     01bah              _builtin_holtek_ftzero
+     01bbh              _builtin_holtek_ftzero1
+     01c7h              _builtin_holtek_dtdecode2
+     01cch              _builtin_holtek_dtdecode1
+     01d0h              _builtin_holtek_dtzero
+     01d2h              _builtin_holtek_dtzero1
+     01dfh              _builtin_holtek_dtnorm
+     0213h              _builtin_holtek_ultof_isr10
+     021fh              _builtin_holtek_ftnorm_isr10
+     024eh              _builtin_holtek_uitof_isr10
+     0252h              _builtin_holtek_ftdiv_isr10
+     0284h              _builtin_holtek_ftdecode2_isr10
+     0289h              _builtin_holtek_ftdecode1_isr10
+     028dh              _builtin_holtek_ftzero_isr10
+     028eh              _builtin_holtek_ftzero1_isr10
+     029ah              _builtin_holtek_dtmul_isr10
+     02dah              _builtin_holtek_dtdecode2_isr10
+     02dfh              _builtin_holtek_dtdecode1_isr10
+     02e3h              _builtin_holtek_dtzero_isr10
+     02e5h              _builtin_holtek_dtzero1_isr10
+     02f2h              _builtin_holtek_dtnorm_isr10
+     0326h              _builtin_holtek_dtinf_isr10
+     032dh              _builtin_holtek_dtol_isr10
+     0358h              _builtin_holtek_dtsub_isr10
+     0359h              _builtin_holtek_dtadd_isr10
+     0396h              _builtin_holtek_dtdiv_isr10
+     0442h              _main
+     045eh              startup_value_1
+     0465h              _ADC_init
+     048fh              _ADC_update
+     0717h              _ADC_getValue
+     071dh              _ADC_getMax
+     0722h              _ADC_getMin
+     0727h              _ADC_getMaxTime
+     072ch              _ADC_getMinTime
+     0731h              _ADC_getSignal
+     0735h              _ADC_setSignal
+     0739h              _ADC_getCount
+     073eh              _EEPROM_init
+     0745h              _EEPROM_getData
+     0757h              _EEPROM_setAddr
+     075bh              _EEPROM_getAddr
+     075fh              _EEPROM_update
+     0a10h              _EEPROM_disable
+     0a13h              _SEOS_init
+     0a24h              _SEOS_sleep
+     0a26h              _ISR_tmr2
+     0a44h              _UART_init
+     0a54h              _UART_update
+     0afch              _UART_getSignal
+     0b00h              _UART_setSignal
+     0b04h              _ISR_uart
+     0b42h              _strlen
+     0b5ch              _reverse
+     0ba3h              _itoa
+     0c0dh              _Crom2PromNext
+     0c0eh              _Crom2Prom
+     0c1fh              _builtin_holtek_divmodhi4_isr10
+     0c28h              _builtin_holtek_udivmodhi4_isr10
+
+
+ROM Usage Statistics
+     Size      Used     Percentage
+     1000h     0c55h    77%
+
+RAM Usage Statistics
+    Bank      Size      Used     Percentage
+     00h       0080h     007ch    96%
+     01h       0080h     0000h    0%
+     Total     0100h     007ch    48%
+
+Use Stack Count
+_main: 1
+_ISR_tmr2: 5
+_ISR_uart: 0
+
+Call Tree
+    @dummy
+        _main (0)
+            _UART_init (1)
+            _ADC_init (1)
+            _EEPROM_init (1)
+            _SEOS_init (1)
+            _SEOS_sleep (1)
+    @dummy16
+        _ISR_tmr2 (0)
+            _ADC_update (1)
+                _UART_getSignal (2)
+                _builtin_holtek_ultof_isr10 (2)
+                _builtin_holtek_uitof_isr10 (2)
+                _builtin_holtek_ftdiv_isr10 (2)
+                _builtin_holtek_dtmul_isr10 (2)
+                _Crom2Prom (2)
+                _builtin_holtek_dtol_isr10 (2)
+                _itoa (2)
+                    _builtin_holtek_divmodhi4_isr10 (3)
+                    _reverse (3)
+                        _strlen (4)
+                            _Crom2Prom (5)
+                        _Crom2Prom (4)
+                _builtin_holtek_dtsubadd_isr10 (2)
+                _builtin_holtek_dtdiv_isr10 (2)
+                _builtin_holtek_dtsubadd_isr10 (2)
+            _EEPROM_update (1)
+                _ADC_getSignal (2)
+                _Crom2Prom (2)
+                _UART_getSignal (2)
+                _EEPROM_setAddr (2)
+                _itoa (2)
+                    _builtin_holtek_divmodhi4_isr10 (3)
+                    _reverse (3)
+                        _strlen (4)
+                            _Crom2Prom (5)
+                        _Crom2Prom (4)
+                _EEPROM_getData (2)
+                _ADC_setSignal (2)
+                _ADC_getValue (2)
+                _EEPROM_getAddr (2)
+                _ADC_getMax (2)
+                _ADC_getMin (2)
+                _ADC_getMaxTime (2)
+                _ADC_getMinTime (2)
+            _UART_update (1)
+                _ADC_setSignal (2)
+                _Crom2Prom (2)
+    @dummy44
+        _ISR_uart (0)
+
+HLINK: Program entry point at section '@code' (address 0) of file 'E:\1_TOSHIBA\Projects\voltage_stabilizer\PeakDetector_v0.3\PEAKDETECTOR_V0.2.OBJ'
+
+Total 0 error(s), Total 0 Warning(s)
