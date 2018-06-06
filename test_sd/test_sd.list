@@ -1,0 +1,1874 @@
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\test_sd.c
+				;1	#define IC_HOLTEK_HT66F0185
+				;2	
+				;3	#include "util.h"
+				;4	#include "uart.h"
+				;5	#include "main_ht66f0185.h"
+				;6	#include "HT66F0185.h"
+				;7	#include "sd_interface.h"
+				;8	#include "spi.h"
+				;9	
+				;10	
+				;11	void main()
+				;12	{
+				@code .SECTION 'CODE'
+				include HT66F0185.inc
+0000	2830	jmp     begin_startup_value
+				startup_value:
+				@ROMDATA_BASE .SECTION 'CODE'
+0001	0007	jmp     L0007
+0002	0083	mov     MP1, a
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+				@ROMDATA_BASE .SECTION 'CODE'
+0003	0000	nop
+0004	0000	nop
+0005	0000	nop
+0006	0000	nop
+				L0007:
+0007	0001	clr     wdt
+0008	008B	mov     SMOD, a
+				@ROMDATA_BASE .SECTION 'CODE'
+0009	0000	nop
+000A	0000	nop
+				startupend3:
+				@start .SECTION 'CODE'
+006A	2871	jmp     _main
+006B	4E49	dc	04E49H
+006C	2020	call    _SPI_cs_disable
+006D	2020	call    _SPI_cs_disable
+006E	0020	call    _SPI_cs_disable
+006F	0D0A	or      a, AH
+0070	0000	nop
+				;13		int x = 100;
+				;14		uint16_t i;
+				;15		char c[5];
+				;16		SAFEGUARD_INIT_1;
+				_main:
+				_main:
+0071	0FA8	mov     a, A8H
+0072	009A	mov     WDTC, a
+0073	0F08	mov     a, 8H
+0074	00BF	mov     CPC, a
+0075	1F14	clr     PA
+0076	1F25	clr     PB
+0077	1F41	clr     PC
+0078	1F52	clr     PD
+0079	1F95	set     PAC
+007A	1FA6	set     PBC
+007B	1FC2	set     PCC
+007C	1FD3	set     PDC
+007D	1F17	clr     PAWU
+007E	1F16	clr     PAPU
+007F	1F27	clr     PBPU
+0080	1F43	clr     PCPU
+0081	1F54	clr     PDPU
+				;17	    IDLE1_ENABLE;
+0082	308B	set     IDLEN
+0083	339C	set     FSYSON
+				;18	    UART_init();
+0084	200E	call    _UART_init
+0085	0FE8	mov     a, E8H
+0086	408E	mov     rb, a
+0087	0FFD	mov     a, FDH
+0088	408F	mov     rc, a
+				;19	    for (i =0; i < 65000; i++)	GCC_DELAY(200);
+				_L3:
+0089	0F31	mov     a, 31H
+008A	2028	call    L0028
+008B	0FFF	mov     a, FFH
+008C	438E	addm    a, rb
+008D	0FFF	mov     a, FFH
+008E	538F	adcm    a, rc
+008F	470E	mov     a, rb
+0090	450F	or      a, rc
+0091	390A	snz     Z
+0092	2889	jmp     _L3
+				;20		x = disk_initialize();
+0093	21A3	call    _disk_initialize
+				_L4:
+0094	2894	jmp     $
+0095	2895	jmp     $
+				;21			
+				;22		while (1)
+				;23		{
+				;24		}
+				;25	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\sd_interface.c
+				;1	// MISO HAS A PULL UP IN THE CURRENT DRIVE (pull up to 3.3v) ??
+				;2	// GCC_DELAY(NO._SYS_TICKS)  8M/4 --> 1/2M (0.5 us)--> need 200 ticks to get 100 uS
+				;3	
+				;4	#define IC_HOLTEK_HT66F0185
+				;5	#include "util.h"
+				;6	#include "sd_interface.h"
+				;7	#include "main_ht66f0185.h"
+				;8	#include "spi.h"
+				;9	
+				;10	static uint8_t CardType;
+				;11	
+				;12	void delay_100us(void)
+				;13	{
+				;14	    GCC_DELAY(200);
+				_delay_100us:
+				_delay_100us:
+000B	0F31	mov     a, 31H
+000C	2028	call    L0028
+000D	0003	ret
+				;15	}
+				;16	
+				;17	
+				;18	static uint8_t p_send_cmd(uint8_t cmd, uint32_t arg)
+				;19	{
+				;20		char c[5];
+				;21		uint8_t n, res;
+				;22		/* Select the card */
+				;23	    SPI_cs_disable();
+				___p_send_cmd_constprop_0:
+				___p_send_cmd_constprop_0:
+				@dummy .SECTION 'CODE'
+0096	2020	call    _SPI_cs_disable
+				;24	    SPI_transmit(0XFF);
+0097	0FFF	mov     a, FFH
+0098	23CF	call    _SPI_transmit
+				;25	    SPI_cs_enable();
+0099	201E	call    _SPI_cs_enable
+				;26	    SPI_transmit(0XFF);
+009A	0FFF	mov     a, FFH
+009B	23CF	call    _SPI_transmit
+				;27	
+				;28	    /* Send a command packet */
+				;29	    SPI_transmit(cmd);                      /* Start + Command index */
+009C	0F77	mov     a, 77H
+009D	23CF	call    _SPI_transmit
+				;30	    SPI_transmit((uint8_t)(arg >> 24));        /* Argument[31..24] */
+009E	0F00	mov     a, 0H
+009F	23CF	call    _SPI_transmit
+				;31	    SPI_transmit((uint8_t)(arg >> 16));        /* Argument[23..16] */
+00A0	0F00	mov     a, 0H
+00A1	23CF	call    _SPI_transmit
+				;32	    SPI_transmit((uint8_t)(arg >> 8));         /* Argument[15..8] */
+00A2	0F00	mov     a, 0H
+00A3	23CF	call    _SPI_transmit
+				;33	    SPI_transmit((uint8_t)arg);                /* Argument[7..0] */
+00A4	0F00	mov     a, 0H
+00A5	23CF	call    _SPI_transmit
+				;34	    n = 0x01;                           /* Dummy CRC + Stop */
+				;35	    if (cmd == CMD0) n = 0x95;          /* Valid CRC for CMD0(0) */
+				;36	    if (cmd == CMD8) n = 0x87;          /* Valid CRC for CMD8(0x1AA) */
+				;37	    SPI_transmit(n);
+00A6	0F01	mov     a, 1H
+00A7	23CF	call    _SPI_transmit
+00A8	0F0A	mov     a, AH
+00A9	40AF	mov     c[5], a
+				_L4:
+00AF	5F0D	clr     ra
+00B0	28B9	jmp     _L3
+				_L2:
+00B1	57AF	sdz     c[5]
+00B2	28AA	jmp     _L5
+00B3	28AF	jmp     _L4
+				;38	
+				;39	    /* Receive a command response */
+				;40	    n = 10;                             /* Wait for a valid response in timeout of 10 attempts */
+				;41	    do {
+				;42	        res = SPI_transmit(0xff);
+				_L5:
+00AA	0FFF	mov     a, FFH
+00AB	23CF	call    _SPI_transmit
+00AC	40B0	mov     res[0], a
+				;43	    } while ((res & 0x80) && --n);
+00AD	7FB0	sz      res[0].7
+00AE	28B1	jmp     _L2
+				;44	
+				;45		UART_PUT_STRING("IN     ");
+				_L7:
+00B4	3855	snz     TXIF
+00B5	28B4	jmp     _L7
+00B6	470E	mov     a, rb
+00B7	00D9	mov     TXR_RXR, a
+00B8	548D	inc     ra
+				_L3:
+00B9	0FD6	mov     a, D6H
+00BA	430D	add     a, ra
+00BB	0083	mov     MP1, a
+00BC	0F80	mov     a, 80H
+00BD	1F01	clr     MP0
+00BE	1381	adcm    a, MP0
+00BF	2421	call    L0421
+00C0	408E	mov     rb, a
+00C1	508E	sz      rb
+00C2	28B4	jmp     _L7
+				_L10:
+00C3	3855	snz     TXIF
+00C4	28C3	jmp     _L10
+00C5	1F59	clr     TXR_RXR
+				;46		itoa(res,c);
+00C6	0FAA	mov     a, AAH
+00C7	40A6	mov     s, a
+00C8	0F00	mov     a, 0H
+00C9	40A7	mov     s[1], a
+00CA	4730	mov     a, res[0]
+00CB	40A4	mov     n, a
+00CC	5F25	clr     n[1]
+00CD	2355	call    _itoa
+				;47	    UART_PUT_STRING(c);
+00CE	5F0D	clr     ra
+				_L11:
+00CF	0FAA	mov     a, AAH
+00D0	408E	mov     rb, a
+00D1	0F00	mov     a, 0H
+00D2	408F	mov     rc, a
+00D3	470D	mov     a, ra
+00D4	430E	add     a, rb
+00D5	0083	mov     MP1, a
+00D6	1F05	clr     ACC
+00D7	530F	adc     a, rc
+00D8	0081	mov     MP0, a
+00D9	2421	call    L0421
+00DA	408E	mov     rb, a
+00DB	508E	sz      rb
+00DC	28DE	jmp     _L13
+00DD	28E4	jmp     _L16
+				_L13:
+				_LI1:
+00DE	3855	snz     TXIF
+00DF	28DE	jmp     _L13
+00E0	470E	mov     a, rb
+00E1	00D9	mov     TXR_RXR, a
+00E2	548D	inc     ra
+00E3	28CF	jmp     _L11
+				_L16:
+00E4	3855	snz     TXIF
+00E5	28E4	jmp     _L16
+00E6	1F59	clr     TXR_RXR
+				;48	    UART_NEW_LINE;
+00E7	5F0D	clr     ra
+				_L17:
+00E8	0FDE	mov     a, DEH
+00E9	430D	add     a, ra
+00EA	0083	mov     MP1, a
+00EB	0F80	mov     a, 80H
+00EC	1F01	clr     MP0
+00ED	1381	adcm    a, MP0
+00EE	2421	call    L0421
+00EF	408E	mov     rb, a
+00F0	508E	sz      rb
+00F1	28F3	jmp     _L19
+00F2	28F9	jmp     _L22
+				_L19:
+				_LI2:
+00F3	3855	snz     TXIF
+00F4	28F3	jmp     _L19
+00F5	470E	mov     a, rb
+00F6	00D9	mov     TXR_RXR, a
+00F7	548D	inc     ra
+00F8	28E8	jmp     _L17
+				_L22:
+00F9	3855	snz     TXIF
+00FA	28F9	jmp     _L22
+00FB	1F59	clr     TXR_RXR
+				;49	
+				;50	    return res;         /* Return with the response value */	
+				;51	}
+00FC	4730	mov     a, res[0]
+00FD	0003	ret
+				;52	
+				;53	
+				;54	static uint8_t send_cmd(uint8_t cmd, uint32_t arg)
+				;55	{
+				_send_cmd:
+				_send_cmd:
+00FE	408D	mov     ra, a
+00FF	40BA	mov     cmd[0], a
+				;56	    uint8_t n, res;
+				;57	    char c[5];
+				;58	
+				;59	    if (cmd & 0x80) {   /* ACMD<n> is the command sequense of CMD55-CMD<n> */
+0100	7B8D	snz     ra.7
+0101	2909	jmp     L0109
+				;60	        cmd &= 0x7F;
+0108	77BA	clr     cmd[0].7
+				;61	        res = p_send_cmd(CMD55, 0);
+0102	2096	call    ___p_send_cmd_constprop_0
+0103	408D	mov     ra, a
+				;62	        if (res > 1) return res;
+0104	0F01	mov     a, 1H
+0105	420D	sub     a, ra
+0106	380A	snz     C
+0107	29A1	jmp     L01A1
+				;63	    }         
+				;64	
+				;65	    /* Select the card */
+				;66	    SPI_cs_disable();
+				L0109:
+0109	2020	call    _SPI_cs_disable
+				;67	    SPI_transmit(0XFF);
+010A	0FFF	mov     a, FFH
+010B	23CF	call    _SPI_transmit
+				;68	    SPI_cs_enable();
+010C	201E	call    _SPI_cs_enable
+				;69	    SPI_transmit(0XFF);
+010D	0FFF	mov     a, FFH
+010E	23CF	call    _SPI_transmit
+				;70	
+				;71	    /* Send a command packet */
+				;72	    SPI_transmit(cmd);                      /* Start + Command index */
+010F	473A	mov     a, cmd[0]
+0110	408D	mov     ra, a
+0111	470D	mov     a, ra
+0112	23CF	call    _SPI_transmit
+				;73	    SPI_transmit((uint8_t)(arg >> 24));        /* Argument[31..24] */
+0113	4731	mov     a, arg[0]
+0114	4090	mov     rd, a
+0115	4732	mov     a, arg[1]
+0116	4091	mov     re, a
+0117	4733	mov     a, arg[2]
+0118	4092	mov     rf, a
+0119	4734	mov     a, arg[3]
+011A	4093	mov     rg, a
+011B	4713	mov     a, rg
+011C	4090	mov     rd, a
+011D	5F13	clr     rg
+011E	5F12	clr     rf
+011F	5F11	clr     re
+0120	4710	mov     a, rd
+0121	23CF	call    _SPI_transmit
+				;74	    SPI_transmit((uint8_t)(arg >> 16));        /* Argument[23..16] */
+0122	4731	mov     a, arg[0]
+0123	4090	mov     rd, a
+0124	4732	mov     a, arg[1]
+0125	4091	mov     re, a
+0126	4733	mov     a, arg[2]
+0127	4092	mov     rf, a
+0128	4734	mov     a, arg[3]
+0129	4093	mov     rg, a
+012A	4712	mov     a, rf
+012B	4090	mov     rd, a
+012C	4713	mov     a, rg
+012D	4091	mov     re, a
+012E	5F13	clr     rg
+012F	5F12	clr     rf
+0130	4710	mov     a, rd
+0131	23CF	call    _SPI_transmit
+				;75	    SPI_transmit((uint8_t)(arg >> 8));         /* Argument[15..8] */
+0132	4731	mov     a, arg[0]
+0133	4090	mov     rd, a
+0134	4732	mov     a, arg[1]
+0135	4091	mov     re, a
+0136	4733	mov     a, arg[2]
+0137	4092	mov     rf, a
+0138	4734	mov     a, arg[3]
+0139	4093	mov     rg, a
+013A	4711	mov     a, re
+013B	4090	mov     rd, a
+013C	4712	mov     a, rf
+013D	4091	mov     re, a
+013E	4713	mov     a, rg
+013F	4092	mov     rf, a
+0140	5F13	clr     rg
+0141	4710	mov     a, rd
+0142	23CF	call    _SPI_transmit
+				;76	    SPI_transmit((uint8_t)arg);                /* Argument[7..0] */
+0143	4731	mov     a, arg[0]
+0144	23CF	call    _SPI_transmit
+				;77	    n = 0x01;                           /* Dummy CRC + Stop */
+014C	0F01	mov     a, 1H
+014D	408D	mov     ra, a
+014E	2954	jmp     L0154
+				;78	    if (cmd == CMD0) n = 0x95;          /* Valid CRC for CMD0(0) */
+0145	473A	mov     a, cmd[0]
+0146	0A40	sub     a, 40H
+0147	3D0A	sz      Z
+0148	294F	jmp     L014F
+0149	0A08	sub     a, 8H
+014A	3D0A	sz      Z
+014B	2952	jmp     L0152
+				L014F:
+014F	0F95	mov     a, 95H
+0150	408D	mov     ra, a
+0151	2954	jmp     L0154
+				;79	    if (cmd == CMD8) n = 0x87;          /* Valid CRC for CMD8(0x1AA) */
+				L0152:
+0152	0F87	mov     a, 87H
+0153	408D	mov     ra, a
+				;80	    SPI_transmit(n);
+				L0154:
+0154	470D	mov     a, ra
+0155	23CF	call    _SPI_transmit
+0156	0F0A	mov     a, AH
+0157	40BC	mov     cmd[2], a
+				;81	
+				;82	    /* Receive a command response */
+				;83	    n = 10;                             /* Wait for a valid response in timeout of 10 attempts */
+				;84	    do {
+				;85	        res = SPI_transmit(0xff);
+				L0158:
+0158	0FFF	mov     a, FFH
+0159	23CF	call    _SPI_transmit
+015A	40BB	mov     cmd[1], a
+				;86	    } while ((res & 0x80) && --n);
+015B	7FBB	sz      cmd[1].7
+015C	2975	jmp     L0175
+				;87		
+				;88		itoa(res,c);
+				L015D:
+015D	0FB1	mov     a, B1H
+015E	408D	mov     ra, a
+015F	0F00	mov     a, 0H
+0160	408E	mov     rb, a
+0161	0F04	mov     a, 4H
+0162	430D	add     a, ra
+0163	40A6	mov     s, a
+0164	0F00	mov     a, 0H
+0165	530E	adc     a, rb
+0166	40A7	mov     s[1], a
+0167	473B	mov     a, cmd[1]
+0168	40A4	mov     n, a
+0169	5F25	clr     n[1]
+016A	2355	call    _itoa
+				;89	    UART_PUT_STRING(c);
+016B	5F0D	clr     ra
+016C	0FB1	mov     a, B1H
+016D	408E	mov     rb, a
+016E	0F00	mov     a, 0H
+016F	408F	mov     rc, a
+0170	0F04	mov     a, 4H
+0171	438E	addm    a, rb
+0172	0F00	mov     a, 0H
+0173	538F	adcm    a, rc
+0174	297D	jmp     L017D
+				L0175:
+0175	57BC	sdz     cmd[2]
+0176	2958	jmp     L0158
+0177	295D	jmp     L015D
+				L0178:
+0178	3855	snz     TXIF
+0179	2978	jmp     L0178
+017A	4710	mov     a, rd
+017B	00D9	mov     TXR_RXR, a
+017C	548D	inc     ra
+				L017D:
+017D	470D	mov     a, ra
+017E	430E	add     a, rb
+017F	0083	mov     MP1, a
+0180	1F05	clr     ACC
+0181	530F	adc     a, rc
+0182	0081	mov     MP0, a
+0183	2421	call    L0421
+0184	4090	mov     rd, a
+0185	5090	sz      rd
+0186	2978	jmp     L0178
+				L0187:
+0187	3855	snz     TXIF
+0188	2987	jmp     L0187
+0189	1F59	clr     TXR_RXR
+				;90	    UART_NEW_LINE;
+018A	5F0D	clr     ra
+				L018B:
+018B	0FDE	mov     a, DEH
+018C	430D	add     a, ra
+018D	0083	mov     MP1, a
+018E	0F80	mov     a, 80H
+018F	1F01	clr     MP0
+0190	1381	adcm    a, MP0
+0191	2421	call    L0421
+0192	408E	mov     rb, a
+0193	508E	sz      rb
+0194	2996	jmp     L0196
+0195	299C	jmp     L019C
+				L0196:
+0196	3855	snz     TXIF
+0197	2996	jmp     L0196
+0198	470E	mov     a, rb
+0199	00D9	mov     TXR_RXR, a
+019A	548D	inc     ra
+019B	298B	jmp     L018B
+				L019C:
+019C	3855	snz     TXIF
+019D	299C	jmp     L019C
+019E	1F59	clr     TXR_RXR
+				;91	    
+				;92	    return res;         /* Return with the response value */
+019F	473B	mov     a, cmd[1]
+01A0	408D	mov     ra, a
+				;93	}
+				L01A1:
+01A1	470D	mov     a, ra
+01A2	0003	ret
+				;94	
+				;95	
+				;96	
+				;97	uint8_t disk_initialize(void)
+				;98	{
+				;99	    uint8_t n, cmd, ty, ocr[4];
+				;100	    uint16_t tmr;
+				;101	    char c[5];
+				;102	
+				;103	#if _USE_WRITE
+				;104	    if (CardType && SELECTING) disk_writep(0, 0);   /* Finalize write process if it is in progress */
+				;105	#endif
+				;106	
+				;107	    SPI_init();
+				_disk_initialize:
+				_disk_initialize:
+01A3	23BF	call    _SPI_init
+				;108	    SPI_cs_disable();
+01A4	2020	call    _SPI_cs_disable
+01A5	0F0A	mov     a, AH
+01A6	40C6	mov     ty[0], a
+				;109	    for (n = 10; n; n--) SPI_transmit(0XFF); /* 80 dummy clocks with CS=H */
+				_L54:
+01A7	0FFF	mov     a, FFH
+01A8	23CF	call    _SPI_transmit
+01A9	57C6	sdz     ty[0]
+01AA	29A7	jmp     _L54
+				;110	
+				;111	    ty = 0;
+				;112	    if (send_cmd(CMD0, 0) == 1) {           /* GO_IDLE_STATE */
+01AB	5F31	clr     arg
+01AC	5F32	clr     arg[1]
+01AD	5F33	clr     arg[2]
+01AE	5F34	clr     arg[3]
+01AF	0F40	mov     a, 40H
+01B0	20FE	call    _send_cmd
+01B1	408D	mov     ra, a
+01B2	570D	sdza    ra
+01B3	2A30	jmp     _L91
+				;113	        if (send_cmd(CMD8, 0x1AA) == 1) {   /* SDv2 */
+01B4	0FAA	mov     a, AAH
+01B5	40B1	mov     arg, a
+01B6	0F01	mov     a, 1H
+01B7	40B2	mov     arg[1], a
+01B8	5F33	clr     arg[2]
+01B9	5F34	clr     arg[3]
+01BA	0F48	mov     a, 48H
+01BB	20FE	call    _send_cmd
+01BC	408D	mov     ra, a
+01BD	570D	sdza    ra
+01BE	29F9	jmp     _L57
+01BF	0F04	mov     a, 4H
+01C0	40C6	mov     ty[0], a
+01C1	5F48	clr     ty[2]
+				;114	            for (n = 0; n < 4; n++) ocr[n] = SPI_transmit(0xff);     /* Get trailing return value of R7 resp */
+				_L59:
+01C2	0FFF	mov     a, FFH
+01C3	23CF	call    _SPI_transmit
+01C4	408D	mov     ra, a
+01C5	0FBD	mov     a, BDH
+01C6	408E	mov     rb, a
+01C7	0F00	mov     a, 0H
+01C8	408F	mov     rc, a
+01C9	0F05	mov     a, 5H
+01CA	438E	addm    a, rb
+01CB	0F00	mov     a, 0H
+01CC	538F	adcm    a, rc
+01CD	4748	mov     a, ty[2]
+01CE	430E	add     a, rb
+01CF	0083	mov     MP1, a
+01D0	1F05	clr     ACC
+01D1	530F	adc     a, rc
+01D2	0081	mov     MP0, a
+01D3	0701	mov     a, MP0
+01D4	0084	mov     BP, a
+01D5	470D	mov     a, ra
+01D6	0082	mov     [02H], a
+01D7	54C8	inc     ty[2]
+01D8	57C6	sdz     ty[0]
+01D9	29C2	jmp     _L59
+				;115	            if (ocr[2] == 0x01 && ocr[3] == 0xAA) {         /* The card can work at vdd range of 2.7-3.6V */
+01DA	5744	sdza    ocr[2]
+01DB	2A30	jmp     _L91
+01DC	4745	mov     a, ocr[3]
+01DD	0AAA	sub     a, AAH
+01DE	390A	snz     Z
+01DF	2A30	jmp     _L91
+01E0	0F10	mov     a, 10H
+01E1	40C6	mov     ty[0], a
+01E2	0F27	mov     a, 27H
+01E3	40C7	mov     ty[1], a
+				;116	                for (tmr = 10000; tmr && send_cmd(ACMD41, 1UL << 30); tmr--) delay_100us();   /* Wait for leaving idle state (ACMD41 with HCS bit) */
+				_L61:
+01E4	5F31	clr     arg
+01E5	5F32	clr     arg[1]
+01E6	5F33	clr     arg[2]
+01E7	0F40	mov     a, 40H
+01E8	40B4	mov     arg[3], a
+01E9	0FE9	mov     a, E9H
+01EA	20FE	call    _send_cmd
+01EB	408D	mov     ra, a
+01EC	508D	sz      ra
+01ED	29EF	jmp     _LI4
+01EE	2A88	jmp     _L104
+				_LI4:
+01EF	200B	call    _delay_100us
+01F0	0FFF	mov     a, FFH
+01F1	43C6	addm    a, ty[0]
+01F2	0FFF	mov     a, FFH
+01F3	53C7	adcm    a, ty[1]
+01F4	4746	mov     a, ty[0]
+01F5	4547	or      a, ty[1]
+01F6	390A	snz     Z
+01F7	29E4	jmp     _L61
+01F8	2A30	jmp     _L91
+				;117	                if (tmr && send_cmd(CMD58, 0) == 0) {       /* Check CCS bit in the OCR */
+				_L104:
+0288	5F31	clr     arg
+0289	5F32	clr     arg[1]
+028A	5F33	clr     arg[2]
+028B	5F34	clr     arg[3]
+028C	0F7A	mov     a, 7AH
+028D	20FE	call    _send_cmd
+028E	408D	mov     ra, a
+028F	508D	sz      ra
+0290	2A30	jmp     _L91
+0291	0F04	mov     a, 4H
+0292	40C6	mov     ty[0], a
+0293	5F48	clr     ty[2]
+				;118	                    for (n = 0; n < 4; n++) ocr[n] = SPI_transmit(0xff);
+				_L88:
+0294	0FFF	mov     a, FFH
+0295	23CF	call    _SPI_transmit
+0296	408D	mov     ra, a
+0297	0FBD	mov     a, BDH
+0298	408E	mov     rb, a
+0299	0F00	mov     a, 0H
+029A	408F	mov     rc, a
+029B	0F05	mov     a, 5H
+029C	438E	addm    a, rb
+029D	0F00	mov     a, 0H
+029E	538F	adcm    a, rc
+029F	4748	mov     a, ty[2]
+02A0	430E	add     a, rb
+02A1	0083	mov     MP1, a
+02A2	1F05	clr     ACC
+02A3	530F	adc     a, rc
+02A4	0081	mov     MP0, a
+02A5	0701	mov     a, MP0
+02A6	0084	mov     BP, a
+02A7	470D	mov     a, ra
+02A8	0082	mov     [02H], a
+02A9	54C8	inc     ty[2]
+02AA	57C6	sdz     ty[0]
+02AB	2A94	jmp     _L88
+				;119	                    ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;  /* SDv2 (HC or SC) */
+02AC	7B42	snz     ocr[0].6
+02AD	2AB1	jmp     _L89
+02AE	0F0C	mov     a, CH
+02AF	40C6	mov     ty[0], a
+02B0	2A31	jmp     _L56
+				_L89:
+02B1	0F04	mov     a, 4H
+02B2	40C6	mov     ty[0], a
+02B3	2A31	jmp     _L56
+				;120	                }
+				;121	            }
+				;122	        } else {                            /* SDv1 or MMCv3 */
+				;123	            if (send_cmd(ACMD41, 0) <= 1)   {
+				_L57:
+01F9	5F31	clr     arg
+01FA	5F32	clr     arg[1]
+01FB	5F33	clr     arg[2]
+01FC	5F34	clr     arg[3]
+01FD	0FE9	mov     a, E9H
+01FE	20FE	call    _send_cmd
+01FF	408D	mov     ra, a
+0200	0F01	mov     a, 1H
+0201	420D	sub     a, ra
+0202	380A	snz     C
+0203	2A09	jmp     _L90
+				;124	                ty = CT_SD1; cmd = ACMD41;  /* SDv1 */
+0204	0F02	mov     a, 2H
+0205	40C6	mov     ty[0], a
+0206	0FE9	mov     a, E9H
+0207	40CA	mov     cmd[0], a
+0208	2A0D	jmp     _L65
+				;125	            } else {
+				;126	                ty = CT_MMC; cmd = CMD1;    /* MMCv3 */
+				_L90:
+0209	0F01	mov     a, 1H
+020A	40C6	mov     ty[0], a
+020B	0F41	mov     a, 41H
+020C	40CA	mov     cmd[0], a
+				_L65:
+020D	0F10	mov     a, 10H
+020E	40C8	mov     ty[2], a
+020F	0F27	mov     a, 27H
+0210	40C9	mov     ty[3], a
+				;127	            }
+				;128	            for (tmr = 10000; tmr && send_cmd(cmd, 0); tmr--) delay_100us();  /* Wait for leaving idle state */
+				_L66:
+0211	5F31	clr     arg
+0212	5F32	clr     arg[1]
+0213	5F33	clr     arg[2]
+0214	5F34	clr     arg[3]
+0215	474A	mov     a, cmd[0]
+0216	20FE	call    _send_cmd
+0217	408D	mov     ra, a
+0218	508D	sz      ra
+0219	2A1B	jmp     _LI5
+021A	2A25	jmp     _L105
+				_LI5:
+021B	200B	call    _delay_100us
+021C	0FFF	mov     a, FFH
+021D	43C8	addm    a, ty[2]
+021E	0FFF	mov     a, FFH
+021F	53C9	adcm    a, ty[3]
+0220	4748	mov     a, ty[2]
+0221	4549	or      a, ty[3]
+0222	390A	snz     Z
+0223	2A11	jmp     _L66
+0224	2A30	jmp     _L91
+				;129	            if (!tmr || send_cmd(CMD16, 512) != 0)          /* Set R/W block length to 512 */
+				_L105:
+0225	5F31	clr     arg
+0226	0F02	mov     a, 2H
+0227	40B2	mov     arg[1], a
+0228	5F33	clr     arg[2]
+0229	5F34	clr     arg[3]
+022A	0F50	mov     a, 50H
+022B	20FE	call    _send_cmd
+022C	408D	mov     ra, a
+022D	508D	sz      ra
+022E	2A30	jmp     _L91
+022F	2A31	jmp     _L56
+				;130	                ty = 0;
+				_L91:
+				_LI6:
+0230	5F46	clr     ty[0]
+				;131	        }
+				;132	    }
+				;133	    CardType = ty;
+				_L56:
+0231	4746	mov     a, ty[0]
+0232	4082	mov     CardType[0], a
+				;134	    SPI_cs_disable();
+0233	2020	call    _SPI_cs_disable
+				;135	    SPI_transmit(0xff);
+0234	0FFF	mov     a, FFH
+0235	23CF	call    _SPI_transmit
+				;136	
+				;137		itoa(ty,c);
+0236	0FBD	mov     a, BDH
+0237	40A6	mov     s, a
+0238	0F00	mov     a, 0H
+0239	40A7	mov     s[1], a
+023A	4746	mov     a, ty[0]
+023B	40A4	mov     n, a
+023C	5F25	clr     n[1]
+023D	2355	call    _itoa
+				;138		UART_NEW_LINE;
+023E	5F0D	clr     ra
+				_L69:
+023F	0FDE	mov     a, DEH
+0240	430D	add     a, ra
+0241	0083	mov     MP1, a
+0242	0F80	mov     a, 80H
+0243	1F01	clr     MP0
+0244	1381	adcm    a, MP0
+0245	2421	call    L0421
+0246	408E	mov     rb, a
+0247	508E	sz      rb
+0248	2A4A	jmp     _L71
+0249	2A50	jmp     _L74
+				_L71:
+				_LI7:
+024A	3855	snz     TXIF
+024B	2A4A	jmp     _L71
+024C	470E	mov     a, rb
+024D	00D9	mov     TXR_RXR, a
+024E	548D	inc     ra
+024F	2A3F	jmp     _L69
+				_L74:
+0250	3855	snz     TXIF
+0251	2A50	jmp     _L74
+0252	1F59	clr     TXR_RXR
+				;139		UART_PUT_STRING(c);
+0253	5F0D	clr     ra
+				_L75:
+0254	0FBD	mov     a, BDH
+0255	408E	mov     rb, a
+0256	0F00	mov     a, 0H
+0257	408F	mov     rc, a
+0258	470D	mov     a, ra
+0259	430E	add     a, rb
+025A	0083	mov     MP1, a
+025B	1F05	clr     ACC
+025C	530F	adc     a, rc
+025D	0081	mov     MP0, a
+025E	2421	call    L0421
+025F	408E	mov     rb, a
+0260	508E	sz      rb
+0261	2A63	jmp     _L77
+0262	2A69	jmp     _L80
+				_L77:
+				_LI8:
+0263	3855	snz     TXIF
+0264	2A63	jmp     _L77
+0265	470E	mov     a, rb
+0266	00D9	mov     TXR_RXR, a
+0267	548D	inc     ra
+0268	2A54	jmp     _L75
+				_L80:
+0269	3855	snz     TXIF
+026A	2A69	jmp     _L80
+026B	1F59	clr     TXR_RXR
+				;140		UART_NEW_LINE;
+026C	5F0D	clr     ra
+				_L81:
+026D	0FDE	mov     a, DEH
+026E	430D	add     a, ra
+026F	0083	mov     MP1, a
+0270	0F80	mov     a, 80H
+0271	1F01	clr     MP0
+0272	1381	adcm    a, MP0
+0273	2421	call    L0421
+0274	408E	mov     rb, a
+0275	508E	sz      rb
+0276	2A78	jmp     _L83
+0277	2A7E	jmp     _L86
+				_L83:
+				_LI9:
+0278	3855	snz     TXIF
+0279	2A78	jmp     _L83
+027A	470E	mov     a, rb
+027B	00D9	mov     TXR_RXR, a
+027C	548D	inc     ra
+027D	2A6D	jmp     _L81
+				_L86:
+027E	3855	snz     TXIF
+027F	2A7E	jmp     _L86
+0280	1F59	clr     TXR_RXR
+				;141	    return ty ? 0 : STA_NOINIT;
+0281	0F01	mov     a, 1H
+0282	408D	mov     ra, a
+0283	50C6	sz      ty[0]
+0284	2A86	jmp     _LI10
+0285	2AB4	jmp     _L95
+				_LI10:
+0286	5F0D	clr     ra
+0287	2AB4	jmp     _L95
+				;142	}
+				_L95:
+02B4	470D	mov     a, ra
+02B5	0003	ret
+				;143	
+				;144	/*-----------------------------------------------------------------------*/
+				;145	/* Read partial sector                                                   */
+				;146	/*-----------------------------------------------------------------------*/
+				;147	
+				;148	// buff    :  Pointer to the read buffer (NULL:Forward to the stream) 
+				;149	// sector  :  Sector number (LBA) 
+				;150	// offset  :  byte offset to read from (0..511) 
+				;151	// count   :  Number of bytes to read (ofs + cnt mus be <= 512) 
+				;152	
+				;153	int8_t disk_read(uint8_t *buff, uint32_t sector, uint16_t offset, uint16_t count)
+				;154	{
+				;155	    int8_t res;
+				;156	    uint8_t rc;
+				;157	    uint16_t bc;
+				;158	
+				;159	
+				;160	    if (!(CardType & CT_BLOCK)) sector *= 512;  /* Convert to byte address if needed */
+				;161	
+				;162	    res = RES_ERROR;
+				;163	    if (send_cmd(CMD17, sector) == 0)
+				;164	    { /* READ_SINGLE_BLOCK */
+				;165	        bc = 40000;         /* Time counter */
+				;166	        do {                /* Wait for data packet */
+				;167	            rc = SPI_transmit(0xff);
+				;168	        } while (rc == 0xFF && --bc);
+				;169	
+				;170	        if (rc == 0xFE) {   /* A data packet arrived */
+				;171	
+				;172	            bc = 512 + 2 - offset - count;  /* Number of trailing bytes to skip */
+				;173	
+				;174	            /* Skip leading bytes */
+				;175	            while (offset--) SPI_transmit(0xff);
+				;176	
+				;177	            /* Receive a part of the sector */
+				;178	            if (buff) { /* Store data to the memory */
+				;179	                do {
+				;180	                    *buff++ = SPI_transmit(0xff);
+				;181	                } while (--count);
+				;182	            } else {    /* Forward data to the outgoing stream */
+				;183	                do {
+				;184	                    FORWARD(SPI_transmit(0xff));
+				;185	                } while (--count);
+				;186	            }
+				;187	
+				;188	            /* Skip trailing bytes and CRC */
+				;189	            do SPI_transmit(0xff); while (--bc);
+				;190	
+				;191	            res = RES_OK;
+				;192	        }
+				;193	    }
+				;194	
+				;195	    SPI_cs_disable();
+				;196	    SPI_transmit(0xff);
+				;197	
+				;198	    return res;
+				;199	}
+				;200	
+				;201	
+				;202	/*-----------------------------------------------------------------------*/
+				;203	/* Write partial sector                                                  */
+				;204	/*-----------------------------------------------------------------------*/
+				;205	// buff   :   Pointer to the bytes to be written (NULL:Initiate/Finalize sector write) 
+				;206	// sc     :   Number of bytes to send, Sector number (LBA) or zero 
+				;207	
+				;208	int8_t disk_write(const uint8_t *buff, uint32_t sc)
+				;209	{
+				;210	    int8_t res;
+				;211	    uint16_t bc;
+				;212	    static uint16_t wc; /* Sector write counter */
+				;213	
+				;214	    res = RES_ERROR;
+				;215	
+				;216	    if (buff) {     /* Send data bytes */
+				;217	        bc = sc;
+				;218	        while (bc && wc) {      /* Send data bytes to the card */
+				;219	            SPI_transmit(*buff++);
+				;220	            wc--; bc--;
+				;221	        }
+				;222	        res = RES_OK;
+				;223	    } else {
+				;224	        if (sc) {   /* Initiate sector write process */
+				;225	            if (!(CardType & CT_BLOCK)) sc *= 512;  /* Convert to byte address if needed */
+				;226	            if (send_cmd(CMD24, sc) == 0) {         /* WRITE_SINGLE_BLOCK */
+				;227	                SPI_transmit(0xFF); SPI_transmit(0xFE);     /* Data block header */
+				;228	                wc = 512;                           /* Set byte counter */
+				;229	                res = RES_OK;
+				;230	            }
+				;231	        } else {    /* Finalize sector write process */
+				;232	            bc = wc + 2;
+				;233	            while (bc--) SPI_transmit(0);   /* Fill left bytes and CRC with zeros */
+				;234	            if ((SPI_transmit(0xff) & 0x1F) == 0x05)
+				;235	            {   /* Receive data resp and wait for end of write process in timeout of 500ms */
+				;236	                for (bc = 5000; SPI_transmit(0XFF) != 0xFF && bc; bc--)  /* Wait for ready */
+				;237	                    delay_100us();
+				;238	                if (bc) res = RES_OK;
+				;239	            }
+				;240	            SPI_cs_disable();
+				;241	            SPI_transmit(0xff);
+				;242	        }
+				;243	    }
+				;244	
+				;245	    return res;
+				;246	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\uart.c
+				;1	/*  UART MODULE
+				;2	 *  1- MONITORS THE UART BUFFER FOR ANY RECEIVED DATA
+				;3	 *  2- SIGNALS THAT TO THE EEPROM MODULE & ADC MODULE TO WORK INTO SPECIFIC MODE (MOINTOR MODE - DISPLAY MODE)
+				;4	 *
+				;5	 * Author: mnana3a
+				;6	 * Date  : 05/03/2018
+				;7	 *
+				;8	 * USAGE : used in a data logger device
+				;9	*/
+				;10	
+				;11	#define IC_HOLTEK_HT66F0185
+				;12	//#include "config.h"
+				;13	#include "util.h"
+				;14	//#include "port.h"
+				;15	#include "main_ht66f0185.h"
+				;16	#include "uart.h"
+				;17	//#include "spi.h"
+				;18	
+				;19	volatile uint8_t gu8Buf_idx = 0;
+				;20	volatile uint8_t gu8Main_buf[MAX_UART_BUF_SIZE] = {0};
+				;21	volatile uint8_t gu8Buffer_ready = 0;
+				;22	volatile static uint8_t uart_signal = 0;
+				;23	
+				;24	void UART_init(void)
+				;25	{
+				;26	    uint8_t i = 0;
+				;27	    UART_INIT;  
+				_UART_init:
+				_UART_init:
+000E	3190	set     URE
+000F	33D6	set     UARTEN
+0010	0F0C	mov     a, CH
+0011	00D8	mov     BRG, a
+0012	0FC4	mov     a, C4H
+0013	05D7	orm     a, UCR2
+0014	300E	set     EMI
+				;28	    for (i = 0; i < MAX_UART_BUF_SIZE; i++)
+				;29	        gu8Main_buf[i] = 0;
+0015	5F04	clr     gu8Main_buf[0]
+0016	5F05	clr     gu8Main_buf[1]
+0017	5F06	clr     gu8Main_buf[2]
+0018	5F07	clr     gu8Main_buf[3]
+0019	5F08	clr     gu8Main_buf[4]
+				;30	    gu8Buf_idx = 0;
+001A	5F09	clr     gu8Buf_idx[0]
+				;31	    gu8Buffer_ready = 0;
+001B	5F03	clr     gu8Buffer_ready[0]
+				;32	    uart_signal = 0;
+001C	5F0A	clr     uart_signal[0]
+001D	0003	ret
+				;33	}
+				;34	
+				;35	void UART_update(void)
+				;36	{
+				;37	
+				;38	}
+				;39	
+				;40	uint8_t UART_getSignal(void)
+				;41	{
+				;42	    return uart_signal;
+				;43	}
+				;44	
+				;45	void UART_setSignal(uint8_t signal)
+				;46	{
+				;47	    uart_signal = signal;
+				;48	}   
+				;49	// NOTE:
+				;50	// this driver depends on the application to read the buffer first before accepting new data
+				;51	// thus some values will be lost if the sys_tick is high enough that the user input is faster.
+				;52	
+				;53	void __attribute((interrupt(0x2c))) ISR_uart (void)
+				;54	{
+				@ISR_uart_code .SECTION 'CODE'
+002C	4095	mov     r12c, a
+002D	0704	mov     a, BP
+002E	4096	mov     r22c, a
+002F	2AB6	jmp     _ISR_uart
+				_ISR_uart:
+				_ISR_uart:
+02B6	070A	mov     a, STATUS
+02B7	4097	mov     r32c, a
+02B8	0703	mov     a, MP1
+02B9	4098	mov     r42c, a
+02BA	0701	mov     a, MP0
+02BB	4099	mov     r52c, a
+				;55	    volatile char data;
+				;56	    
+				;57	    data = TXR_RXR;
+02BC	0759	mov     a, TXR_RXR
+02BD	409B	mov     data[0], a
+				;58	    if(gu8Buffer_ready == 0)
+02BE	5083	sz      gu8Buffer_ready[0]
+02BF	2AEA	jmp     L02EA
+				;59	    {
+				;60	        gu8Main_buf[gu8Buf_idx++] = data;
+02C0	4709	mov     a, gu8Buf_idx[0]
+02C1	409A	mov     ra2c, a
+02C2	541A	inca    ra2c
+02C3	4089	mov     gu8Buf_idx[0], a
+02C4	0F84	mov     a, 84H
+02C5	431A	add     a, ra2c
+02C6	0083	mov     MP1, a
+02C7	0F00	mov     a, 0H
+02C8	1F01	clr     MP0
+02C9	1381	adcm    a, MP0
+02CA	0701	mov     a, MP0
+02CB	0084	mov     BP, a
+02CC	471B	mov     a, data[0]
+02CD	0082	mov     [02H], a
+				;61	        if(data == TERMINATOR1 || data == TERMINATOR2 || data == TERMINATOR3 || data == TERMINATOR4 || gu8Buf_idx >= MAX_UART_BUF_SIZE-1)
+02CE	471B	mov     a, data[0]
+02CF	0A0A	sub     a, AH
+02D0	3D0A	sz      Z
+02D1	2ADD	jmp     L02DD
+02D2	0A03	sub     a, 3H
+02D3	3D0A	sz      Z
+02D4	2ADD	jmp     L02DD
+02D5	471B	mov     a, data[0]
+02D6	409A	mov     ra2c, a
+02D7	471B	mov     a, data[0]
+02D8	409A	mov     ra2c, a
+02D9	0F03	mov     a, 3H
+02DA	4209	sub     a, gu8Buf_idx[0]
+02DB	3C0A	sz      C
+02DC	2AEA	jmp     L02EA
+				;62	        {
+				;63	            gu8Main_buf[gu8Buf_idx-1] = TERMINATOR0;
+				L02DD:
+02DD	0F83	mov     a, 83H
+02DE	4309	add     a, gu8Buf_idx[0]
+02DF	0083	mov     MP1, a
+02E0	0F00	mov     a, 0H
+02E1	1F01	clr     MP0
+02E2	1381	adcm    a, MP0
+02E3	0701	mov     a, MP0
+02E4	0084	mov     BP, a
+02E5	0F00	mov     a, 0H
+02E6	0082	mov     [02H], a
+				;64	            gu8Buf_idx = 0;
+02E7	5F09	clr     gu8Buf_idx[0]
+				;65	            gu8Buffer_ready = 1;
+02E8	0F01	mov     a, 1H
+02E9	4083	mov     gu8Buffer_ready[0], a
+				L02EA:
+02EA	4716	mov     a, r22c
+02EB	0084	mov     BP, a
+02EC	4717	mov     a, r32c
+02ED	008A	mov     STATUS, a
+02EE	4718	mov     a, r42c
+02EF	0083	mov     MP1, a
+02F0	4719	mov     a, r52c
+02F1	0081	mov     MP0, a
+02F2	4715	mov     a, r12c
+02F3	0004	reti
+				;66	        }
+				;67	    }
+				;68	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\spi.c
+				;1	#define IC_HOLTEK_HT66F0185
+				;2	#include "util.h"
+				;3	#include "main_ht66f0185.h"
+				;4	#include "spi.h"
+				;5	
+				;6	
+				;7	volatile uint8_t res;
+				;8	uint8_t count = 0;
+				;9	
+				;10	
+				;11	void SPI_init(void)
+				;12	{
+				;13		uint8_t n;
+				;14		count = 0;
+				_SPI_init:
+				_SPI_init:
+03BF	5F0B	clr     count[0]
+				;15	    SPI_SS_CONFIG = OUTPUT;
+03C0	3453	clr     PDC0
+				;16	    SPI_CONTROL_REGISTER0 = 0X00;
+03C1	1F45	clr     SIMC0
+				;17	    SPI_CONTROL_REGISTER2 = 0X00;
+03C2	1F48	clr     SIMA
+				;18	    SPI_SET_OPERATING_MODE(SPI_MASTER_FSYS_BY_64);
+03C3	0745	mov     a, SIMC0
+03C4	0E1F	and     a, 1FH
+03C5	408D	mov     ra, a
+03C6	730D	set     ra.6
+03C7	470D	mov     a, ra
+03C8	00C5	mov     SIMC0, a
+				;19	    SPI_SET_DATA_MODE(SPI_MODE_0);
+03C9	0FCF	mov     a, CFH
+03CA	06C8	andm    a, SIMA
+				;20	    SPI_MLS_BIT(SPI_MSB_FIRST);
+03CB	31C8	set     IICA2
+				;21	    SPI_CHIP_SELECT_ENABLE;
+03CC	3148	set     IICA1
+				;22	    SPI_ENABLE;
+03CD	30C5	set     SIMEN
+03CE	0003	ret
+				;23	}
+				;24	
+				;25	void SPI_update(void)
+				;26	{
+				;27	}
+				;28	
+				;29	
+				;30	
+				;31	uint8_t SPI_transmit(uint8_t _data)
+				;32	{
+				_SPI_transmit:
+				_SPI_transmit:
+03CF	408D	mov     ra, a
+03D0	409C	mov     _data[0], a
+				;33	    SPI_DATA_REGISTER = _data;
+03D1	470D	mov     a, ra
+03D2	00C7	mov     SIMD, a
+				;34	    SPI_WAIT_TRANSMIT_COMPLETE;
+				L03D3:
+03D3	0748	mov     a, SIMA
+03D4	0E01	and     a, 1H
+03D5	408D	mov     ra, a
+03D6	0748	mov     a, SIMA
+03D7	408E	mov     rb, a
+03D8	5F0F	clr     rc
+03D9	540D	inca    ra
+03DA	2BE0	jmp     L03E0
+				L03DB:
+03DB	340A	clr     C
+03DC	7F8F	sz      rc.7
+03DD	300A	set     C
+03DE	5B8F	rrc     rc
+03DF	5B8E	rrc     rb
+				L03E0:
+03E0	1785	sdz     ACC
+03E1	2BDB	jmp     L03DB
+03E2	780E	snz     rb.0
+03E3	2BD3	jmp     L03D3
+				;35	    SPI_DATA_TRANSFER_FLAG_RESET;
+03E4	3448	clr     SIMA.0
+				;36	    _data = SPI_DATA_REGISTER;
+03E5	0747	mov     a, SIMD
+03E6	408D	mov     ra, a
+				;37	    return _data;
+				;38	}
+03E7	470D	mov     a, ra
+03E8	0003	ret
+				L03E9:
+03E9	5F22	clr     str[3]
+03EA	7B9D	snz     _data[1].7
+03EB	2BF2	jmp     L03F2
+03EC	419C	cpl     _data[0]
+03ED	419D	cpl     _data[1]
+03EE	549C	inc     _data[0]
+03EF	3D0A	sz      Z
+03F0	549D	inc     _data[1]
+03F1	55A2	dec     str[3]
+				L03F2:
+03F2	7B9F	snz     str.7
+03F3	2BFB	jmp     L03FB
+03F4	419E	cpl     _data[2]
+03F5	419F	cpl     str
+03F6	549E	inc     _data[2]
+03F7	3D0A	sz      Z
+03F8	549F	inc     str
+03F9	54A2	inc     str[3]
+03FA	54A2	inc     str[3]
+				L03FB:
+03FB	5F20	clr     str[1]
+03FC	5F21	clr     str[2]
+03FD	0F10	mov     a, 10H
+03FE	40A3	mov     str[4], a
+				L03FF:
+03FF	340A	clr     C
+0400	5A9C	rlc     _data[0]
+0401	5A9D	rlc     _data[1]
+0402	5AA0	rlc     str[1]
+0403	5AA1	rlc     str[2]
+0404	4720	mov     a, str[1]
+0405	421E	sub     a, _data[2]
+0406	4721	mov     a, str[2]
+0407	521F	sbc     a, str
+0408	380A	snz     C
+0409	2C0F	jmp     L040F
+040A	40A1	mov     str[2], a
+040B	4720	mov     a, str[1]
+040C	421E	sub     a, _data[2]
+040D	40A0	mov     str[1], a
+040E	549C	inc     _data[0]
+				L040F:
+040F	57A3	sdz     str[4]
+0410	2BFF	jmp     L03FF
+0411	7822	snz     str[3].0
+0412	2C18	jmp     L0418
+0413	41A0	cpl     str[1]
+0414	41A1	cpl     str[2]
+0415	54A0	inc     str[1]
+0416	3D0A	sz      Z
+0417	54A1	inc     str[2]
+				L0418:
+0418	78A2	snz     str[3].1
+0419	2C1F	jmp     L041F
+041A	419C	cpl     _data[0]
+041B	419D	cpl     _data[1]
+041C	549C	inc     _data[0]
+041D	3D0A	sz      Z
+041E	549D	inc     _data[1]
+				L041F:
+041F	0003	ret
+0420	1483	inc     MP1
+				L0421:
+0421	3F81	sz      MP0.7
+0422	2C27	jmp     L0427
+0423	0701	mov     a, MP0
+0424	0084	mov     BP, a
+0425	0702	mov     a, [02H]
+0426	0003	ret
+				L0427:
+0427	1B01	rrca    MP0
+0428	0E3F	and     a, 3FH
+0429	0089	mov     TBHP, a
+042A	1B03	rrca    MP1
+042B	0087	mov     TBLP, a
+042C	1D05	tabrd   ACC
+042D	3C0A	sz      C
+042E	0708	mov     a, TBLH
+042F	0003	ret
+				L0E49:
+				org	0e49h
+0E49	0000	nop
+				;39	
+				;40	void SPI_cs_enable(void)
+				;41	{
+				;42	    SPI_SS_PIN = LOW;
+				_SPI_cs_enable:
+				_SPI_cs_enable:
+001E	3452	clr     PD0
+001F	0003	ret
+				;43	}
+				;44	
+				;45	void SPI_cs_disable(void)
+				;46	{
+				;47	    SPI_SS_PIN = HIGH;
+				_SPI_cs_disable:
+				_SPI_cs_disable:
+0020	3052	set     PD0
+0021	0003	ret
+0022	0000	nop
+0023	0000	nop
+0024	0000	nop
+0025	0000	nop
+0026	0000	nop
+0027	0000	nop
+				L0028:
+0028	0000	nop
+0029	1785	sdz     ACC
+002A	2828	jmp     L0028
+002B	0003	ret
+				;48	}
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\startup1_l.asm
+				;1	;;--------------------------------------------------------------;;
+				;2	;;    This file is part of the Holtek C Compiler V3 package     ;;
+				;3	;;    For the initialization of static linkage variables        ;;
+				;4	;;    Copyright (C) 2016 Holtek Semiconductor Inc.              ;;
+				;5	;;    Version: 1.06 (Above IDE3000 V7.93)                       ;;
+				;6	;;    Date:    2016/12/07                                        ;;
+				;7	;;--------------------------------------------------------------;;
+				;8	
+				;9	acc equ [05h]
+				;10	tblp equ [07h]
+				;11	tblh equ [08h]
+				;12	;;tbhp equ [09h] 
+				;13	r0 equ [00h]
+				;14	mp0 equ [01h]
+				;15	r1 equ [02h]
+				;16	mp1l equ [03h]
+				;17	mp1h equ [04h]
+				;18	z equ [0ah].2
+				;19	c equ [0ah].0
+				;20	
+				;21	ifndef tbhp
+				;22	tbhp equ [09h]
+				;23	endif
+				;24	 
+				;25	extern startup_value_1:near
+				;26	
+				;27	@start .section 'code'
+				;28	begin_startup_value:
+				;29	  mov a,low (offset startup_value_1) 
+				@dummy44 .SECTION 'CODE'
+				begin_startup_value:
+				@start .SECTION 'CODE'
+				_main_startup1:
+				@start .SECTION 'CODE'
+0030	0F00	mov     a, 0H
+				;30	  mov tblp,a
+0031	0087	mov     TBLP, a
+				;31	  mov a,high (offset startup_value_1) 
+0032	0F00	mov     a, 0H
+				;32	  mov tbhp,a
+0033	0089	mov     TBHP, a
+				;33	next_table:
+				;34	  ;CLR WDT
+				;35	  inc tblp
+				next_table:
+0034	1487	inc     TBLP
+				;36	  sz z
+0035	3D0A	sz      Z
+				;37	  inc tbhp
+0036	1489	inc     TBHP
+				;38	ifdef USE_TABRDC
+				;39	  tabrdc mp0
+				;40	else
+				;41	  tabrd mp0
+0037	1D01	tabrd   MP0
+				;42	endif
+				;43	  sz mp0
+0038	1081	sz      MP0
+				;44	  jmp read_data
+0039	283B	jmp     read_data
+				;45	  jmp startupend1
+003A	2850	jmp     startupend1
+				;46	read_data:
+				;47	  inc tblp
+				read_data:
+003B	1487	inc     TBLP
+				;48	  sz z
+003C	3D0A	sz      Z
+				;49	  inc tbhp
+003D	1489	inc     TBHP
+				;50	ifdef USE_TABRDC
+				;51	  tabrdc mp1l
+				;52	else
+				;53	  tabrd mp1l
+003E	1D03	tabrd   MP1
+				;54	endif
+				;55	  mov a,tblh
+003F	0708	mov     a, TBLH
+				;56	  mov mp1h,a
+0040	0084	mov     BP, a
+				;57	next_data:
+				;58	  inc tblp
+				next_data:
+0041	1487	inc     TBLP
+				;59	  sz z
+0042	3D0A	sz      Z
+				;60	  inc tbhp
+0043	1489	inc     TBHP
+				;61	ifdef USE_TABRDC
+				;62	  tabrdc acc
+				;63	else
+				;64	  tabrd acc
+0044	1D05	tabrd   ACC
+				;65	endif
+				;66	  mov r1,a
+0045	0082	mov     [02H], a
+				;67	  sdz mp0
+0046	1781	sdz     MP0
+				;68	  jmp $+2
+0047	2849	jmp     L0049
+				;69	  jmp next_table
+0048	2834	jmp     next_table
+				;70	  inc mp1l
+				L0049:
+0049	1483	inc     MP1
+				;71	  mov a,tblh
+004A	0708	mov     a, TBLH
+				;72	  mov r1,a
+004B	0082	mov     [02H], a
+				;73	  inc mp1l
+004C	1483	inc     MP1
+				;74	  sdz mp0
+004D	1781	sdz     MP0
+				;75	  jmp next_data
+004E	2841	jmp     next_data
+				;76	  jmp next_table
+004F	2834	jmp     next_table
+				;77	
+				;78	;end_startup_value:
+				;79	
+				;80	startupend1:
+				;81		MOV A,high  bitdatasec1_start
+				startupend1:
+0050	0F00	mov     a, 0H
+				;82		MOV mp1h,a
+0051	0084	mov     BP, a
+				;83		MOV A,offset bitdatasec1_end
+0052	0F80	mov     a, 80H
+				;84		mov mp1l,A
+0053	0083	mov     MP1, a
+				;85		dec mp1l
+0054	1583	dec     MP1
+				;86		clr z
+0055	350A	clr     Z
+				;87		sub a,offset bitdatasec1_start
+0056	0A80	sub     a, 80H
+				;88		sz z
+0057	3D0A	sz      Z
+				;89		jmp startupend2
+0058	285D	jmp     startupend2
+				;90	L0005:
+				;91		set r1
+				L0005:
+0059	1F82	set     [02H]
+				;92		dec mp1l
+005A	1583	dec     MP1
+				;93		sdz  acc
+005B	1785	sdz     ACC
+				;94		jmp L0005
+005C	2859	jmp     L0005
+				;95	
+				;96	startupend2:
+				;97		MOV A,high  bitdatasec0_start
+				startupend2:
+005D	0F00	mov     a, 0H
+				;98		MOV mp1h,a
+005E	0084	mov     BP, a
+				;99		MOV A,offset bitdatasec0_end
+005F	0F80	mov     a, 80H
+				;100		mov mp1l,A
+0060	0083	mov     MP1, a
+				;101		dec mp1l
+0061	1583	dec     MP1
+				;102		clr z
+0062	350A	clr     Z
+				;103		sub a,offset bitdatasec0_start
+0063	0A80	sub     a, 80H
+				;104		sz  z
+0064	3D0A	sz      Z
+				;105		jmp startupend3
+0065	286A	jmp     startupend3
+				;106	L0006:
+				;107		clr r1
+				L0006:
+0066	1F02	clr     [02H]
+				;108		dec mp1l
+0067	1583	dec     MP1
+				;109		sdz  acc
+0068	1785	sdz     ACC
+				;110		jmp L0006
+0069	2866	jmp     L0006
+				;111	startupend3:
+				;112			
+				;113	   
+				;114	@ROMDATA_BASE .SECTION com_l 'CODE'  
+				;115	startup_value:
+				;116	;;linker range the initial value table here
+				;117	
+				;118	@BITDATASEC1 .SECTION com_l 'DATA'  
+				;119	bitdatasec1_start:
+				;120	
+				;121	@BITDATASEC1 .SECTION com_e 'DATA'  
+				;122	bitdatasec1_end:
+				;123	
+				;124	@BITDATASEC .SECTION com_l 'DATA'  
+				;125	bitdatasec0_start:
+				;126	
+				;127	@BITDATASEC .SECTION com_e 'DATA'  
+				;128	bitdatasec0_end:
+				;file E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\util.c
+				;1	/*  UTILITY FUNCTIONS
+				;2	 *  1- PROVIDES DIFFERENT FUNCTIONS THAT CAN BE USED WITH DIFFERENT MODULES TO CONVERT DATA FORMAT
+				;3	 *
+				;4	 * Author: mnana3a
+				;5	 * Date  : 05/03/2018
+				;6	 *
+				;7	 * USAGE : used in a data logger device
+				;8	*/
+				;9	
+				;10	#include "util.h"
+				;11	
+				;12	#if 0
+				;13	void ftoa(float x, char *a)
+				;14	{
+				;15	    int i = 0;
+				;16	    unsigned int integer = (unsigned int)x;
+				;17	    unsigned int fraction = (((x - integer) < 0.11) ? (0) : (x-integer)*100);
+				;18	    if (integer == 0) a[i++] = '0';
+				;19	    else{
+				;20	        while (integer > 0)
+				;21	        {
+				;22	            a[i] = (integer % 10) | 0x30;
+				;23	            integer /= 10;
+				;24	            i++;    
+				;25	        }  
+				;26	    } 
+				;27	    a[i++] = '.';
+				;28	    reverse(a);
+				;29	    if (fraction == 0) {a[i++] = '0';  a[i] = '\0';}
+				;30	    else{
+				;31	        while (fraction > 0)
+				;32	        {
+				;33	            a[i] = (fraction % 10) | 0x30;
+				;34	            fraction /= 10;
+				;35	            i++;    
+				;36	        }   
+				;37	        a[i] = '\0';
+				;38	        reverse(&a[i-2]);
+				;39	    }
+				;40	}
+				;41	#endif
+				;42	
+				;43	void itoa(int n, char s[])
+				;44	{
+				_itoa:
+				_itoa:
+0355	4724	mov     a, n[0]
+0356	4092	mov     rf, a
+0357	4725	mov     a, n[1]
+0358	4093	mov     rg, a
+0359	7B93	snz     rg.7
+035A	2B5F	jmp     _L12
+035B	0F00	mov     a, 0H
+035C	4292	subm    a, rf
+035D	0F00	mov     a, 0H
+035E	5293	sbcm    a, rg
+				_L12:
+035F	5F10	clr     rd
+0360	5F11	clr     re
+				_L14:
+0361	0F01	mov     a, 1H
+0362	4310	add     a, rd
+0363	408E	mov     rb, a
+0364	0F00	mov     a, 0H
+0365	5311	adc     a, re
+0366	408F	mov     rc, a
+				;45	  int i, sign;
+				;46	  if ((sign = n) < 0)
+				;47	    n = -n;
+				;48	  i = 0;
+				;49	  do { 
+				;50	    s[i++] = n % 10 + ' 0'; 
+0367	4712	mov     a, rf
+0368	409C	mov     _data, a
+0369	4713	mov     a, rg
+036A	409D	mov     _data[1], a
+036B	0F0A	mov     a, AH
+036C	409E	mov     _data[2], a
+036D	0F00	mov     a, 0H
+036E	409F	mov     str, a
+036F	23E9	call    L03E9
+0370	4720	mov     a, str[1]
+0371	40A8	mov     s[2], a
+0372	4721	mov     a, str[2]
+0373	40A9	mov     s[3], a
+0374	4728	mov     a, s[2]
+0375	0B30	add     a, 30H
+0376	408D	mov     ra, a
+0377	4710	mov     a, rd
+0378	4326	add     a, s[0]
+0379	0083	mov     MP1, a
+037A	4711	mov     a, re
+037B	5327	adc     a, s[1]
+037C	0081	mov     MP0, a
+037D	0701	mov     a, MP0
+037E	0084	mov     BP, a
+037F	470D	mov     a, ra
+0380	0082	mov     [02H], a
+0394	470E	mov     a, rb
+0395	4090	mov     rd, a
+0396	470F	mov     a, rc
+0397	4091	mov     re, a
+0398	2B61	jmp     _L14
+				_L13:
+0399	470E	mov     a, rb
+039A	4092	mov     rf, a
+039B	470F	mov     a, rc
+039C	4093	mov     rg, a
+				;51	  } while ((n /= 10) > 0); 
+0381	4712	mov     a, rf
+0382	409C	mov     _data, a
+0383	4713	mov     a, rg
+0384	409D	mov     _data[1], a
+0385	0F0A	mov     a, AH
+0386	409E	mov     _data[2], a
+0387	0F00	mov     a, 0H
+0388	409F	mov     str, a
+0389	23E9	call    L03E9
+038A	471C	mov     a, _data
+038B	4092	mov     rf, a
+038C	471D	mov     a, _data[1]
+038D	4093	mov     rg, a
+038E	7F93	sz      rg.7
+038F	2B99	jmp     _L13
+0390	4712	mov     a, rf
+0391	4513	or      a, rg
+0392	3D0A	sz      Z
+0393	2B99	jmp     _L13
+				;52	  if (sign < 0)
+039D	7BA5	snz     n[1].7
+039E	2BAF	jmp     _L15
+				;53	    s[i++] = '-';
+039F	0F02	mov     a, 2H
+03A0	4310	add     a, rd
+03A1	408E	mov     rb, a
+03A2	0F00	mov     a, 0H
+03A3	5311	adc     a, re
+03A4	408F	mov     rc, a
+03A5	4712	mov     a, rf
+03A6	4326	add     a, s[0]
+03A7	0083	mov     MP1, a
+03A8	4713	mov     a, rg
+03A9	5327	adc     a, s[1]
+03AA	0081	mov     MP0, a
+03AB	0701	mov     a, MP0
+03AC	0084	mov     BP, a
+03AD	0F2D	mov     a, 2DH
+03AE	0082	mov     [02H], a
+				;54	  s[i] = '\0'; 
+				_L15:
+03AF	470E	mov     a, rb
+03B0	4326	add     a, s[0]
+03B1	0083	mov     MP1, a
+03B2	470F	mov     a, rc
+03B3	5327	adc     a, s[1]
+03B4	0081	mov     MP0, a
+03B5	0701	mov     a, MP0
+03B6	0084	mov     BP, a
+03B7	0F00	mov     a, 0H
+03B8	0082	mov     [02H], a
+				;55	  reverse(s);
+03B9	4726	mov     a, s[0]
+03BA	409F	mov     str, a
+03BB	4727	mov     a, s[1]
+03BC	40A0	mov     str[1], a
+03BD	230E	call    _reverse
+03BE	0003	ret
+				;56	}
+				;57	
+				;58	void reverse(char *str)
+				;59	{
+				;60	    int i , j;
+				;61	    char temp;
+				;62	    for(i = 0, j = strlen(str) - 1 ; i < j ; i++, j--)
+				_reverse:
+				_reverse:
+030E	471F	mov     a, str[0]
+030F	409C	mov     _data, a
+0310	4720	mov     a, str[1]
+0311	409D	mov     _data[1], a
+0312	22F4	call    _strlen
+0313	470E	mov     a, rb
+0314	408F	mov     rc, a
+0315	470D	mov     a, ra
+0316	0BFF	add     a, FFH
+0317	408E	mov     rb, a
+0318	0FFF	mov     a, FFH
+0319	538F	adcm    a, rc
+031A	5F10	clr     rd
+031B	5F11	clr     re
+031C	2B4C	jmp     _L9
+				_L10:
+031D	4710	mov     a, rd
+031E	431F	add     a, str[0]
+031F	4092	mov     rf, a
+0320	4711	mov     a, re
+0321	5320	adc     a, str[1]
+0322	4093	mov     rg, a
+0345	5490	inc     rd
+0346	3D0A	sz      Z
+0347	5491	inc     re
+0348	0FFF	mov     a, FFH
+0349	438E	addm    a, rb
+034A	0FFF	mov     a, FFH
+034B	538F	adcm    a, rc
+				_L9:
+034C	4710	mov     a, rd
+034D	420E	sub     a, rb
+034E	4711	mov     a, re
+034F	520F	sbc     a, rc
+0350	1185	swap    ACC
+0351	040A	xor     a, STATUS
+0352	3D85	sz      ACC.3
+0353	2B1D	jmp     _L10
+0354	0003	ret
+				;63	    {
+				;64	        temp = str[i];
+0323	4712	mov     a, rf
+0324	0083	mov     MP1, a
+0325	4713	mov     a, rg
+0326	0081	mov     MP0, a
+0327	2421	call    L0421
+0328	4094	mov     rh, a
+0329	470E	mov     a, rb
+032A	431F	add     a, str[0]
+032B	40A1	mov     str[2], a
+032C	470F	mov     a, rc
+032D	5320	adc     a, str[1]
+032E	40A2	mov     str[3], a
+				;65	        str[i] = str[j];
+032F	4721	mov     a, str[2]
+0330	0083	mov     MP1, a
+0331	4722	mov     a, str[3]
+0332	0081	mov     MP0, a
+0333	2421	call    L0421
+0334	408D	mov     ra, a
+0335	4712	mov     a, rf
+0336	0083	mov     MP1, a
+0337	4713	mov     a, rg
+0338	0081	mov     MP0, a
+0339	0701	mov     a, MP0
+033A	0084	mov     BP, a
+033B	470D	mov     a, ra
+033C	0082	mov     [02H], a
+				;66	        str[j] = temp;
+033D	4721	mov     a, str[2]
+033E	0083	mov     MP1, a
+033F	4722	mov     a, str[3]
+0340	0081	mov     MP0, a
+0341	0701	mov     a, MP0
+0342	0084	mov     BP, a
+0343	4714	mov     a, rh
+0344	0082	mov     [02H], a
+				;67	    }
+				;68	}
+				;69	
+				;70	int strlen(char *s)
+				;71	{
+				;72	    int i = 0;
+				_strlen:
+				_strlen:
+02F4	5F0E	clr     rb
+02F5	5F0F	clr     rc
+				;73	    while(s[i] != 0 && s[i] != '.') i++;
+				_L2:
+02F6	470E	mov     a, rb
+02F7	431C	add     a, s[0]
+02F8	0083	mov     MP1, a
+02F9	470F	mov     a, rc
+02FA	531D	adc     a, s[1]
+02FB	0081	mov     MP0, a
+02FC	2421	call    L0421
+02FD	409E	mov     _data[2], a
+02FE	471E	mov     a, _data[2]
+02FF	0A00	sub     a, 0H
+0300	3D0A	sz      Z
+0301	2B09	jmp     _L6
+0302	0A2E	sub     a, 2EH
+0303	3D0A	sz      Z
+0304	2B09	jmp     _L6
+0305	548E	inc     rb
+0306	3D0A	sz      Z
+0307	548F	inc     rc
+0308	2AF6	jmp     _L2
+				;74	    return i;
+				;75	}
+				_L6:
+0309	470E	mov     a, rb
+030A	408D	mov     ra, a
+030B	470F	mov     a, rc
+030C	408E	mov     rb, a
+030D	0003	ret
+				;76	
+				;77	void delay(unsigned long x)
+				;78	{
+				;79	    while (x-- > 0);
+				;80	}
+				data .SECTION 'DATA'
+				__intc0 DB DUP (?) ; __intc0
+				__intc2 DB DUP (?) ; __intc2
+				__pa DB DUP (?) ; __pa
+				__pac DB DUP (?) ; __pac
+				__papu DB DUP (?) ; __papu
+				__pawu DB DUP (?) ; __pawu
+				__wdtc DB DUP (?) ; __wdtc
+				__pb DB DUP (?) ; __pb
+				__pbc DB DUP (?) ; __pbc
+				__pbpu DB DUP (?) ; __pbpu
+				__cpc DB DUP (?) ; __cpc
+				__pc DB DUP (?) ; __pc
+				__pcc DB DUP (?) ; __pcc
+				__pcpu DB DUP (?) ; __pcpu
+				__simc0 DB DUP (?) ; __simc0
+				__simd DB DUP (?) ; __simd
+				__simc2 DB DUP (?) ; __simc2
+				__pd DB DUP (?) ; __pd
+				__pdc DB DUP (?) ; __pdc
+				__pdpu DB DUP (?) ; __pdpu
+				wc DB 2 DUP (?) ; wc
+				CardType DB DUP (?) ; CardType
+				gu8Buffer_ready DB DUP (?) ; gu8Buffer_ready
+				gu8Main_buf DB DUP (?) ; gu8Main_buf
+				gu8Buf_idx DB DUP (?) ; gu8Buf_idx
+				uart_signal DB DUP (?) ; uart_signal
+				count DB DUP (?) ; count
+				res DB DUP (?) ; res
+				ra DB DUP (?)
+				rb DB DUP (?)
+				rc DB DUP (?)
+				rd DB DUP (?)
+				re DB DUP (?)
+				rf DB DUP (?)
+				rg DB DUP (?)
+				rh DB DUP (?)
+				r12c DB DUP (?)
+				r22c DB DUP (?)
+				r32c DB DUP (?)
+				r42c DB DUP (?)
+				r52c DB DUP (?)
+				ra2c DB DUP (?)
+				data DB DUP (?) ; data
+				_data DB DUP (?) ; _data
+				str DB DUP (?) ; str
+				n DB 2 DUP (?) ; n
+				s DB DUP (?) ; s
+				c DB DUP (?) ; c
+				res DB DUP (?) ; res
+				arg DB 4 DUP (?) ; arg
+				c DB DUP (?) ; c
+				cmd DB DUP (?) ; cmd
+				c DB DUP (?) ; c
+				ocr DB DUP (?) ; ocr
+				ty DB DUP (?) ; ty
+				cmd DB DUP (?) ; cmd

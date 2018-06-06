@@ -1,0 +1,294 @@
+
+Linker Version 8.7.2.161220
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\STARTUP1_L.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ
+Input Object File: E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ
+
+Input Library File: C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB
+Input Library File: C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\v3_tabrd_mrsc.lib
+
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     0000h     0000h    0001h      CODE               @code (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ)
+     00h     0001h     000ah    000ah      CODE               @ROMDATA_BASE (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\STARTUP1_L.OBJ)
+     00h     000bh     000dh    0003h      CODE               _delay_100us (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     000eh     001dh    0010h      CODE               _UART_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     001eh     001fh    0002h      CODE               _SPI_cs_enable (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     0020h     0021h    0002h      CODE               _SPI_cs_disable (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     0022h     002bh    000ah      CODE               __DELAYX (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     002ch     002fh    0004h      CODE               @ISR_uart_code (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     0030h     006ah    003bh      CODE               @start (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ)
+     00h     006bh     0070h    0006h      CODE               @crom (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     0071h     0095h    0025h      CODE               _main (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ)
+     00h     0096h     00fdh    0068h      CODE               ___p_send_cmd_constprop_0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     00feh     01a2h    00a5h      CODE               _send_cmd (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     01a3h     02b5h    0113h      CODE               _disk_initialize (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     02b6h     02f3h    003eh      CODE               _ISR_uart (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     02f4h     030dh    001ah      CODE               _strlen (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ)
+     00h     030eh     0354h    0047h      CODE               _reverse (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ)
+     00h     0355h     03beh    006ah      CODE               _itoa (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ)
+     00h     03bfh     03ceh    0010h      CODE               _SPI_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     03cfh     03e8h    001ah      CODE               _SPI_transmit (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     03e9h     041fh    0037h      CODE               _builtin_holtek_divmodhi4_isr00 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0420h     042fh    0010h      CODE               _CROM2PROM (CROM2PROM)
+     00h     0080h     0082h    0003h      DATA     3.6667    @HCCINIT0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     0083h     0089h    0007h      DATA     2         @HCCINIT (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     008ah     008ah    0001h      DATA     3         @HCCINIT0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     008bh     008bh    0001h      DATA     1         @HCCINIT (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     008ch     008ch    0001h      DATA     0         @HCCINIT0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     008dh     008dh    0001h      DATA     95        @data_ra (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     008eh     008eh    0001h      DATA     63        @data_rb (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     008fh     008fh    0001h      DATA     35        @data_rc (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0090h     0090h    0001h      DATA     21        @data_rd (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0091h     0091h    0001h      DATA     16        @data_re (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0092h     0092h    0001h      DATA     19        @data_rf (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0093h     0093h    0001h      DATA     22        @data_rg (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0094h     0094h    0001h      DATA     2         @data_rh (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     0095h     0095h    0001h      DATA     2         @data_r12c (isr:ra~rh)
+     00h     0096h     0096h    0001h      DATA     2         @data_r22c (isr:ra~rh)
+     00h     0097h     0097h    0001h      DATA     2         @data_r32c (isr:ra~rh)
+     00h     0098h     0098h    0001h      DATA     2         @data_r42c (isr:ra~rh)
+     00h     0099h     0099h    0001h      DATA     2         @data_r52c (isr:ra~rh)
+     00h     009ah     009ah    0001h      DATA     5         @data_ra2c (isr:ra~rh)
+
+     Local Sections
+
+     Bank    Start     End      Length     Class    AvgIns    Name
+     00h     00cbh     00cbh    0000h      LOCAL    0         @dummy (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ)
+     00h     00cbh     00cbh    0000h      LOCAL    0         _main (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         _UART_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         __DELAYX (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     00bdh     00cah    000eh      LOCAL    2.7143    _disk_initialize (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         _SPI_init (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         _SPI_cs_disable (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     009ch     009ch    0001h      LOCAL    1         _SPI_transmit (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     00b1h     00bch    000ch      LOCAL    4.9167    _send_cmd (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     00aah     00b0h    0007h      LOCAL    0.8571    ___p_send_cmd_constprop_0 (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         _SPI_cs_enable (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SPI.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         _Crom2Prom (CROM2PROM)
+     00h     00a4h     00a9h    0006h      LOCAL    4.3333    _itoa (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ)
+     00h     009ch     00a3h    0008h      LOCAL    6.625     _builtin_holtek_divmodhi4_isr00 (C:\Program Files\Holtek MCU Development Tools\HT-IDE3000V7.x\LIB\LIBHOLTEKGCC.LIB)
+     00h     009fh     00a2h    0004h      LOCAL    3.5       _reverse (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ)
+     00h     009ch     009eh    0003h      LOCAL    2         _strlen (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UTIL.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         _delay_100us (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\SD_INTERFACE.OBJ)
+     00h     009ch     009ch    0000h      LOCAL    0         @dummy44 (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+     00h     009bh     009bh    0001h      LOCAL    5         _ISR_uart (E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\UART.OBJ)
+
+     Public Symbols Information
+     Address            Public by Name
+     0420h              _Crom2Prom
+     0420h              _Crom2PromNext
+     02b6h              _ISR_uart
+     0020h              _SPI_cs_disable
+     001eh              _SPI_cs_enable
+     03bfh              _SPI_init
+     03cfh              _SPI_transmit
+     000eh              _UART_init
+     0028h              __DELAYX0
+     0027h              __DELAYX1
+     0026h              __DELAYX2
+     0025h              __DELAYX3
+     0024h              __DELAYX4
+     0023h              __DELAYX5
+     0022h              __DELAYX6
+     03e9h              _builtin_holtek_divmodhi4_isr00
+     03f2h              _builtin_holtek_udivmodhi4_isr00
+     00a3h              _builtin_holtek_udivmodhi4_isr00_2
+     008bh              _count
+     000bh              _delay_100us
+     01a3h              _disk_initialize
+     0089h              _gu8Buf_idx
+     0083h              _gu8Buffer_ready
+     0084h              _gu8Main_buf
+     0355h              _itoa
+     00a4h              _itoa_2
+     0071h              _main
+     008ch              _res
+     030eh              _reverse
+     009fh              _reverse_2
+     02f4h              _strlen
+     009ch              _strlen_2
+     0095h              r12c
+     0096h              r22c
+     0097h              r32c
+     0098h              r42c
+     0099h              r52c
+     008dh              ra
+     009ah              ra2c
+     008eh              rb
+     008fh              rc
+     0090h              rd
+     0091h              re
+     0092h              rf
+     0093h              rg
+     0094h              rh
+     0000h              startup_value_1
+
+     Address            Public by Value
+     0000h              startup_value_1
+     000bh              _delay_100us
+     000eh              _UART_init
+     001eh              _SPI_cs_enable
+     0020h              _SPI_cs_disable
+     0022h              __DELAYX6
+     0023h              __DELAYX5
+     0024h              __DELAYX4
+     0025h              __DELAYX3
+     0026h              __DELAYX2
+     0027h              __DELAYX1
+     0028h              __DELAYX0
+     0071h              _main
+     0083h              _gu8Buffer_ready
+     0084h              _gu8Main_buf
+     0089h              _gu8Buf_idx
+     008bh              _count
+     008ch              _res
+     008dh              ra
+     008eh              rb
+     008fh              rc
+     0090h              rd
+     0091h              re
+     0092h              rf
+     0093h              rg
+     0094h              rh
+     0095h              r12c
+     0096h              r22c
+     0097h              r32c
+     0098h              r42c
+     0099h              r52c
+     009ah              ra2c
+     009ch              _strlen_2
+     009fh              _reverse_2
+     00a3h              _builtin_holtek_udivmodhi4_isr00_2
+     00a4h              _itoa_2
+     01a3h              _disk_initialize
+     02b6h              _ISR_uart
+     02f4h              _strlen
+     030eh              _reverse
+     0355h              _itoa
+     03bfh              _SPI_init
+     03cfh              _SPI_transmit
+     03e9h              _builtin_holtek_divmodhi4_isr00
+     03f2h              _builtin_holtek_udivmodhi4_isr00
+     0420h              _Crom2PromNext
+     0420h              _Crom2Prom
+
+
+ROM Usage Statistics
+     Size      Used     Percentage
+     1000h     0430h    26%
+
+RAM Usage Statistics
+    Bank      Size      Used     Percentage
+     00h       0080h     004bh    58%
+     01h       0080h     0000h    0%
+     Total     0100h     004bh    29%
+
+Use Stack Count
+_main: 7
+_disk_read: 6
+_disk_write: 6
+_ISR_uart: 0
+
+Call Tree
+    @dummy
+        _main (0)
+            _UART_init (1)
+            __DELAYX (1)
+            _disk_initialize (1)
+                _SPI_init (2)
+                _SPI_cs_disable (2)
+                _SPI_transmit (2)
+                _send_cmd (2)
+                    ___p_send_cmd_constprop_0 (3)
+                        _SPI_cs_disable (4)
+                        _SPI_transmit (4)
+                        _SPI_cs_enable (4)
+                        _Crom2Prom (4)
+                        _itoa (4)
+                            _builtin_holtek_divmodhi4_isr00 (5)
+                            _reverse (5)
+                                _strlen (6)
+                                    _Crom2Prom (7)
+                                _Crom2Prom (6)
+                    _SPI_cs_disable (3)
+                    _SPI_transmit (3)
+                    _SPI_cs_enable (3)
+                    _itoa (3)
+                        _builtin_holtek_divmodhi4_isr00 (4)
+                        _reverse (4)
+                            _strlen (5)
+                                _Crom2Prom (6)
+                            _Crom2Prom (5)
+                    _Crom2Prom (3)
+                _delay_100us (2)
+                    __DELAYX (3)
+                _itoa (2)
+                    _builtin_holtek_divmodhi4_isr00 (3)
+                    _reverse (3)
+                        _strlen (4)
+                            _Crom2Prom (5)
+                        _Crom2Prom (4)
+                _Crom2Prom (2)
+    _disk_read
+        _send_cmd (0)
+            ___p_send_cmd_constprop_0 (1)
+                _SPI_cs_disable (2)
+                _SPI_transmit (2)
+                _SPI_cs_enable (2)
+                _Crom2Prom (2)
+                _itoa (2)
+                    _builtin_holtek_divmodhi4_isr00 (3)
+                    _reverse (3)
+                        _strlen (4)
+                            _Crom2Prom (5)
+                        _Crom2Prom (4)
+            _SPI_cs_disable (1)
+            _SPI_transmit (1)
+            _SPI_cs_enable (1)
+            _itoa (1)
+                _builtin_holtek_divmodhi4_isr00 (2)
+                _reverse (2)
+                    _strlen (3)
+                        _Crom2Prom (4)
+                    _Crom2Prom (3)
+            _Crom2Prom (1)
+        _SPI_transmit (0)
+        _SPI_cs_disable (0)
+    _disk_write
+        _Crom2Prom (0)
+        _SPI_transmit (0)
+        _send_cmd (0)
+            ___p_send_cmd_constprop_0 (1)
+                _SPI_cs_disable (2)
+                _SPI_transmit (2)
+                _SPI_cs_enable (2)
+                _Crom2Prom (2)
+                _itoa (2)
+                    _builtin_holtek_divmodhi4_isr00 (3)
+                    _reverse (3)
+                        _strlen (4)
+                            _Crom2Prom (5)
+                        _Crom2Prom (4)
+            _SPI_cs_disable (1)
+            _SPI_transmit (1)
+            _SPI_cs_enable (1)
+            _itoa (1)
+                _builtin_holtek_divmodhi4_isr00 (2)
+                _reverse (2)
+                    _strlen (3)
+                        _Crom2Prom (4)
+                    _Crom2Prom (3)
+            _Crom2Prom (1)
+        _delay_100us (0)
+            __DELAYX (1)
+        _SPI_cs_disable (0)
+    @dummy44
+        _ISR_uart (0)
+
+HLINK: Program entry point at section '@code' (address 0) of file 'E:\1_TOSHIBA\Projects\voltage_stabilizer\DataLoggerJig\proj\test_sd\TEST_SD.OBJ'
+
+Total 0 error(s), Total 0 Warning(s)
